@@ -11,8 +11,6 @@ import {
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
-//Test commit -m
-
 function ImageRequestForm() {
   //This object is the same as the body for api request
   const reviewData = React.useRef({
