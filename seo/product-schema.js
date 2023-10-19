@@ -34,7 +34,7 @@ export default function ProductSchema(props) {
     <div className="d-none" typeof="Product" vocab="https://schema.org/">
       <div rel="schema:brand">
         <div typeof="schema:Brand">
-          <div content="Calypso" property="schema:name"></div>
+          <div content="Calypso" property="schema:name" />
         </div>
       </div>
       <div content={product.description} property="schema:description" />
