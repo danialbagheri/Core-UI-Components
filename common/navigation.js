@@ -13,6 +13,9 @@ import {
 
 import MegaMenu from './megaMenu'
 import {SearchModal} from 'components/searchModal'
+import {getMegaMenuProducts} from 'services'
+
+const website = process.env.NEXT_PUBLIC_WEBSITE
 
 function Navigation() {
   const [mobileMenu, setMobileMenu] = useState(false)
@@ -39,13 +42,9 @@ function Navigation() {
   }, [])
 
   useEffect(() => {
-    const endPoint =
-      'https://service.calypsosun.com/api/products/collections/products-mega-menu/?resize_w=280'
-    fetch(endPoint)
-      .then(res => res.json())
-      .then(data => {
-        setProductPageMegaMenu(data.items)
-      })
+    //To Do:::: This api doesn't work for cabana
+    getMegaMenuProducts()
+      .then(res => setProductPageMegaMenu(res.items))
       .catch(err => console.log(err))
   }, [])
 
@@ -80,7 +79,7 @@ function Navigation() {
                 exact="true"
                 href="/"
                 itemProp="url"
-                onClick={e => CloseMobileMenu(e)}
+                onClick={() => CloseMobileMenu()}
               >
                 Home
               </ActiveLink>
@@ -93,7 +92,7 @@ function Navigation() {
                 className="nav-link"
                 href="/products"
                 itemProp="url"
-                onClick={e => CloseMobileMenu(e)}
+                onClick={() => CloseMobileMenu()}
               >
                 Products
               </ActiveLink>
@@ -108,36 +107,40 @@ function Navigation() {
                    Mix & Match
                   </ActiveLink>
              </li> */}
-            <li>
-              <ActiveLink
-                className="nav-link"
-                href="/be-sun-ready"
-                itemProp="url"
-                onClick={e => CloseMobileMenu(e)}
-              >
-                Be Sun Ready
-              </ActiveLink>
-            </li>
-            <li>
-              <ActiveLink
-                className="nav-link"
-                href="/advice"
-                itemProp="url"
-                onClick={e => CloseMobileMenu(e)}
-              >
-                Advice
-              </ActiveLink>
-            </li>
-            <li>
-              <ActiveLink
-                className="nav-link"
-                href="/about"
-                itemProp="url"
-                onClick={e => CloseMobileMenu(e)}
-              >
-                About Us
-              </ActiveLink>
-            </li>
+            {website === 'calypso' ? (
+              <>
+                <li>
+                  <ActiveLink
+                    className="nav-link"
+                    href="/be-sun-ready"
+                    itemProp="url"
+                    onClick={() => CloseMobileMenu()}
+                  >
+                    Be Sun Ready
+                  </ActiveLink>
+                </li>
+                <li>
+                  <ActiveLink
+                    className="nav-link"
+                    href="/advice"
+                    itemProp="url"
+                    onClick={() => CloseMobileMenu()}
+                  >
+                    Advice
+                  </ActiveLink>
+                </li>
+                <li>
+                  <ActiveLink
+                    className="nav-link"
+                    href="/about"
+                    itemProp="url"
+                    onClick={() => CloseMobileMenu()}
+                  >
+                    About Us
+                  </ActiveLink>
+                </li>
+              </>
+            ) : null}
           </ul>
           <div className="icon-holder">
             <button

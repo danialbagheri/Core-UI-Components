@@ -32,6 +32,8 @@ export default function AddToBasketWithDropDown(props) {
     openCart()
   }
 
+  console.log('variants::::', variants)
+
   return (
     <Box
       sx={{

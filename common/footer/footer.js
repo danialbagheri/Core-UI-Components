@@ -6,6 +6,7 @@ import BottomBar from './BottomBar'
 import SocialMediaIcons from './SocialMediaIcons'
 import FooterMenu from './FooterMenu'
 import {SubscribeForm} from './subscribeForm'
+import {Box} from '@mui/material'
 
 const FooterMainMenu = [
   {
@@ -55,20 +56,23 @@ const helpMenu = [
 export default function Footer({showSubscription}) {
   return (
     <footer className="page-footer font-small ">
-      <div className="container-fluid calypsoOrange text-md-left calypso-footer">
+      <Box
+        bgcolor="primary.main"
+        className="container-fluid text-md-left calypso-footer"
+      >
         <div className="container top30">
           <div className="row height250">
             <div className="col-md-5">
               <div style={{display: 'flex', flexDirection: 'flex-start'}}>
                 <Image
-                  alt="Calypso"
+                  alt="Cabana"
                   className="footerLogo"
                   height="67"
                   src={logo}
                   width="70"
                 />
                 <Image
-                  alt="Calypso"
+                  alt="Cabana"
                   className="footerLogo"
                   height="67"
                   src={tct}
@@ -96,7 +100,7 @@ export default function Footer({showSubscription}) {
           </div>
         </div>
         <div className="top30" />
-      </div>
+      </Box>
       <BottomBar />
     </footer>
   )

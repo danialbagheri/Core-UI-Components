@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {MUIThemeProvider} from 'components/MUIThemeProvider'
+import {MUIThemeProvider} from 'theme'
 
 const AppContext = React.createContext(undefined)
 
