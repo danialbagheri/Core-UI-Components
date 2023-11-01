@@ -1,4 +1,4 @@
-import {Button} from '@mui/base'
+import Button from '@mui/material/Button'
 import {
   Alert,
   Box,
@@ -36,7 +36,6 @@ function SubscribeForm() {
       marginTop: '0',
       marginBottom: '-6px',
       color: '#333',
-      //   textShadow: '1px 1px 2px #d32f2f, 0 0 1em #d32f2f, 0 0 0.2em #d32f2f',
     },
     '& input': {padding: '5px', backgroundColor: 'white', borderRadius: 1},
     '&>label': {
@@ -117,6 +116,7 @@ function SubscribeForm() {
           gap: '12px',
           flexGrow: 1,
           maxWidth: '220px',
+          alignItems: 'flex-start',
         }}
       >
         {' '}
@@ -169,22 +169,19 @@ function SubscribeForm() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            '&>button': {
-              border: 'none',
-              padding: '4px 20px',
-              background: '#f5af3f',
-              borderRadius: 1,
-              width: '120px',
-              height: '28px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            },
           }}
         >
           <Button
             onClick={e => submitHandler(e)}
-            sx={{border: 'none'}}
+            sx={theme => {
+              return {
+                border: 'none',
+                background: `${theme.palette.golden.main}`,
+                p: '4px 20px',
+                fontWeight: '600',
+                borderRadius: 3,
+              }
+            }}
             variant="contained"
           >
             {loading ? <CircularProgress size={23} /> : 'SUBSCRIBE'}
