@@ -3,7 +3,7 @@ import logo from '../../../public/logoWhite.svg'
 import tct from '../../../public/home-page/TCT.svg'
 import BottomBar from './BottomBar'
 
-import SocialMediaIcons from './SocialMediaIcons'
+import SocialIconGroup from './social/SocialIconGroup'
 import FooterMenu from './FooterMenu'
 import {SubscribeForm} from './subscribeForm'
 import {Box} from '@mui/material'
@@ -95,7 +95,7 @@ export default function Footer({showSubscription}) {
               <FooterMenu menuHeader="HELP" menuItems={helpMenu} />
             </div>
             <div className="col-md-3 col-xs-12">
-              <SocialMediaIcons />
+              <SocialIconGroup />
             </div>
           </div>
         </div>
