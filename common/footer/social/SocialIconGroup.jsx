@@ -14,14 +14,14 @@ export default function SocialIconGroup() {
   const iconItems =
     socialIcons &&
     socialIcons.items?.map((item, index) => {
-      return <SocialIcon item={item} index={index} />
+      return <SocialIcon index={index} item={item} key={index} />
     })
   return (
     <>
       <Typography
-        varinat="h3"
         color="white"
         sx={{fontWeight: 600, textTransform: 'uppercase'}}
+        varinat="h3"
       >
         Follow us
       </Typography>

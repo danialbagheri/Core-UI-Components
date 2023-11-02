@@ -11,6 +11,10 @@ export default function SocialIcon(props) {
   }
   return (
     <Box
+      onMouseLeave={() => {
+        setBgColor('transparent')
+      }}
+      onMouseOver={handleMouseOver}
       sx={{
         border: '1px solid white',
         borderRadius: '50%',
@@ -18,13 +22,9 @@ export default function SocialIcon(props) {
         backgroundColor: `${bgColor}`,
         cursor: 'pointer',
       }}
-      onMouseOver={handleMouseOver}
-      onMouseLeave={() => {
-        setBgColor('transparent')
-      }}
     >
       <Link href={item.url} rel="noopener noreferrer" target="_blank">
-        <Image alt={item.name} src={item.svg_icon} width={20} height={20} />
+        <Image alt={item.name} height={20} src={item.svg_icon} width={20} />
       </Link>
     </Box>
   )
