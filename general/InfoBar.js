@@ -1,4 +1,3 @@
-// import React from "react";
 import * as React from 'react'
 /* -------------------------------- Libraries ------------------------------- */
 import Slider from 'react-slick'
@@ -6,12 +5,14 @@ import Slider from 'react-slick'
 
 /* ----------------------------- MUI Components ----------------------------- */
 import {Box, Typography, useTheme} from '@mui/material'
-import * as Icon from '@mui/icons-material'
+import Place from '@mui/icons-material/Place'
+import LocalShipping from '@mui/icons-material/LocalShipping'
+import Star from '@mui/icons-material/Star'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
 import TopBar from './topbar'
-import data from '../../data.json'
+import {getInfoBarStatus} from '../../services'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- CSS Files ------------------------------- */
@@ -58,23 +59,21 @@ export default function InfoBar() {
   }
 
   //TO DO::: We should import icons from backend
-  const icons = ['Place', 'LocalShipping', 'Star']
+  const icons = [<Place key={1} />, <LocalShipping key={2} />, <Star key={3} />]
 
-  async function getInfoBarStatus() {
-    const endpoint = data.apiUrl + 'web/top-bars/'
-    const res = await fetch(endpoint)
-    const json = await res.json()
-    setItems(json[0].items)
-    setIsLoaded(true)
-  }
-
+  //@Danial::: It gets 404 on this API call
   React.useEffect(() => {
     getInfoBarStatus()
+      .then(res => {
+        setItems(res[0].items)
+        setIsLoaded(true)
+      })
+      .catch(err => console.log(err))
   }, [])
 
   if (isLoaded) {
     const infoBarItems = items.map((item, i) => {
-      const ItemIcon = Icon[icons[i]]
+      const ItemIcon = icons[i]
       return (
         <Box
           className="info-bar-item"
