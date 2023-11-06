@@ -21,7 +21,7 @@ export default function SocialIconGroup() {
       <Typography
         color="white"
         sx={{fontWeight: 600, textTransform: 'uppercase'}}
-        varinat="h3"
+        variant="h3"
       >
         Follow us
       </Typography>
