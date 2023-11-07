@@ -19,7 +19,7 @@ function ReviewPagination() {
           reviewData: {...prev.reviewData, results: res.results},
         }))
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   }
 
   return (

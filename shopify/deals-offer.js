@@ -20,7 +20,7 @@ export default function DealOffer(props) {
   //   const containSanitiser = _.pullAll(result, [false])
   //   if (lineItems && lineItems.length == containSanitiser.length) {
   //     setOfferLipBalm(false)
-  //     console.log('There is only sanitiser in the basket')
+  //     console.error('There is only sanitiser in the basket')
   //   } else {
   //     setOfferLipBalm(true)
   //   }

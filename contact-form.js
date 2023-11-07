@@ -94,7 +94,7 @@ export default class Contact extends React.Component {
           }
         },
         error => {
-          console.log(error.code)
+          console.error(error.code)
           console.error(error)
           this.setState({
             response: error,

@@ -25,10 +25,9 @@ function SubmitRequest(props) {
         setLoading(false)
         setResponse(res)
         setOpenSnackbar(true)
-        console.log(res)
       })
       .catch(err => {
-        console.log(err)
+        console.error(err)
         setLoading(false)
       })
   }

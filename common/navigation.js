@@ -45,7 +45,7 @@ function Navigation() {
     //To Do:::: This api doesn't work for cabana
     getMegaMenuProducts()
       .then(res => setProductPageMegaMenu(res.items))
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   }, [])
 
   const openResponsiveMenu = () => {

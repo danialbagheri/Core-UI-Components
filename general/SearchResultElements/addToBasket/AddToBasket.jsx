@@ -14,7 +14,7 @@ function AddToBasket(props) {
     ]
     addVariant(checkoutState.id, lineItemsToAdd)
       .then(() => openCart())
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   }
 
   return (
