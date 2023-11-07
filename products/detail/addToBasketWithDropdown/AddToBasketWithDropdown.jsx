@@ -45,6 +45,8 @@ export default function AddToBasketWithDropDown(props) {
           width: 30,
           height: 30,
           fontSize: 12,
+          backgroundColor: theme.palette.primary.main,
+          boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
         },
         '& .ProductOptionSelector': {
           width: '100%',
