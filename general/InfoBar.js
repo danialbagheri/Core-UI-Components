@@ -68,7 +68,7 @@ export default function InfoBar() {
         setItems(res[0].items)
         setIsLoaded(true)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   }, [])
 
   if (isLoaded) {
