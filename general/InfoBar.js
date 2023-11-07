@@ -1,4 +1,5 @@
 import * as React from 'react'
+
 /* -------------------------------- Libraries ------------------------------- */
 import Slider from 'react-slick'
 /* -------------------------------------------------------------------------- */
@@ -50,18 +51,19 @@ export default function InfoBar() {
           infinite: true,
           autoplay: true,
           autoplaySpeed: 1500,
-          // centerMode: true,
-          // vertical: true,
-          // verticalSwiping: true,
         },
       },
     ],
   }
 
   //TO DO::: We should import icons from backend
-  const icons = [<Place key={1} />, <LocalShipping key={2} />, <Star key={3} />]
+  const icons = [
+    <Place color="primary" key={1} />,
+    <LocalShipping color="primary" key={2} />,
+    <Star color="primary" key={3} />,
+  ]
 
-  //@Danial::: It gets 404 on this API call
+  //@Danial::: It gets 404 in Cabana on this API call
   React.useEffect(() => {
     getInfoBarStatus()
       .then(res => {
@@ -73,16 +75,13 @@ export default function InfoBar() {
 
   if (isLoaded) {
     const infoBarItems = items.map((item, i) => {
-      const ItemIcon = icons[i]
       return (
         <Box
           className="info-bar-item"
           key={item.id}
           sx={{alignItems: 'center'}}
         >
-          <Box className="info-bar-icon">
-            <ItemIcon color="primary" />
-          </Box>
+          <Box className="info-bar-icon">{icons[i]}</Box>
           <Typography className="text-centre">{item.text}</Typography>
         </Box>
       )
