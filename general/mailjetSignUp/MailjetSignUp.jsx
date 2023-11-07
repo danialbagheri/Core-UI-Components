@@ -173,18 +173,28 @@ export default function MailjetSignUp() {
             : Styles.NewsLetterContainerClose
         }`}
       >
-        <div
-          className={Styles.OfferContainer}
+        <Box
           onClick={e => {
             e.stopPropagation()
             setShowPopUpSetting()
+          }}
+          sx={{
+            top: 0,
+            left: 0,
+            width: '37px',
+            height: '340px',
+            position: 'absolute',
+            display: 'inline-block',
+            backgroundColor: 'primary.main',
+            padding: '3px',
+            cursor: 'pointer',
           }}
         >
           <i className={Styles.ToggleIcon} />
           <div className={Styles.Offer}>
             <span>GET 10% OFF</span>
           </div>
-        </div>
+        </Box>
 
         <div className={Styles.Content}>
           <div className={Styles.ImageContainer}>
