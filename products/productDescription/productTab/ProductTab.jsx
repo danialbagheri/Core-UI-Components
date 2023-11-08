@@ -49,7 +49,7 @@ const ProductTab = props => {
 
   return (
     <Box sx={{width: '100%'}}>
-      <Box sx={{borderBottom: 1, borderColor: 'rgba(255, 94, 43, 0.4)'}}>
+      <Box sx={{borderBottom: 1, borderColor: 'primary.main'}}>
         <Tabs
           aria-label="basic tabs example"
           onChange={handleChange}

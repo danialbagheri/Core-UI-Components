@@ -15,6 +15,7 @@ function AddButton(props) {
   const [selectedQuantity, setSelectedQuantity] = React.useState(1)
 
   function addToBasket(variantId, quantity) {
+    console.log('variantId:::', variantId)
     const lineItemsToAdd = [
       {
         variantId: variantId,
@@ -59,7 +60,7 @@ function AddButton(props) {
           fontWeight: 700,
           color: 'white',
           borderRadius: '10px',
-          '&:hover': {backgroundColor: '#ff6b00'},
+          '&:hover': {backgroundColor: 'primary.main', boxShadow: 'none'},
           height: '52px',
           boxShadow: 'none',
         }}

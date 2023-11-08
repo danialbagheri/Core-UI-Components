@@ -15,7 +15,7 @@ const ProductDescription = props => {
   const {product, selectedVariant, setSelectedVariant} = props
   return (
     <Stack gap={4}>
-      <Typography color={'#ff6b00'} variant={'h2'}>
+      <Typography color="primary.main" variant={'h2'}>
         {product.name}
       </Typography>
 
@@ -49,7 +49,7 @@ const ProductDescription = props => {
 
       <VariantSize selectedVariant={selectedVariant} />
 
-      <Typography color={'#FF6B00'} variant="h2">
+      <Typography color="primary.main" variant="h2">
         <ShowPrice selectedVariant={selectedVariant} />
       </Typography>
 

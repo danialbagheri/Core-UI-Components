@@ -47,6 +47,16 @@ function ProductImageSlider(props) {
         position: {xs: 'relative', sm: 'sticky'},
         top: {xs: 0, sm: '70px'},
         overflow: 'scroll',
+        paddingRight:
+          '17px' /* Increase/decrease this value for cross-browser compatibility */,
+        boxSizing: 'content-box',
+
+        '&::-webkit-scrollbar ': {
+          display: 'none',
+        },
+
+        msOverflowStyle: 'none',
+        scrollbarWidth: 'none',
 
         '& .slick-arrow': {
           top: '40%',
