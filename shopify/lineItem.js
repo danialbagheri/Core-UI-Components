@@ -25,7 +25,7 @@ export default function LineItem() {
 
   return (
     <li className="Line-item">
-      {checkoutState.lineItems &&
+      {checkoutState?.lineItems &&
         checkoutState.lineItems.map((lineItem, i) => {
           return (
             <div className="lineItemDiv" key={`${lineItem.title}` + i}>

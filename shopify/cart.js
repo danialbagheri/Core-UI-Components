@@ -87,7 +87,7 @@ export default function Cart() {
 
     function getCount() {
       const lineItems =
-        checkoutState.lineItems && checkoutState.lineItems.length > 0
+        checkoutState?.lineItems && checkoutState.lineItems.length > 0
           ? checkoutState.lineItems
           : []
       let count = 0

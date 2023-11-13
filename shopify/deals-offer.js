@@ -7,7 +7,7 @@ export default function DealOffer(props) {
   const [remainingAmount, setRemainingAmount] = useState(0)
   const [remindFreeDelivery, setRemindFreeDelivery] = useState(false)
   const [offerLipBalm] = useState(false)
-  const totalPrice = props.checkoutState.totalPrice
+  const totalPrice = props.checkoutState?.totalPrice
   const checkoutState = props.checkoutState
 
   // const checkLipBalmDeal = () => {
@@ -27,7 +27,7 @@ export default function DealOffer(props) {
   // }
 
   const checkFreeDeliveryEligibility = () => {
-    if (checkoutState.totalPrice && checkoutState.totalPrice.amount < 25) {
+    if (checkoutState?.totalPrice && checkoutState.totalPrice.amount < 25) {
       const remainingAmount = 25 - parseFloat(checkoutState.totalPrice.amount)
       setRemainingAmount(remainingAmount.toFixed(2))
       setRemindFreeDelivery(true)

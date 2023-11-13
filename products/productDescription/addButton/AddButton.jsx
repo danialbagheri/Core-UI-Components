@@ -15,10 +15,9 @@ function AddButton(props) {
   const [selectedQuantity, setSelectedQuantity] = React.useState(1)
 
   function addToBasket(variantId, quantity) {
-    console.log('variantId:::', variantId)
     const lineItemsToAdd = [
       {
-        variantId: variantId,
+        variantId,
         quantity: parseInt(quantity, 10),
       },
     ]
