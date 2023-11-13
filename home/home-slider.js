@@ -35,7 +35,7 @@ const SliderItem = slide => {
   }, [])
 
   const clickHandler = () => {
-    router.push(slide.slide.link || '/about')
+    router.push(slide.slide.slide.link || '/about')
   }
 
   if (slide.slide.custom_slide) {
