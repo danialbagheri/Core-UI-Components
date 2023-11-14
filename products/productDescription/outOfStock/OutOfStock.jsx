@@ -1,12 +1,19 @@
 import * as React from 'react'
 
-import {Button, CircularProgress, TextField, Typography} from '@mui/material'
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import {Stack} from '@mui/system'
 import {validateEmail} from 'utils'
 import {postOutOfStockEmail} from 'services'
 
 function OutOfStock(props) {
   const {selectedVariant} = props
+  const theme = useTheme()
 
   const [email, setEmail] = React.useState('')
   const [error, setError] = React.useState({state: false, text: ''})
@@ -87,7 +94,7 @@ function OutOfStock(props) {
                     fontWeight: 700,
                     fontSize: 16,
                     borderRadius: 3,
-                    background: '#ec6b1d',
+                    background: theme.palette.primary.main,
                     color: 'white',
 
                     '& .MuiCircularProgress-svg ': {

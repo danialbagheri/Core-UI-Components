@@ -5,12 +5,14 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import {useTheme} from '@mui/material'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons'
 
 export default function DropDown(props) {
   const [expanded, setExpanded] = React.useState(false)
+  const theme = useTheme()
 
   return (
     <Box>
@@ -32,7 +34,7 @@ export default function DropDown(props) {
           aria-controls="panel1a-content"
           expandIcon={
             <FontAwesomeIcon
-              color="#FF6B00"
+              color={theme.palette.primary.main}
               icon={expanded ? faMinus : faPlus}
             />
           }

@@ -10,15 +10,9 @@ export default function AddToBasketWithDropDown(props) {
 
   const inStock = (variant = false) => {
     if (!variant) {
-      if (activeVariant.inventory_quantity > 0) {
-        return true
-      }
-      return false
+      return activeVariant.inventory_quantity > 0
     }
-    if (variant.inventory_quantity > 0) {
-      return true
-    }
-    return false
+    return variant.inventory_quantity > 0
   }
 
   function addToBasket(variantId, quantity) {
@@ -45,8 +39,8 @@ export default function AddToBasketWithDropDown(props) {
           width: 30,
           height: 30,
           fontSize: 12,
-          backgroundColor: theme.palette.primary.main,
-          boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
+          // backgroundColor: theme.palette.primary.main,
+          // boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
         },
         '& .ProductOptionSelector': {
           width: '100%',
@@ -71,7 +65,6 @@ export default function AddToBasketWithDropDown(props) {
         sx={{
           fontWeight: 700,
           '&:hover': {
-            // backgroundColor: theme.palette.sand.main,
             boxShadow: `0 0 2px 1px ${theme.palette.primary.main}`,
             borderColor: 'transparent',
           },
