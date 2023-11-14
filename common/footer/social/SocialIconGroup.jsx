@@ -11,11 +11,6 @@ export default function SocialIconGroup() {
     })
   }, [])
 
-  const iconItems =
-    socialIcons &&
-    socialIcons.items?.map((item, index) => {
-      return <SocialIcon index={index} item={item} key={index} />
-    })
   return (
     <>
       <Typography
@@ -25,7 +20,13 @@ export default function SocialIconGroup() {
       >
         Follow us
       </Typography>
-      <Box sx={{mt: 3, display: 'flex', gap: 2}}>{iconItems}</Box>
+      <Box sx={{mt: 3, display: 'flex', gap: 2}}>
+        {socialIcons?.items?.length
+          ? socialIcons.items.map((item, index) => (
+              <SocialIcon index={index} item={item} key={index} />
+            ))
+          : null}
+      </Box>
     </>
   )
 }

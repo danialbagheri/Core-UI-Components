@@ -24,7 +24,12 @@ export default function SocialIcon(props) {
       }}
     >
       <Link href={item.url} rel="noopener noreferrer" target="_blank">
-        <Image alt={item.name} height={20} src={item.svg_icon} width={20} />
+        <Image
+          alt={item.name || ''}
+          height={20}
+          src={item.svg_icon ?? ''}
+          width={20}
+        />
       </Link>
     </Box>
   )
