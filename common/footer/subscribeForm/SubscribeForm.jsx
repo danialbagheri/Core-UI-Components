@@ -172,6 +172,7 @@ function SubscribeForm() {
           }}
         >
           <Button
+            color="primary"
             onClick={e => submitHandler(e)}
             sx={theme => {
               return {
@@ -182,7 +183,7 @@ function SubscribeForm() {
                 borderRadius: 3,
               }
             }}
-            variant="contained"
+            variant="primary"
           >
             {loading ? <CircularProgress size={23} /> : 'SUBSCRIBE'}
           </Button>
