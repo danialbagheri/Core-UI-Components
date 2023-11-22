@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react'
-import {useShopify} from '../hooks'
+import {useShopify} from '../../hooks'
 import logo from '../../public/logo.svg'
-import SearchBar from '../general/searchbar'
-import Link from 'next/link'
-import ActiveLink from './active-link'
+import SearchBar from '../../general/searchbar'
+// import Link from 'next/link'
+import ActiveLink from '../active-link'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
   faBars,
@@ -11,25 +11,32 @@ import {
   faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons'
 
-import MegaMenu from './megaMenu'
+// import MegaMenu from '../megaMenu'
 import {SearchModal} from 'components/searchModal'
 import {getMegaMenuProducts} from 'services'
+import {getRetrieveMenu} from '../../../services'
+import {Box} from '@mui/material'
+import Image from 'next/image'
 
 const website = process.env.NEXT_PUBLIC_WEBSITE
 
 function Navigation() {
   const [mobileMenu, setMobileMenu] = useState(false)
-  const [search, showSearch] = useState(false)
+  const [search, setSearch] = useState(false)
+  const [menuItems, setMenuItems] = useState([])
   const [openSearchModal, setOpenSearchModal] = useState(false)
-  const [showMegaMenu, toggleMegaMenu] = useState(false)
-  const [productsPageMegaMenu, setProductPageMegaMenu] = useState([])
+  // const [showMegaMenu, setShowMegaMenu] = useState(false)
+  const [
+    // productsPageMegaMenu,
+    setProductsPageMegaMenu,
+  ] = useState([])
   const {openCart} = useShopify()
 
   useEffect(() => {
     const navbar = document.getElementsByClassName('navbar-fixed-top')[0]
 
     window.onscroll = () => {
-      if (window.pageYOffset >= 10) {
+      if (window.scrollY >= 10) {
         navbar.style.position = 'fixed'
         navbar.style.top = '0'
         navbar.style.boxShadow = '0 0 4px 2px rgba(0,0,0,0.3)'
@@ -44,7 +51,14 @@ function Navigation() {
   useEffect(() => {
     //To Do:::: This api doesn't work for cabana
     getMegaMenuProducts()
-      .then(res => setProductPageMegaMenu(res.items))
+      .then(res => setProductsPageMegaMenu(res.items))
+      .catch(err => console.error(err))
+
+    getRetrieveMenu()
+      .then(res => {
+        console.log('res.sub_menus:::', res.sub_menus)
+        setMenuItems(res.sub_menus)
+      })
       .catch(err => console.error(err))
   }, [])
 
@@ -58,89 +72,35 @@ function Navigation() {
 
   return (
     <>
-      <SearchBar visibilitySetter={showSearch} visible={search} />
+      <SearchBar visibilitySetter={setSearch} visible={search} />
       <nav
         className="navbar navbar-fixed-top"
         itemScope
         itemType="https://schema.org/SiteNavigationElement"
       >
         <div className="navbar-content">
-          <Link className="navbar-brand" href="/">
-            <img alt="Calypso" height="47" src={logo} width="150" />
-          </Link>
+          <Box className="navbar-brand" href="/">
+            <Image alt={website} height="47" src={logo} width="150" />
+          </Box>
+
           <ul
             className={
               mobileMenu ? 'navbar-nav responsive fade-in' : 'navbar-nav'
             }
           >
-            <li>
-              <ActiveLink
-                className="nav-link"
-                exact="true"
-                href="/"
-                itemProp="url"
-                onClick={() => CloseMobileMenu()}
-              >
-                Home
-              </ActiveLink>
-            </li>
-            <li
-              onMouseEnter={() => toggleMegaMenu(true)}
-              onMouseLeave={() => toggleMegaMenu(false)}
-            >
-              <ActiveLink
-                className="nav-link"
-                href="/products"
-                itemProp="url"
-                onClick={() => CloseMobileMenu()}
-              >
-                Products
-              </ActiveLink>
-              {showMegaMenu && <MegaMenu products={productsPageMegaMenu} />}
-            </li>
-            {/* <li>
-            <ActiveLink
-              itemProp="url"
-              className="nav-link"
-              href="/products/"
-            >
-                   Mix & Match
-                  </ActiveLink>
-             </li> */}
-            {website === 'calypso' ? (
-              <>
-                <li>
+            {menuItems.length
+              ? menuItems.map(item => (
                   <ActiveLink
                     className="nav-link"
-                    href="/be-sun-ready"
+                    href={item.url}
                     itemProp="url"
+                    key={item.id}
                     onClick={() => CloseMobileMenu()}
                   >
-                    Be Sun Ready
+                    {item.name}
                   </ActiveLink>
-                </li>
-                <li>
-                  <ActiveLink
-                    className="nav-link"
-                    href="/advice"
-                    itemProp="url"
-                    onClick={() => CloseMobileMenu()}
-                  >
-                    Advice
-                  </ActiveLink>
-                </li>
-                <li>
-                  <ActiveLink
-                    className="nav-link"
-                    href="/about"
-                    itemProp="url"
-                    onClick={() => CloseMobileMenu()}
-                  >
-                    About Us
-                  </ActiveLink>
-                </li>
-              </>
-            ) : null}
+                ))
+              : null}
           </ul>
           <div className="icon-holder">
             <button

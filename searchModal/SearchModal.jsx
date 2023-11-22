@@ -26,7 +26,7 @@ import {AppContext} from 'components/appProvider'
 import style from './searchModal.module.css'
 /* -------------------------------------------------------------------------- */
 
-function SearchModal({setOpenSearchModal}) {
+function SearchModal({setOpen, open}) {
   const [, setAppState] = React.useContext(AppContext)
   const [searchValue, setSearchValue] = React.useState('')
   const [loading, setLoading] = React.useState(false)
@@ -75,7 +75,7 @@ function SearchModal({setOpenSearchModal}) {
   }
 
   const closeSearchModal = () => {
-    setOpenSearchModal(false)
+    setOpen(false)
   }
 
   React.useEffect(() => {
@@ -85,6 +85,10 @@ function SearchModal({setOpenSearchModal}) {
       }
     })
   }, [])
+
+  if (!open) {
+    return
+  }
 
   return (
     <Box
@@ -158,7 +162,7 @@ function SearchModal({setOpenSearchModal}) {
         className={style.crossContainer}
         onClick={e => {
           e.stopPropagation()
-          setOpenSearchModal(false)
+          setOpen(false)
         }}
         sx={{
           '& svg.MuiSvgIcon-root': {width: 30, transition: 'all 200ms'},

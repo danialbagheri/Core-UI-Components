@@ -6,8 +6,7 @@
   bottom: 0;
 
   cursor: default;
-
-  /* background-color: rgba(25,25,25,.94); */
+  z-index: 10000;
 }
 
 .searchContainer {
