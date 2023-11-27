@@ -15,12 +15,12 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import {hexToRgba} from '../../../utils/hexToRgba'
 
-const drawerWidth = 300
+const drawerWidth = '100%'
 
 const Accordion = styled(props => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(() => ({
-  width: 300,
+  width: '100%',
 
   '&:before': {
     display: 'none',
@@ -56,7 +56,8 @@ export function MenuDrawer(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined
 
-  const handleDrawerToggle = () => {
+  const handleDrawerToggle = e => {
+    e.stopPropagation()
     setMobileOpen(prevState => !prevState)
   }
 
@@ -136,6 +137,7 @@ export function MenuDrawer(props) {
     <nav>
       <Drawer
         container={container}
+        id="MAMAD"
         ModalProps={{
           keepMounted: true,
         }}
@@ -143,10 +145,11 @@ export function MenuDrawer(props) {
         onClose={handleDrawerToggle}
         open={mobileOpen}
         sx={{
-          display: {xs: 'block', sm: 'none'},
+          display: {xs: 'block', md: 'none'},
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
+            height: 'fit-content',
             bgcolor: theme.palette.primary.light,
           },
         }}

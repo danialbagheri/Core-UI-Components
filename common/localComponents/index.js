@@ -1,3 +1,4 @@
+export * from './AppBarIcons.tsx'
+export * from './DesktopMenu.jsx'
 export * from './MenuDrawer'
-export * from './MenuIcons.tsx'
 export * from './NavItem.jsx'

@@ -16,13 +16,13 @@ const SliderItem = slide => {
     if (window) {
       const imgSrcHandler = () => {
         const windowWidth = window.innerWidth
-        if (windowWidth < 600) {
+        if (windowWidth < 790) {
           setImgSrc('xs_image')
-        } else if (windowWidth < 900) {
+        } else if (windowWidth < 800) {
           setImgSrc('sm_image')
-        } else if (windowWidth < 1200) {
+        } else if (windowWidth < 1448) {
           setImgSrc('md_image')
-        } else if (windowWidth < 1536) {
+        } else if (windowWidth < 1685) {
           setImgSrc('lg_image')
         } else {
           setImgSrc('xl_image')

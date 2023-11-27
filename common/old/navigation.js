@@ -56,7 +56,6 @@ function Navigation() {
 
     getRetrieveMenu()
       .then(res => {
-        console.log('res.sub_menus:::', res.sub_menus)
         setMenuItems(res.sub_menus)
       })
       .catch(err => console.error(err))
