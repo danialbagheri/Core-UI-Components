@@ -1,16 +1,18 @@
-import React, {useEffect} from 'react'
+import * as React from 'react'
 import LineItem from './lineItem'
 import {useShopify} from '../hooks'
 import DealOffer from './deals-offer'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons'
 import * as ga from '../common/googleAnalytics'
+import {Backdrop} from '@mui/material'
 
 export default function Cart() {
   const [discountItem, setDiscountItem] = React.useState({
     title: '',
     percentage: '',
   })
+
   const {
     cartStatus,
     closeCart,
@@ -73,11 +75,11 @@ export default function Cart() {
     }
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     applyDiscountApplication(checkoutState)
   }, [checkoutState])
 
-  useEffect(() => {
+  React.useEffect(() => {
     const button = document.querySelector('button.App__view-cart')
     if (cartStatus === true) {
       button.classList.add('hide')
@@ -104,6 +106,13 @@ export default function Cart() {
 
   return (
     <div id="cart">
+      <Backdrop
+        onClick={e => {
+          handleClose(e)
+        }}
+        open={cartStatus}
+        sx={{color: '#fff', zIndex: theme => theme.zIndex.drawer + 1}}
+      />
       <div className={`Cart ${cartStatus ? 'Cart--open' : ''}`}>
         <div className="App__view-cart-wrapper2">
           <button className="App__view-cart" onClick={e => handleOpen(e)}>

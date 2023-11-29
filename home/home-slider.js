@@ -16,17 +16,20 @@ const SliderItem = slide => {
     if (window) {
       const imgSrcHandler = () => {
         const windowWidth = window.innerWidth
-        if (windowWidth < 790) {
+        if (windowWidth < 400) {
           setImgSrc('xs_image')
-        } else if (windowWidth < 800) {
+          return
+        } else if (windowWidth < 500) {
           setImgSrc('sm_image')
-        } else if (windowWidth < 1448) {
+          return
+        } else if (windowWidth < 750) {
           setImgSrc('md_image')
-        } else if (windowWidth < 1685) {
+          return
+        } else if (windowWidth < 1200) {
           setImgSrc('lg_image')
-        } else {
-          setImgSrc('xl_image')
+          return
         }
+        setImgSrc('xl_image')
       }
 
       imgSrcHandler()
@@ -52,10 +55,10 @@ const SliderItem = slide => {
   return (
     <Box
       index={slide.id}
-      onClick={clickHandler}
+      // onClick={clickHandler}
       sx={{
         position: 'relative',
-        height: {xs: 400, ssm: 500, sm: 800, md: 500, lg: 600},
+        height: {xs: 350, ssm: 450, msm: 300, sm: 350, md: 400},
         cursor: 'pointer',
       }}
     >

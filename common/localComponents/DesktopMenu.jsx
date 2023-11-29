@@ -34,16 +34,17 @@ export function DesktopMenu(props) {
         onClick={() => router.push('/')}
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: {xs: 'flex-end', md: 'space-between'},
           alignItems: 'center',
           width: {xs: '100%', md: trigger ? 'unset' : '100%'},
           position: 'relative',
           '&>img': {
-            // position: {xs: 'absolute', md: 'relative'},
+            position: {xs: 'absolute', md: 'relative'},
             top: {xs: '50%', md: 'unset'},
             left: {xs: '50%', md: 'unset'},
             transform: {
-              xs: 'none',
+              xs: 'translate(-80%,-50%)',
+              msm: 'translate(-50%,-50%)',
               md: trigger ? 'none' : 'translate(-50px)',
             },
           },

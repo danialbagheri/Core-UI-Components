@@ -25,7 +25,7 @@ export function AppBarIcons(props: PropsTypes) {
   return (
     <Box
       sx={{
-        gap: {xs: '20px', md: trigger ? '25px' : '41px'},
+        gap: {xs: '10px', md: trigger ? '25px' : '41px'},
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -39,14 +39,6 @@ export function AppBarIcons(props: PropsTypes) {
       />
       <PersonIcon color="primary" />
 
-      {/* <Backdrop
-        onClick={() => {
-          closeCart()
-          cartOpenState.current = false
-        }}
-        open={cartOpenState.current}
-        // sx={{color: '#fff', zIndex: theme => theme.zIndex.drawer + 1}}
-      ></Backdrop> */}
       <ShoppingCartIcon
         color="primary"
         onClick={e => {
