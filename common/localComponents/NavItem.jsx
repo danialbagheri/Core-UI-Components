@@ -50,9 +50,10 @@ export const NavItem = props => {
   const id = open ? data.id : undefined
 
   const handleClick = url => {
-    if (url) {
-      router.push(url)
-    }
+    console.log('clicked::::', url)
+    // if (url) {
+    //   router.push(url)
+    // }
   }
 
   const openPopover = event => {
@@ -68,8 +69,18 @@ export const NavItem = props => {
     setExpanded(newExpanded ? panel : false)
   }
 
+  const accordionSummaryOnClick = (subMenuLength, url) => {
+    if (!subMenuLength) {
+      router.push(url)
+    }
+  }
+
+  const subMenuClickHandler = url => {
+    router.push(url)
+  }
+
   return (
-    <Box>
+    <Box sx={{zIndex: 5000}}>
       <Button
         key={data.id}
         onClick={() => handleClick(data.url)}
@@ -102,11 +113,14 @@ export const NavItem = props => {
               sx: {
                 boxShadow: 'none',
                 backgroundColor: theme.palette.primary.light,
+                zIndex: 100,
               },
             },
           }}
         >
-          <Box onMouseLeave={closePopover}>
+          <Box
+          // onMouseLeave={closePopover}
+          >
             {data.sub_menus.map(item => (
               <Accordion
                 expanded={expanded === item.id}
@@ -124,6 +138,9 @@ export const NavItem = props => {
                   aria-controls="panel1d-content"
                   hasAnchor={item.sub_menus.length}
                   id="panel1d-header"
+                  onClick={() =>
+                    accordionSummaryOnClick(item.sub_menus.length, item.url)
+                  }
                 >
                   <Typography
                     sx={{
@@ -132,6 +149,7 @@ export const NavItem = props => {
                       fontWeight: 600,
                       textTransform: 'capitalize',
                       textWrap: 'nowrap',
+                      whiteSpace: 'nowrap',
                       minWidth: 'fit-content',
                       maxWidth: 'fit-content',
                     }}
@@ -143,8 +161,26 @@ export const NavItem = props => {
                   <AccordionDetails
                     sx={{pl: 5, bgcolor: theme.palette.primary.light, py: 0}}
                   >
+                    <Box onClick={() => subMenuClickHandler(item.url)}>
+                      <Button
+                        sx={{
+                          color: '#333',
+                          fontSize: '14px',
+                          fontWeight: 600,
+                          textTransform: 'capitalize',
+                          textWrap: 'nowrap',
+                          minWidth: 'fit-content',
+                          maxWidth: 'fit-content',
+                        }}
+                      >
+                        {item.name}
+                      </Button>
+                    </Box>
                     {item.sub_menus.map(_item => (
-                      <Box key={_item.id}>
+                      <Box
+                        key={_item.id}
+                        onClick={() => subMenuClickHandler(_item.url)}
+                      >
                         <Button
                           sx={{
                             color: '#333',

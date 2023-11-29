@@ -14,6 +14,7 @@ import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import {hexToRgba} from '../../../utils/hexToRgba'
+import {useRouter} from 'next/router'
 
 const drawerWidth = '100%'
 
@@ -48,9 +49,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
 }))
 
 export function MenuDrawer(props) {
-  const {setMobileOpen, mobileOpen, navItems, window} = props
+  const {setMobileOpen, mobileOpen, navItems, window, trigger} = props
   const [expanded, setExpanded] = React.useState(null)
   const theme = useTheme()
+  const router = useRouter()
   const borderColor = hexToRgba(theme.palette.primary.main, 0.3)
 
   const container =
@@ -64,6 +66,16 @@ export function MenuDrawer(props) {
   const handleChange = panel => (event, newExpanded) => {
     event.stopPropagation()
     setExpanded(newExpanded ? panel : false)
+  }
+
+  const accordionSummaryClickHandler = (subMenuLength, url) => {
+    if (!subMenuLength) {
+      router.push(url)
+    }
+  }
+
+  const subMenuClickHandler = url => {
+    router.push(url)
   }
 
   const drawer = (
@@ -89,6 +101,9 @@ export function MenuDrawer(props) {
                 aria-controls="panel1d-content"
                 hasAnchor={item.sub_menus.length}
                 id="panel1d-header"
+                onClick={() =>
+                  accordionSummaryClickHandler(item.sub_menus.length, item.url)
+                }
               >
                 <Typography
                   sx={{
@@ -108,8 +123,26 @@ export function MenuDrawer(props) {
                 <AccordionDetails
                   sx={{pl: 5, bgcolor: theme.palette.primary.light, py: 0}}
                 >
+                  <Box onClick={() => subMenuClickHandler(item.url)}>
+                    <Button
+                      sx={{
+                        color: '#333',
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        textTransform: 'capitalize',
+                        textWrap: 'nowrap',
+                        minWidth: 'fit-content',
+                        maxWidth: 'fit-content',
+                      }}
+                    >
+                      {item.name}
+                    </Button>
+                  </Box>
                   {item.sub_menus.map(_item => (
-                    <Box key={_item.id}>
+                    <Box
+                      key={_item.id}
+                      onClick={() => subMenuClickHandler(_item.url)}
+                    >
                       <Button
                         sx={{
                           color: '#333',
@@ -137,7 +170,6 @@ export function MenuDrawer(props) {
     <nav>
       <Drawer
         container={container}
-        id="MAMAD"
         ModalProps={{
           keepMounted: true,
         }}
@@ -146,11 +178,20 @@ export function MenuDrawer(props) {
         open={mobileOpen}
         sx={{
           display: {xs: 'block', md: 'none'},
+          top: 100,
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
             height: 'fit-content',
             bgcolor: theme.palette.primary.light,
+          },
+
+          '&>.MuiPaper-root': {
+            top: trigger ? 75 : 100,
+          },
+
+          '& .MuiBackdrop-root': {
+            display: 'none',
           },
         }}
         variant="temporary"

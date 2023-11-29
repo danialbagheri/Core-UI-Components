@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import {useScrollTrigger} from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
@@ -127,6 +128,7 @@ function Navigation() {
             bgcolor: '#FFF',
             boxShadow: 'none',
             p: trigger ? '10px 30px' : '20px 30px',
+            pt: '20px',
           }}
         >
           <Toolbar
@@ -148,7 +150,11 @@ function Navigation() {
               onClick={handleDrawerToggle}
               sx={{mr: 2, display: {md: 'none'}}}
             >
-              <MenuIcon color="primary" />
+              {mobileOpen ? (
+                <CloseIcon color="primary" />
+              ) : (
+                <MenuIcon color="primary" />
+              )}
             </IconButton>
             {/* -------------------------------------------------------------------------- */}
 
@@ -167,6 +173,7 @@ function Navigation() {
           mobileOpen={mobileOpen}
           navItems={navItems}
           setMobileOpen={setMobileOpen}
+          trigger={trigger}
         />
       </Box>
     </>
