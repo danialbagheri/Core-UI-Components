@@ -5,7 +5,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
-import {hexToRgba} from '../../../utils/hexToRgba'
 import {useRouter} from 'next/router'
 
 const Accordion = styled(props => (
@@ -24,8 +23,6 @@ const AccordionSummary = styled(props => (
     {...props}
   />
 ))(({theme}) => ({
-  backgroundColor: theme.palette.primary.light,
-
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(180deg)',
   },
@@ -38,22 +35,41 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
   padding: theme.spacing(2),
 }))
 
+export const hoverStyle = bgcolor => {
+  return {
+    position: 'relative',
+    '&::before': {
+      content: "''",
+      position: 'absolute',
+      bottom: -5,
+      left: 0,
+      width: 0,
+      height: '2px',
+      minHeight: '2px',
+      backgroundColor: bgcolor,
+      transition: 'width 0.4s ease',
+    },
+    '&:hover': {background: 'none', fontWeight: 'bold'},
+    '&:hover::before': {
+      width: '100%',
+    },
+  }
+}
+
 export const NavItem = props => {
   const {data} = props
   const theme = useTheme()
   const router = useRouter()
   const [expanded, setExpanded] = React.useState(null)
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const borderColor = hexToRgba(theme.palette.primary.main, 0.3)
 
   const open = Boolean(anchorEl)
   const id = open ? data.id : undefined
 
   const handleClick = url => {
-    console.log('clicked::::', url)
-    // if (url) {
-    //   router.push(url)
-    // }
+    if (url) {
+      router.push(url)
+    }
   }
 
   const openPopover = event => {
@@ -80,7 +96,7 @@ export const NavItem = props => {
   }
 
   return (
-    <Box sx={{zIndex: 5000}}>
+    <Box sx={{zIndex: 1000}}>
       <Button
         key={data.id}
         onClick={() => handleClick(data.url)}
@@ -88,11 +104,25 @@ export const NavItem = props => {
         sx={{
           color: '#333',
           fontSize: '16px',
-          fontWeight: 600,
+          fontWeight: 'regular',
           textTransform: 'capitalize',
           textWrap: 'nowrap',
           minWidth: 'fit-content',
           maxWidth: 'fit-content',
+          '&::before': {
+            content: "''",
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: 0,
+            height: '2px',
+            backgroundColor: theme.palette.primary.main,
+            transition: 'width 0.4s ease',
+          },
+          '&:hover': {background: 'none'},
+          '&:hover::before': {
+            width: '100%',
+          },
         }}
       >
         {data.name}
@@ -111,26 +141,19 @@ export const NavItem = props => {
           slotProps={{
             paper: {
               sx: {
-                boxShadow: 'none',
-                backgroundColor: theme.palette.primary.light,
-                zIndex: 100,
+                backgroundColor: '#FFF',
+                zIndex: 1400,
               },
             },
           }}
         >
-          <Box
-          // onMouseLeave={closePopover}
-          >
+          <Box onMouseLeave={closePopover}>
             {data.sub_menus.map(item => (
               <Accordion
                 expanded={expanded === item.id}
                 key={item.id}
                 onChange={handleChange(item.id)}
                 sx={{
-                  '&:not(:first-child)': {
-                    borderTop: '1px solid',
-                    borderColor,
-                  },
                   mx: 3,
                 }}
               >
@@ -146,31 +169,35 @@ export const NavItem = props => {
                     sx={{
                       color: '#333',
                       fontSize: '16px',
-                      fontWeight: 600,
+                      fontWeight: 'regular',
                       textTransform: 'capitalize',
                       textWrap: 'nowrap',
                       whiteSpace: 'nowrap',
                       minWidth: 'fit-content',
                       maxWidth: 'fit-content',
+                      position: 'relative',
+                      ...hoverStyle(theme.palette.primary.main),
                     }}
                   >
                     {item.name}
                   </Typography>
                 </AccordionSummary>
                 {item.sub_menus.length ? (
-                  <AccordionDetails
-                    sx={{pl: 5, bgcolor: theme.palette.primary.light, py: 0}}
-                  >
+                  <AccordionDetails sx={{pl: 5, bgcolor: '#FFF', py: 0}}>
                     <Box onClick={() => subMenuClickHandler(item.url)}>
                       <Button
                         sx={{
                           color: '#333',
                           fontSize: '14px',
-                          fontWeight: 600,
+                          fontWeight: 'regular',
                           textTransform: 'capitalize',
                           textWrap: 'nowrap',
                           minWidth: 'fit-content',
                           maxWidth: 'fit-content',
+                          position: 'relative',
+                          pb: 0,
+                          pt: 2,
+                          ...hoverStyle(theme.palette.primary.main),
                         }}
                       >
                         {item.name}
@@ -189,6 +216,11 @@ export const NavItem = props => {
                             textWrap: 'nowrap',
                             minWidth: 'fit-content',
                             maxWidth: 'fit-content',
+                            position: 'relative',
+                            pb: 0,
+                            pt: 2,
+                            mb: 2,
+                            ...hoverStyle(theme.palette.primary.main),
                           }}
                         >
                           {_item.name}

@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import Image from 'next/image'
 /* ----------------------------- MUI Components ----------------------------- */
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -8,13 +9,17 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import {useScrollTrigger} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import SearchIcon from '@mui/icons-material/Search'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
 import {DesktopMenu, MenuDrawer} from './localComponents'
 import {getRetrieveMenu} from '../../services'
 import SearchModal from '../searchModal/SearchModal'
+import logo from '../../public/logo.svg'
 /* -------------------------------------------------------------------------- */
+
+const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 
 function Navigation() {
   /* --------------------------------- States --------------------------------- */
@@ -54,7 +59,7 @@ function Navigation() {
 
   const setNavItemsHandler = () => {
     const containerWidth =
-      menuItemsEle.current.getBoundingClientRect().width - 50 //50 is for padding of the element
+      menuItemsEle.current.getBoundingClientRect().width - 100 //50 is for padding of the element
 
     if (navItemsDetail.current.state === 'done' && containerWidth > 0) {
       let widthSum = 50
@@ -126,9 +131,12 @@ function Navigation() {
           component="nav"
           sx={{
             bgcolor: '#FFF',
-            boxShadow: 'none',
-            p: trigger ? '10px 30px' : '20px 30px',
-            pt: '20px',
+            boxShadow: trigger
+              ? '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)'
+              : 'none',
+            p: trigger
+              ? {xs: '0 30px', md: '5px 30px'}
+              : {xs: '10px 30px', md: '20px 30px'},
           }}
         >
           <Toolbar
@@ -140,6 +148,19 @@ function Navigation() {
               maxWidth: '1400px',
               margin: '0 auto',
               width: '100%',
+
+              position: 'relative',
+              '&>img': {
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: {
+                  xs: 'translate(-50%,-50%)',
+                  md: 'translate(-50%,-100%)',
+                },
+                display: {xs: 'block', md: trigger ? 'none' : 'block'},
+                width: {xs: 100, md: 150},
+              },
             }}
           >
             {/* ------------------------ Menu Icon for mobile view ----------------------- */}
@@ -148,13 +169,31 @@ function Navigation() {
               color="inherit"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{mr: 2, display: {md: 'none'}}}
+              sx={{
+                display: {md: 'none'},
+                height: '40px',
+                width: '40px',
+                px: 1,
+              }}
             >
               {mobileOpen ? (
                 <CloseIcon color="primary" />
               ) : (
                 <MenuIcon color="primary" />
               )}
+            </IconButton>
+            <IconButton
+              onClick={() => setOpenSearchModal(true)}
+              sx={{
+                display: {xs: 'block', md: 'none'},
+                height: '40px',
+                width: '40px',
+                ml: -1,
+                mr: 2,
+                px: 1,
+              }}
+            >
+              <SearchIcon color="primary" />
             </IconButton>
             {/* -------------------------------------------------------------------------- */}
 
@@ -166,6 +205,10 @@ function Navigation() {
               shrinkNavItems={shrinkNavItems}
               trigger={trigger}
             />
+            {/* -------------------------------------------------------------------------- */}
+
+            {/* --------------------------- Logo in mobile view -------------------------- */}
+            <Image alt={WEBSITE} height="47" src={logo} width="100" />
             {/* -------------------------------------------------------------------------- */}
           </Toolbar>
         </AppBar>

@@ -3,6 +3,7 @@ import * as React from 'react'
 import {
   // Backdrop,
   Box,
+  IconButton,
   SxProps,
 } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
@@ -25,22 +26,34 @@ export function AppBarIcons(props: PropsTypes) {
   return (
     <Box
       sx={{
-        gap: {xs: '10px', md: trigger ? '25px' : '41px'},
+        gap: {xs: 0, md: trigger ? '15px' : '30px'},
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         ...sx,
       }}
     >
-      <SearchIcon
-        color="primary"
+      <IconButton
         onClick={() => setOpenSearchModal(true)}
-        sx={{display: {xs: 'block', md: trigger ? 'block' : 'none'}}}
-      />
-      <PersonIcon color="primary" />
+        sx={{
+          width: '40px',
+          height: '40px',
+          display: {xs: 'none', md: trigger ? 'block' : 'none'},
+        }}
+      >
+        <SearchIcon color="primary" onClick={() => setOpenSearchModal(true)} />
+      </IconButton>
 
-      <ShoppingCartIcon
-        color="primary"
+      <IconButton
+        sx={{
+          width: '40px',
+          height: '40px',
+        }}
+      >
+        <PersonIcon color="primary" />
+      </IconButton>
+
+      <IconButton
         onClick={e => {
           e.preventDefault()
           if (!cartOpenState.current) {
@@ -51,7 +64,13 @@ export function AppBarIcons(props: PropsTypes) {
             cartOpenState.current = false
           }
         }}
-      />
+        sx={{
+          width: '40px',
+          height: '40px',
+        }}
+      >
+        <ShoppingCartIcon color="primary" />
+      </IconButton>
     </Box>
   )
 }

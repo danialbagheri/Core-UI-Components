@@ -14,11 +14,11 @@ import CircularProgress from '@mui/material/CircularProgress'
 import {registerContact} from 'services'
 import Link from 'next/link'
 
-export default function MailjetSignUp() {
-  const SUBSCRIPTION_STATE = 'subscriptionState'
-  const SUB_PANEL_OPEN = 'sub panel open'
-  const SIGNED_UP = 'signedUp'
+const SUBSCRIPTION_STATE = 'subscriptionState'
+const SUB_PANEL_OPEN = 'sub panel open'
+const SIGNED_UP = 'signedUp'
 
+export default function MailjetSignUp() {
   const [showPopUp, setShowPopUp] = React.useState(false)
   const [fieldData, setFieldData] = React.useState({
     email: '',

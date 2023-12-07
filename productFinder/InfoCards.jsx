@@ -44,7 +44,7 @@ export function InfoCards(props) {
           fontColor="#FFF"
           key="btn_1"
           onClick={startBtnHandler}
-          sx={{mt: 8}}
+          sx={{mt: 8, fontSize: 18}}
           variant="contained"
         >
           Start
@@ -266,12 +266,19 @@ export function InfoCards(props) {
       <Box
         sx={{
           position: 'absolute',
-          width: 200,
-          height: 200,
+          width: {xs: 200, md: 250},
+          height: {xs: 200, md: 250},
           top: card.imgTop ?? 0,
           left: '50%',
 
-          transform: 'translate(-40%,calc(-100% + 6px))',
+          transform: {
+            xs: `translate(${
+              card.type === 'start' ? '-40%' : '-50%'
+            },calc(-100% + 6px))`,
+            md: `translate(${
+              card.type === 'start' ? '-40%' : '-50%'
+            },calc(-100% + 8px))`,
+          },
         }}
       >
         <Image

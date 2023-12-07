@@ -78,6 +78,14 @@ export function QuestionCards(props) {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        '&>img': {
+          width: {xs: 200, md: 300},
+          height: {xs: 200, md: 300},
+          transform: {
+            xs: 'translate(-50%, -100%)',
+            md: 'translate(-50%,calc(-100% + 11px))',
+          },
+        },
       }}
     >
       <Image
@@ -88,7 +96,6 @@ export function QuestionCards(props) {
           position: 'absolute',
           top: 23,
           left: '50%',
-          transform: 'translate(-50%,calc(-100%))',
         }}
         width={200}
       />

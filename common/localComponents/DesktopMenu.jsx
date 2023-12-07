@@ -39,14 +39,7 @@ export function DesktopMenu(props) {
           width: {xs: '100%', md: trigger ? 'unset' : '100%'},
           position: 'relative',
           '&>img': {
-            position: {xs: 'absolute', md: 'relative'},
-            top: {xs: '50%', md: 'unset'},
-            left: {xs: '50%', md: 'unset'},
-            transform: {
-              xs: 'translate(-80%,-50%)',
-              msm: 'translate(-50%,-50%)',
-              md: trigger ? 'none' : 'translate(-50px)',
-            },
+            display: {xs: 'none', md: trigger ? 'block' : 'none'},
           },
         }}
       >

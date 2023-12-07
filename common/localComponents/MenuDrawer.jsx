@@ -13,8 +13,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
-import {hexToRgba} from '../../../utils/hexToRgba'
 import {useRouter} from 'next/router'
+import {hoverStyle} from './NavItem'
 
 const drawerWidth = '100%'
 
@@ -34,8 +34,6 @@ const AccordionSummary = styled(props => (
     {...props}
   />
 ))(({theme}) => ({
-  backgroundColor: theme.palette.primary.light,
-
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(180deg)',
   },
@@ -53,7 +51,6 @@ export function MenuDrawer(props) {
   const [expanded, setExpanded] = React.useState(null)
   const theme = useTheme()
   const router = useRouter()
-  const borderColor = hexToRgba(theme.palette.primary.main, 0.3)
 
   const container =
     window !== undefined ? () => window().document.body : undefined
@@ -80,9 +77,7 @@ export function MenuDrawer(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
-      <List
-        sx={{'& li:not(:first-child)': {borderTop: `1px solid ${borderColor}`}}}
-      >
+      <List>
         {navItems.map(item => (
           <ListItem disablePadding key={item.id}>
             <Accordion
@@ -90,10 +85,6 @@ export function MenuDrawer(props) {
               key={item.id}
               onChange={handleChange(item.id)}
               sx={{
-                '&:not(:first-child)': {
-                  borderTop: '1px solid',
-                  borderColor,
-                },
                 mx: 3,
               }}
             >
@@ -109,30 +100,33 @@ export function MenuDrawer(props) {
                   sx={{
                     color: '#333',
                     fontSize: '16px',
-                    fontWeight: 600,
+                    fontWeight: 'regular',
                     textTransform: 'capitalize',
                     textWrap: 'nowrap',
                     minWidth: 'fit-content',
                     maxWidth: 'fit-content',
+                    ...hoverStyle(theme.palette.primary.main),
                   }}
                 >
                   {item.name}
                 </Typography>
               </AccordionSummary>
               {item.sub_menus.length ? (
-                <AccordionDetails
-                  sx={{pl: 5, bgcolor: theme.palette.primary.light, py: 0}}
-                >
+                <AccordionDetails sx={{pl: 5, py: 0}}>
                   <Box onClick={() => subMenuClickHandler(item.url)}>
                     <Button
                       sx={{
                         color: '#333',
                         fontSize: '14px',
-                        fontWeight: 600,
+                        fontWeight: 'regular',
                         textTransform: 'capitalize',
                         textWrap: 'nowrap',
                         minWidth: 'fit-content',
                         maxWidth: 'fit-content',
+                        pb: 0,
+                        pt: 2,
+                        mb: 2,
+                        ...hoverStyle(theme.palette.primary.main),
                       }}
                     >
                       {item.name}
@@ -151,6 +145,10 @@ export function MenuDrawer(props) {
                           textWrap: 'nowrap',
                           minWidth: 'fit-content',
                           maxWidth: 'fit-content',
+                          pb: 0,
+                          pt: 2,
+                          mb: 2,
+                          ...hoverStyle(theme.palette.primary.main),
                         }}
                       >
                         {_item.name}
@@ -183,11 +181,10 @@ export function MenuDrawer(props) {
             boxSizing: 'border-box',
             width: drawerWidth,
             height: 'fit-content',
-            bgcolor: theme.palette.primary.light,
           },
 
           '&>.MuiPaper-root': {
-            top: trigger ? 75 : 100,
+            top: trigger ? 63 : 80,
           },
 
           '& .MuiBackdrop-root': {
