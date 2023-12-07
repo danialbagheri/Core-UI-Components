@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Box, Button, Popover, Typography, useTheme} from '@mui/material'
+import {Box, Button, Popper, Typography, useTheme} from '@mui/material'
 import {styled} from '@mui/material/styles'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import MuiAccordion from '@mui/material/Accordion'
@@ -96,7 +96,7 @@ export const NavItem = props => {
   }
 
   return (
-    <Box sx={{zIndex: 1000}}>
+    <Box onMouseLeave={closePopover}>
       <Button
         key={data.id}
         onClick={() => handleClick(data.url)}
@@ -128,26 +128,22 @@ export const NavItem = props => {
         {data.name}
       </Button>
       {data.sub_menus.length ? (
-        <Popover
+        <Popper
           anchorEl={anchorEl}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          disableRestoreFocus
           id={id}
           onClose={closePopover}
           open={open}
-          slotProps={{
-            paper: {
-              sx: {
-                backgroundColor: '#FFF',
-                zIndex: 1400,
-              },
-            },
+          sx={{
+            zIndex: 2000,
+            boxShadow: '0 1px 7px 0 rgba(0, 0, 0, 0.15)',
+            bgcolor: '#FFF',
           }}
         >
-          <Box onMouseLeave={closePopover}>
+          <Box>
             {data.sub_menus.map(item => (
               <Accordion
                 expanded={expanded === item.id}
@@ -197,6 +193,7 @@ export const NavItem = props => {
                           position: 'relative',
                           pb: 0,
                           pt: 2,
+                          mb: 2,
                           ...hoverStyle(theme.palette.primary.main),
                         }}
                       >
@@ -232,7 +229,7 @@ export const NavItem = props => {
               </Accordion>
             ))}
           </Box>
-        </Popover>
+        </Popper>
       ) : null}
     </Box>
   )

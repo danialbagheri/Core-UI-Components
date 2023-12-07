@@ -79,7 +79,7 @@ export function DesktopMenu(props) {
         ref={menuItemsEle}
         sx={{
           display: {xs: 'none', md: 'flex'},
-          mt: '10px',
+          mt: trigger ? 0 : '15px',
           px: '20px',
           flexGrow: 1,
           textAlign: 'center',
