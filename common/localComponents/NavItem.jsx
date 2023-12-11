@@ -35,27 +35,6 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
   padding: theme.spacing(2),
 }))
 
-export const hoverStyle = bgcolor => {
-  return {
-    position: 'relative',
-    '&::before': {
-      content: "''",
-      position: 'absolute',
-      bottom: -5,
-      left: 0,
-      width: 0,
-      height: '2px',
-      minHeight: '2px',
-      backgroundColor: bgcolor,
-      transition: 'width 0.4s ease',
-    },
-    '&:hover': {background: 'none', fontWeight: 'bold'},
-    '&:hover::before': {
-      width: '100%',
-    },
-  }
-}
-
 export const NavItem = props => {
   const {data} = props
   const theme = useTheme()
@@ -141,9 +120,17 @@ export const NavItem = props => {
             zIndex: 2000,
             boxShadow: '0 1px 7px 0 rgba(0, 0, 0, 0.15)',
             bgcolor: '#FFF',
+            p: '20px',
           }}
         >
-          <Box>
+          <Box
+            sx={{
+              '&>.MuiPaper-root:not(:first-child)': {
+                borderTop: '1px solid ',
+                borderColor: 'rgba(255, 107, 0, 0.10)',
+              },
+            }}
+          >
             {data.sub_menus.map(item => (
               <Accordion
                 expanded={expanded === item.id}
@@ -172,7 +159,6 @@ export const NavItem = props => {
                       minWidth: 'fit-content',
                       maxWidth: 'fit-content',
                       position: 'relative',
-                      ...hoverStyle(theme.palette.primary.main),
                     }}
                   >
                     {item.name}
@@ -191,10 +177,8 @@ export const NavItem = props => {
                           minWidth: 'fit-content',
                           maxWidth: 'fit-content',
                           position: 'relative',
-                          pb: 0,
-                          pt: 2,
-                          mb: 2,
-                          ...hoverStyle(theme.palette.primary.main),
+                          p: '5px 8px',
+                          pt: 0,
                         }}
                       >
                         {item.name}
@@ -214,10 +198,7 @@ export const NavItem = props => {
                             minWidth: 'fit-content',
                             maxWidth: 'fit-content',
                             position: 'relative',
-                            pb: 0,
-                            pt: 2,
-                            mb: 2,
-                            ...hoverStyle(theme.palette.primary.main),
+                            p: 2,
                           }}
                         >
                           {_item.name}

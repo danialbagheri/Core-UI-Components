@@ -55,7 +55,7 @@ const SliderItem = slide => {
   return (
     <Box
       index={slide.id}
-      // onClick={clickHandler}
+      onClick={clickHandler}
       sx={{
         position: 'relative',
         height: {xs: 350, ssm: 450, msm: 300, sm: 350, md: 400},

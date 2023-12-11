@@ -14,9 +14,29 @@ import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import {useRouter} from 'next/router'
-import {hoverStyle} from './NavItem'
 
 const drawerWidth = '100%'
+
+const hoverStyle = bgcolor => {
+  return {
+    position: 'relative',
+    '&::before': {
+      content: "''",
+      position: 'absolute',
+      bottom: -5,
+      left: 0,
+      width: 0,
+      height: '2px',
+      minHeight: '2px',
+      backgroundColor: bgcolor,
+      transition: 'width 0.4s ease',
+    },
+    '&:hover': {background: 'none', fontWeight: 'bold'},
+    '&:hover::before': {
+      width: '100%',
+    },
+  }
+}
 
 const Accordion = styled(props => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
