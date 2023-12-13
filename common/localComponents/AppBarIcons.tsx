@@ -11,6 +11,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SearchIcon from '@mui/icons-material/Search'
 
 import {useShopify} from '../../hooks'
+import {useRouter} from 'next/router'
 
 interface PropsTypes {
   trigger: boolean
@@ -22,6 +23,7 @@ export function AppBarIcons(props: PropsTypes) {
   const {trigger, sx, setOpenSearchModal} = props
   const {openCart, closeCart} = useShopify()
   const cartOpenState = React.useRef(false)
+  const router = useRouter()
 
   return (
     <Box
@@ -45,6 +47,7 @@ export function AppBarIcons(props: PropsTypes) {
       </IconButton>
 
       <IconButton
+        onClick={() => router.push('/login')}
         sx={{
           width: '40px',
           height: '40px',
