@@ -1,5 +1,4 @@
 /* ---------------------------- NextJs Components --------------------------- */
-import {useRouter} from 'next/router'
 import Image from 'next/image'
 /* -------------------------------------------------------------------------- */
 
@@ -19,7 +18,6 @@ const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 export function DesktopMenu(props) {
   const {trigger, setOpenSearchModal, shrinkNavItems, menuItemsEle, navItems} =
     props
-  const router = useRouter()
 
   const renderNavItems = () => {
     if (shrinkNavItems.length) {
@@ -31,7 +29,6 @@ export function DesktopMenu(props) {
   return (
     <>
       <Box
-        onClick={() => router.push('/')}
         sx={{
           display: 'flex',
           justifyContent: {xs: 'flex-end', md: 'space-between'},
