@@ -47,7 +47,7 @@ export function AppBarIcons(props: PropsTypes) {
       </IconButton>
 
       <IconButton
-        onClick={() => router.push('/login')}
+        onClick={() => router.push('/user')}
         sx={{
           width: '40px',
           height: '40px',

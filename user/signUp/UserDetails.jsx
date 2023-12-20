@@ -68,7 +68,7 @@ export function UserDetails({setSteps}) {
 
       <Box className="centralize" mt={7}>
         <Title subTitle>Already have an account?</Title>
-        <CustomLink href="/login" sx={{ml: 3}}>
+        <CustomLink href="/user" sx={{ml: 3}}>
           Login
         </CustomLink>
       </Box>
