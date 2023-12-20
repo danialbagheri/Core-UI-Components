@@ -1,6 +1,10 @@
 import * as React from 'react'
 
+/* ---------------------------- NextJs Components --------------------------- */
 import Image from 'next/image'
+import {useRouter} from 'next/router'
+/* -------------------------------------------------------------------------- */
+
 /* ----------------------------- MUI Components ----------------------------- */
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -17,11 +21,14 @@ import {DesktopMenu, MenuDrawer} from './localComponents'
 import {getRetrieveMenu} from '../../services'
 import SearchModal from '../searchModal/SearchModal'
 import logo from '../../public/logo.svg'
+import {hideHeaderLogoState} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 
 function Navigation() {
+  const router = useRouter()
+  const hideLogo = hideHeaderLogoState(router)
   /* --------------------------------- States --------------------------------- */
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [openSearchModal, setOpenSearchModal] = React.useState(false)
@@ -59,7 +66,7 @@ function Navigation() {
 
   const setNavItemsHandler = () => {
     const containerWidth =
-      menuItemsEle.current.getBoundingClientRect().width - 100 //50 is for padding of the element
+      menuItemsEle.current?.getBoundingClientRect().width - 100 //50 is for padding of the element
 
     if (navItemsDetail.current.state === 'done' && containerWidth > 0) {
       let widthSum = 50
@@ -156,7 +163,10 @@ function Navigation() {
                   xs: 'translate(-50%,-50%)',
                   md: 'translate(-50%,-100%)',
                 },
-                display: {xs: 'block', md: trigger ? 'none' : 'block'},
+                display: {
+                  xs: hideLogo && !trigger ? 'none' : 'block',
+                  md: trigger ? 'none' : 'block',
+                },
                 width: {xs: 100, md: 150},
               },
             }}

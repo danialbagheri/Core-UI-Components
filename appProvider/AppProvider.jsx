@@ -14,10 +14,13 @@ function AppProvider(props) {
   }
   const [appState, setAppState] = React.useState(initState)
 
-  const value = [appState, setAppState]
+  const value = React.useCallback(() => {
+    return [appState, setAppState]
+  }, [appState, setAppState])
+
   return (
     <MUIThemeProvider>
-      <AppContext.Provider value={value} {...props} />
+      <AppContext.Provider value={value()} {...props} />
     </MUIThemeProvider>
   )
 }

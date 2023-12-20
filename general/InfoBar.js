@@ -1,5 +1,9 @@
 import * as React from 'react'
 
+/* ---------------------------- NextJs Components --------------------------- */
+import {useRouter} from 'next/router'
+/* -------------------------------------------------------------------------- */
+
 /* -------------------------------- Libraries ------------------------------- */
 import Slider from 'react-slick'
 /* -------------------------------------------------------------------------- */
@@ -14,6 +18,7 @@ import Star from '@mui/icons-material/Star'
 /* ---------------------------- Local Components ---------------------------- */
 import TopBar from './topbar'
 import {getInfoBarStatus} from '../../services'
+import {hideHeaderLogoState} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- CSS Files ------------------------------- */
@@ -25,6 +30,8 @@ export default function InfoBar() {
   const [isLoaded, setIsLoaded] = React.useState(false)
   const [items, setItems] = React.useState(null)
   const theme = useTheme()
+  const router = useRouter()
+  const hideInfoBar = hideHeaderLogoState(router)
 
   const settings = {
     infinite: false,
@@ -79,7 +86,10 @@ export default function InfoBar() {
         <Box
           className="info-bar-item"
           key={item.id}
-          sx={{alignItems: 'center'}}
+          sx={{
+            alignItems: 'center',
+            display: {xs: hideInfoBar ? 'none' : 'block', md: 'block'},
+          }}
         >
           <Box className="info-bar-icon">{icons[i]}</Box>
           <Typography className="text-centre">{item.text}</Typography>
@@ -87,7 +97,7 @@ export default function InfoBar() {
       )
     })
     return (
-      <>
+      <Box sx={{display: {xs: hideInfoBar ? 'none' : 'block', md: 'block'}}}>
         <TopBar />
         <Box
           className="info-bar"
@@ -103,7 +113,7 @@ export default function InfoBar() {
         >
           <Slider {...settings}>{infoBarItems}</Slider>
         </Box>
-      </>
+      </Box>
     )
   }
   return null

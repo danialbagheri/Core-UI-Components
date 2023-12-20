@@ -1,16 +1,19 @@
 import * as React from 'react'
-import {Button, SxProps, useTheme} from '@mui/material'
+import {Button, CircularProgress, SxProps, useTheme} from '@mui/material'
 
 interface PropsTypes {
   children: React.ReactNode
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
   variant: 'outlined' | 'contained'
   sx?: SxProps
+  loading?: boolean
 }
 
 export function CustomButton(props: PropsTypes) {
-  const {onClick, variant, sx, children} = props
+  const {onClick, variant, sx, children, loading} = props
+
   const theme = useTheme()
+
   return (
     <Button
       onClick={e => onClick(e)}
@@ -42,7 +45,14 @@ export function CustomButton(props: PropsTypes) {
       }}
       variant={variant}
     >
-      {children}
+      {loading ? (
+        <CircularProgress
+          size={30}
+          sx={{color: '#FFF', position: 'absolute'}}
+        />
+      ) : (
+        children
+      )}
     </Button>
   )
 }
