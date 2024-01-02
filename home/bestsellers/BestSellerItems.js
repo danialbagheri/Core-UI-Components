@@ -45,12 +45,12 @@ export default function BestSellerItems(props) {
           }}
         >
           <Image
-            alt={i.name}
+            alt={activeVariant.image_list[0].alternate_text || ''}
             fill={true}
             src={
               showButton
                 ? i.secondary_image_resized || ''
-                : i.main_image_resized || ''
+                : activeVariant.image_list[0].image || ''
             }
             style={{objectFit: showButton ? 'cover' : 'contain'}}
           />
@@ -58,7 +58,7 @@ export default function BestSellerItems(props) {
 
         <Typography variant="h5">{i.name}</Typography>
         <Typography>
-          {i.sub_title} {i.variants[0].name}
+          {i.sub_title} {activeVariant.name}
         </Typography>
       </Box>
       <Box>

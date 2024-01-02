@@ -155,7 +155,7 @@ function Navigation() {
               width: '100%',
 
               position: 'relative',
-              '&>img': {
+              '&>#nav_logo_container': {
                 position: 'absolute',
                 left: '50%',
                 top: '50%',
@@ -167,7 +167,8 @@ function Navigation() {
                   xs: hideLogo && !trigger ? 'none' : 'block',
                   md: trigger ? 'none' : 'block',
                 },
-                width: {xs: 100, md: 150},
+                px: 10,
+                '&>img': {width: {xs: 100, md: 150}},
               },
             }}
           >
@@ -215,15 +216,13 @@ function Navigation() {
             />
             {/* -------------------------------------------------------------------------- */}
 
-            {/* --------------------------- Logo in mobile view -------------------------- */}
-
-            <Image
-              alt={WEBSITE}
-              height="47"
+            {/* ------------------------------ Calypso Logo ------------------------------ */}
+            <IconButton
+              id="nav_logo_container"
               onClick={() => router.push('./')}
-              src={logo}
-              width="100"
-            />
+            >
+              <Image alt={WEBSITE} height="47" src={logo} width="100" />
+            </IconButton>
 
             {/* -------------------------------------------------------------------------- */}
           </Toolbar>
