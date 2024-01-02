@@ -11,6 +11,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import {NavItem} from './NavItem'
 import logo from '../../../public/logo.svg'
 import {AppBarIcons} from './AppBarIcons'
+import {useRouter} from 'next/router'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
@@ -18,6 +19,8 @@ const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 export function DesktopMenu(props) {
   const {trigger, setOpenSearchModal, shrinkNavItems, menuItemsEle, navItems} =
     props
+
+  const router = useRouter()
 
   const renderNavItems = () => {
     if (shrinkNavItems.length) {
@@ -61,7 +64,15 @@ export function DesktopMenu(props) {
         {/* -------------------------------------------------------------------------- */}
 
         {/* ---------------------------------- LOGO ---------------------------------- */}
-        <Image alt={WEBSITE} height="47" src={logo} width="150" />
+
+        <Image
+          alt={WEBSITE}
+          height="47"
+          onClick={() => router.push('./')}
+          src={logo}
+          width="150"
+        />
+
         {/* -------------------------------------------------------------------------- */}
 
         {/* ---------------------------------- Icons --------------------------------- */}

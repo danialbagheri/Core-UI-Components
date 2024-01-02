@@ -6,12 +6,12 @@ import {
   IconButton,
   SxProps,
 } from '@mui/material'
-import PersonIcon from '@mui/icons-material/Person'
+// import PersonIcon from '@mui/icons-material/Person'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import SearchIcon from '@mui/icons-material/Search'
 
 import {useShopify} from '../../hooks'
-import {useRouter} from 'next/router'
+// import {useRouter} from 'next/router'
 
 interface PropsTypes {
   trigger: boolean
@@ -23,7 +23,7 @@ export function AppBarIcons(props: PropsTypes) {
   const {trigger, sx, setOpenSearchModal} = props
   const {openCart, closeCart} = useShopify()
   const cartOpenState = React.useRef(false)
-  const router = useRouter()
+  // const router = useRouter()
 
   return (
     <Box
@@ -46,7 +46,7 @@ export function AppBarIcons(props: PropsTypes) {
         <SearchIcon color="primary" onClick={() => setOpenSearchModal(true)} />
       </IconButton>
 
-      <IconButton
+      {/* <IconButton
         onClick={() => router.push('/user')}
         sx={{
           width: '40px',
@@ -54,7 +54,7 @@ export function AppBarIcons(props: PropsTypes) {
         }}
       >
         <PersonIcon color="primary" />
-      </IconButton>
+      </IconButton> */}
 
       <IconButton
         onClick={e => {
