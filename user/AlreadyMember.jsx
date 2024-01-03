@@ -1,7 +1,7 @@
 import {Box, Button, Checkbox, FormControlLabel, useTheme} from '@mui/material'
 import {CustomButton, CustomTextField, Title} from './localShared'
 
-export function AlreadyMember() {
+export function AlreadyMember({sx = {}}) {
   const theme = useTheme()
 
   return (
@@ -16,6 +16,7 @@ export function AlreadyMember() {
         justifyContent: 'center',
         flexDirection: 'column',
         px: '75px',
+        ...sx,
       }}
     >
       <Title sx={{display: {xs: 'none', md: 'block'}}}>Already a member?</Title>
@@ -65,7 +66,7 @@ export function AlreadyMember() {
         onClick={e => {
           e.preventDefault()
         }}
-        sx={{mt: '50px'}}
+        sx={{mt: '50px', width: 200}}
         variant="contained"
       >
         Sign in

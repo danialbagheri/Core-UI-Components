@@ -33,6 +33,10 @@ export function CustomButton(props: PropsTypes) {
 
         boxShadow: 'none',
 
+        whiteSpace: 'nowrap',
+
+        border: `1px solid ${theme.palette.primary.main}`,
+
         '&:hover': {
           bgcolor:
             variant === 'contained'

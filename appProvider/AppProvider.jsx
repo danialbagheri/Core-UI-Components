@@ -11,6 +11,7 @@ function AppProvider(props) {
       count: 0,
     },
     productQuestions: [],
+    userAssets: null,
   }
   const [appState, setAppState] = React.useState(initState)
 
