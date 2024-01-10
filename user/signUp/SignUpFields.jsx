@@ -1,39 +1,54 @@
 import {Box} from '@mui/material'
 import {CustomOutlinedInput} from '../localShared'
+import {InfoPopover} from './InfoPopover'
 
-export function SignUpFields({data, setData, error}) {
+export function SignUpFields({
+  data,
+  setData,
+  error,
+  infoIcon,
+  popUpPasswordItems,
+}) {
   const changeHandler = (value, field) => {
     setData(prev => ({...prev, [field]: value}))
+  }
+
+  const fullNameChangeHandler = e => {
+    const value = e.target.value
+    const firstSpaceIndex = value.indexOf(' ')
+
+    if (firstSpaceIndex !== -1) {
+      const first_name = value.slice(0, firstSpaceIndex)
+      const last_name = value.slice(firstSpaceIndex + 1)
+
+      setData(prev => ({...prev, first_name, last_name}))
+    }
   }
 
   return (
     <Box sx={{width: '100%', mt: '36px', maxWidth: 280}}>
       <CustomOutlinedInput
         error={error.first_name}
-        label="First name"
-        onChange={e => changeHandler(e.target.value, 'first_name')}
-        placeholder="First name"
+        label="Full name"
+        onChange={fullNameChangeHandler}
+        placeholder="Full name"
         type="text"
-        value={data.first_name}
       />
-      <CustomOutlinedInput
-        error={error.last_name}
-        label="Last name"
-        onChange={e => changeHandler(e.target.value, 'last_name')}
-        placeholder="Last name"
-        sx={{mt: 5}}
-        type="text"
-        value={data.last_name}
-      />
-      <CustomOutlinedInput
-        error={error.password}
-        label="Password"
-        onChange={e => changeHandler(e.target.value, 'password')}
-        placeholder="Password"
-        sx={{mt: 5}}
-        type="password"
-        value={data.password}
-      />
+      <Box sx={{position: 'relative'}}>
+        <CustomOutlinedInput
+          error={error.password}
+          label="Password"
+          onChange={e => changeHandler(e.target.value, 'password')}
+          placeholder="Password"
+          sx={{mt: 5}}
+          type="password"
+          value={data.password}
+        />
+        <InfoPopover
+          infoIcon={infoIcon}
+          popUpPasswordItems={popUpPasswordItems}
+        />
+      </Box>
       <CustomOutlinedInput
         error={error.email}
         label="Email address"

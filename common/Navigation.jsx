@@ -21,14 +21,14 @@ import {DesktopMenu, MenuDrawer} from './localComponents'
 import {getRetrieveMenu} from '../../services'
 import SearchModal from '../searchModal/SearchModal'
 import logo from '../../public/logo.svg'
-import {hideHeaderLogoState} from 'utils'
+import {hideHeaderLogoOrInfoState} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 
 function Navigation() {
   const router = useRouter()
-  const hideLogo = hideHeaderLogoState(router)
+  const {hideLogo} = hideHeaderLogoOrInfoState(router)
   /* --------------------------------- States --------------------------------- */
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [openSearchModal, setOpenSearchModal] = React.useState(false)

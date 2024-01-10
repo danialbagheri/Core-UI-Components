@@ -4,6 +4,7 @@ import {Box, IconButton} from '@mui/material'
 import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {CustomButton, Title} from './localShared'
+import {assetsEndPoints} from '../../utils'
 
 const Benefit = props => {
   const {checkIconSrc, text} = props
@@ -25,10 +26,13 @@ const Benefit = props => {
 }
 
 export function NewMember(props) {
-  const {userAssets} = props
+  const {assets} = props
+  const {userAccountTopIcons, checkIcon, creatingAccountBenefits} =
+    assetsEndPoints
+
   const router = useRouter()
 
-  const topIcon = userAssets?.userAccountTopIcons?.items[0]
+  const topIcon = assets[userAccountTopIcons]?.items[0]
 
   return (
     <Box
@@ -70,9 +74,9 @@ export function NewMember(props) {
       </Title>
 
       <Box mt={{xs: '28px', md: '38px'}}>
-        {userAssets?.creatingAccountBenefits?.items.map(benefit => (
+        {assets[creatingAccountBenefits]?.items.map(benefit => (
           <Benefit
-            checkIconSrc={userAssets?.checkIcon?.items[0]?.svg_icon}
+            checkIconSrc={assets[checkIcon]?.items[0]?.svg_icon}
             key={benefit.id}
             text={benefit.text}
           />
@@ -82,16 +86,21 @@ export function NewMember(props) {
       <CustomButton
         onClick={e => {
           e.preventDefault()
-          router.push('/sign-up')
+          router.push('/user/sign-up')
         }}
         sx={{mt: {xs: '35px', md: '38px'}, width: 200, boxSizing: 'border-box'}}
         variant="contained"
       >
         Sign up now
       </CustomButton>
+
+      {/* This button will be shown only on mobile size and direct user to the 
+        sing-in page
+      */}
       <CustomButton
         onClick={e => {
           e.preventDefault()
+          router.push('./user/sign-in')
         }}
         sx={{
           mt: '10px',

@@ -3,6 +3,7 @@ import {BASE_URL} from '../../../constants/servicesConstants'
 import {Box} from '@mui/material'
 import {CustomButton, CustomLink, Title} from '../localShared'
 import {SignUpFields} from './SignUpFields'
+import {assetsEndPoints} from '../../../utils'
 
 const DATA = {
   email: '',
@@ -12,7 +13,9 @@ const DATA = {
   last_name: '',
 }
 
-export function UserDetails({setSteps}) {
+export function UserDetails({setSteps, assets}) {
+  const {infoIcon, popUpPassword} = assetsEndPoints
+
   const [data, setData] = React.useState({
     ...DATA,
   })
@@ -21,12 +24,10 @@ export function UserDetails({setSteps}) {
   })
   const [loading, setLoading] = React.useState(false)
 
+  const infoIconDetail = assets[infoIcon]?.items[0]
+  const popUpPasswordItems = assets[popUpPassword]?.items || []
   const signUpHandler = async () => {
     const newData = {...data, re_password: data.password}
-
-    // postCreateUser(newData)
-    //   .then(res => console.log('RES::::', res))
-    //   .catch(err => console.log('ERROR::::', err))
 
     setLoading(true)
     const response = await window.fetch(BASE_URL + 'users/', {
@@ -49,13 +50,19 @@ export function UserDetails({setSteps}) {
   }
 
   return (
-    <>
+    <Box className="centralize" sx={{flexDirection: 'column', px: 4}}>
       <Title>Sign up</Title>
       <Title subTitle sx={{mt: 3}}>
         Create your account
       </Title>
 
-      <SignUpFields data={data} error={error} setData={setData} />
+      <SignUpFields
+        data={data}
+        error={error}
+        infoIcon={infoIconDetail}
+        popUpPasswordItems={popUpPasswordItems}
+        setData={setData}
+      />
 
       <CustomButton
         loading={loading}
@@ -68,10 +75,10 @@ export function UserDetails({setSteps}) {
 
       <Box className="centralize" mt={7}>
         <Title subTitle>Already have an account?</Title>
-        <CustomLink href="/user" sx={{ml: 3}}>
+        <CustomLink href="/user/sign-in" sx={{ml: 3}}>
           Login
         </CustomLink>
       </Box>
-    </>
+    </Box>
   )
 }
