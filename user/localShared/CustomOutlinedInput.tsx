@@ -9,10 +9,11 @@ interface PropsTypes {
   value: string | number
   sx?: SxProps
   error?: string[] | ''
+  disabled?: boolean
 }
 
 export function CustomOutlinedInput(props: PropsTypes) {
-  const {label, placeholder, onChange, sx, type, value, error} = props
+  const {label, placeholder, onChange, sx, type, value, error, disabled} = props
   const theme = useTheme()
   return (
     <Box sx={{...sx}}>
@@ -29,6 +30,7 @@ export function CustomOutlinedInput(props: PropsTypes) {
         </Typography>
       ) : null}
       <OutlinedInput
+        disabled={disabled}
         fullWidth
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
         placeholder={placeholder}

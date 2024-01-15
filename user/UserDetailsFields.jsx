@@ -7,26 +7,30 @@ import {
   LAST_NAME,
   MOBILE_NUMBER,
 } from '../../pages/user/dashboard'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 export default function UserDetailsFields(props) {
-  const {fieldData, setFieldData, checkIcon} = props
+  const {
+    fieldData,
+    setFieldData,
+    // checkIcon
+  } = props
 
-  const OrangeIcon = props => {
-    const {field} = props
-    return (
-      <Box height={20} mt={5} width={20}>
-        {field ? (
-          <Image
-            alt={checkIcon.name || ''}
-            height={20}
-            src={checkIcon.svg_icon || ''}
-            width={20}
-          />
-        ) : null}
-      </Box>
-    )
-  }
+  // const OrangeIcon = props => {
+  //   const {field} = props
+  //   return (
+  //     <Box height={20} mt={5} width={20}>
+  //       {field ? (
+  //         <Image
+  //           alt={checkIcon.name || ''}
+  //           height={20}
+  //           src={checkIcon.svg_icon || ''}
+  //           width={20}
+  //         />
+  //       ) : null}
+  //     </Box>
+  //   )
+  // }
 
   const changeHandler = (value, field) => {
     setFieldData(prev => ({...prev, [field]: value}))
@@ -44,7 +48,7 @@ export default function UserDetailsFields(props) {
           type="text"
           value={fieldData[FIRST_NAME]}
         />
-        <OrangeIcon field={fieldData[FIRST_NAME]} />
+        {/* <OrangeIcon field={fieldData[FIRST_NAME]} /> */}
       </Box>
       <Box className="centralize" gap={3}>
         <CustomOutlinedInput
@@ -56,7 +60,7 @@ export default function UserDetailsFields(props) {
           type="text"
           value={fieldData[LAST_NAME]}
         />
-        <OrangeIcon field={fieldData[LAST_NAME]} />
+        {/* <OrangeIcon field={fieldData[LAST_NAME]} /> */}
       </Box>
       <Box className="centralize" gap={3}>
         <CustomOutlinedInput
@@ -68,10 +72,11 @@ export default function UserDetailsFields(props) {
           type="number"
           value={fieldData[MOBILE_NUMBER]}
         />
-        <OrangeIcon field={fieldData[MOBILE_NUMBER]} />
+        {/* <OrangeIcon field={fieldData[MOBILE_NUMBER]} /> */}
       </Box>
       <Box className="centralize" gap={3}>
         <CustomOutlinedInput
+          disabled
           id={'account_details_email'}
           label="Email address"
           onChange={e => changeHandler(e.target.value, EMAIL)}
@@ -80,7 +85,7 @@ export default function UserDetailsFields(props) {
           type="email"
           value={fieldData[EMAIL]}
         />
-        <OrangeIcon field={fieldData[EMAIL]} />
+        {/* <OrangeIcon field={fieldData[EMAIL]} /> */}
       </Box>
     </Box>
   )

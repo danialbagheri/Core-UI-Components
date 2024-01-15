@@ -46,8 +46,6 @@ export function AlreadyMember({sx = {}}) {
   const [error, setError] = React.useState(errorInitialState)
   const [keepSignedIn, setKeepSignedIn] = React.useState(false)
 
-  console.log('🚀 🙂  keepSignedIn:::', keepSignedIn)
-
   const [loading, setLoading] = React.useState(false)
 
   const theme = useTheme()
@@ -65,18 +63,19 @@ export function AlreadyMember({sx = {}}) {
     setError(errorInitialState)
 
     try {
-      const response = await postUserSignIn({data: fields, keepSignedIn})
+      const response = await postUserSignIn({data: fields, keepSignedIn: false})
 
       const {refresh, access} = response
 
       setCookie(null, 'calacc', access, {
-        maxAge: 30 * 60 * 1000,
         path: '/',
       })
-      setCookie(null, 'calref', refresh, {
-        maxAge: 5 * 24 * 60 * 60 * 1000,
-        path: '/',
-      })
+
+      if (keepSignedIn) {
+        setCookie(null, 'calref', refresh, {
+          path: '/',
+        })
+      }
 
       router.push('/user/dashboard')
 

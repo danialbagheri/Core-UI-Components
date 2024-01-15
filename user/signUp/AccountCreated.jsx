@@ -1,6 +1,6 @@
 import {Box, Typography, useTheme} from '@mui/material'
 import Image from 'next/image'
-import {CustomButton, Title} from '../localShared'
+import {CustomButton} from '../localShared'
 import {useRouter} from 'next/router'
 import {assetsEndPoints} from '../../../utils'
 
@@ -45,12 +45,14 @@ export function AccountCreated(props) {
         style={{marginTop: '50px'}}
         width={145}
       />
-      <Title subTitle>Complete your profile</Title>
-      <Title>Get 10% OFF</Title>
+      <Typography sx={{fontSize: 18, fontWeight: 700, mt: 5}}>
+        Please activate your account by clicking the link sent to your email.
+      </Typography>
+      {/* <Title>Get 10% OFF</Title>
 
       <CustomButton sx={{width: 260, mt: '13px'}} variant="contained">
         Complete your profile
-      </CustomButton>
+      </CustomButton> */}
       <CustomButton
         onClick={() => router.push('./')}
         sx={{width: 260, mt: '13px'}}
