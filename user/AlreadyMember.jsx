@@ -44,6 +44,10 @@ const errorInitialState = {
 export function AlreadyMember({sx = {}}) {
   const [fields, setFields] = React.useState({[EMAIL]: '', [PASSWORD]: ''})
   const [error, setError] = React.useState(errorInitialState)
+  const [keepSignedIn, setKeepSignedIn] = React.useState(false)
+
+  console.log('🚀 🙂  keepSignedIn:::', keepSignedIn)
+
   const [loading, setLoading] = React.useState(false)
 
   const theme = useTheme()
@@ -61,7 +65,8 @@ export function AlreadyMember({sx = {}}) {
     setError(errorInitialState)
 
     try {
-      const response = await postUserSignIn(fields)
+      const response = await postUserSignIn({data: fields, keepSignedIn})
+
       const {refresh, access} = response
 
       setCookie(null, 'calacc', access, {
@@ -78,11 +83,13 @@ export function AlreadyMember({sx = {}}) {
       setLoading(false)
     } catch (err) {
       const errorMessages = err.res
-      setError({
-        [EMAIL]: errorMessages[EMAIL],
-        [PASSWORD]: errorMessages[PASSWORD],
-        [DETAIL]: errorMessages[DETAIL],
-      })
+      if (errorMessages) {
+        setError({
+          [EMAIL]: errorMessages[EMAIL],
+          [PASSWORD]: errorMessages[PASSWORD],
+          [DETAIL]: errorMessages[DETAIL],
+        })
+      }
       setLoading(false)
     }
   }
@@ -142,7 +149,13 @@ export function AlreadyMember({sx = {}}) {
         />
 
         <FormControlLabel
-          control={<Checkbox sx={{color: theme.palette.primary.main}} />}
+          control={
+            <Checkbox
+              checked={keepSignedIn}
+              onChange={e => setKeepSignedIn(e.target.checked)}
+              sx={{color: theme.palette.primary.main}}
+            />
+          }
           label="Keep me signed in"
           sx={{
             m: 0,

@@ -4,7 +4,7 @@ import {Button, CircularProgress, SxProps, useTheme} from '@mui/material'
 interface PropsTypes {
   children: React.ReactNode
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
-  variant: 'outlined' | 'contained'
+  variant?: 'outlined' | 'contained'
   sx?: SxProps
   loading?: boolean
 }
@@ -18,6 +18,8 @@ export function CustomButton(props: PropsTypes) {
     <Button
       onClick={e => onClick(e)}
       sx={{
+        position: 'relative',
+
         textAlign: 'center',
         fontSize: '18px',
         fontStyle: 'normal',
@@ -52,7 +54,11 @@ export function CustomButton(props: PropsTypes) {
       {loading ? (
         <CircularProgress
           size={30}
-          sx={{color: '#FFF', position: 'absolute'}}
+          sx={{
+            color:
+              variant === 'contained' ? '#FFF' : theme.palette.primary.main,
+            position: 'absolute',
+          }}
         />
       ) : (
         children
