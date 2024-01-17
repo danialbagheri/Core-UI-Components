@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import {Box, IconButton} from '@mui/material'
+import {Box} from '@mui/material'
 import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {CustomButton, Title} from './localShared'
@@ -113,7 +113,7 @@ export function NewMember(props) {
         Sign in
       </CustomButton>
 
-      <Title subTitle sx={{mt: {xs: '44px', md: '64px'}}}>
+      {/* <Title subTitle sx={{mt: {xs: '44px', md: '64px'}}}>
         Sign in with your other accounts
       </Title>
 
@@ -150,7 +150,7 @@ export function NewMember(props) {
             width={39}
           />
         </IconButton>
-      </Box>
+      </Box> */}
     </Box>
   )
 }
