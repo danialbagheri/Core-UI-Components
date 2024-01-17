@@ -183,6 +183,7 @@ export function AlreadyMember({sx = {}}) {
       </CustomButton>
 
       <Button
+        onClick={() => router.push('/password-reset')}
         sx={{
           textTransform: 'none',
 

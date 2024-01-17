@@ -4,8 +4,9 @@ import {Box} from '@mui/material'
 import {CustomButton, CustomLink, Title} from '../localShared'
 import {SignUpFields} from './SignUpFields'
 import {assetsEndPoints} from '../../../utils'
+import {AppContext} from '../../appProvider/AppProvider'
 
-const DATA = {
+const INITIAL_STATE = {
   email: '',
   password: '',
   re_password: '',
@@ -17,15 +18,17 @@ export function UserDetails({setSteps, assets}) {
   const {infoIcon, popUpPassword} = assetsEndPoints
 
   const [data, setData] = React.useState({
-    ...DATA,
+    ...INITIAL_STATE,
   })
   const [error, setError] = React.useState({
-    ...DATA,
+    ...INITIAL_STATE,
   })
   const [loading, setLoading] = React.useState(false)
+  const [, setAppState] = React.useContext(AppContext)
 
   const infoIconDetail = assets[infoIcon]?.items[0]
   const popUpPasswordItems = assets[popUpPassword]?.items || []
+
   const signUpHandler = async () => {
     const newData = {...data, re_password: data.password}
 
@@ -40,9 +43,10 @@ export function UserDetails({setSteps, assets}) {
     })
     const fetchedData = await response.json()
     if (response.ok) {
-      setError({...DATA})
+      setError({...INITIAL_STATE})
       setLoading(false)
       setSteps(1)
+      setAppState(prev => ({...prev, signUpEmail: data.email}))
     } else {
       setError({...fetchedData})
       setLoading(false)

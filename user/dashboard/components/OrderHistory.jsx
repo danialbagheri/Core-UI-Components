@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import {Box, Divider, Typography} from '@mui/material'
+import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
 import {monthArr, priceHandler} from '../../../../utils'
@@ -48,12 +49,15 @@ export function OrderHistory(props) {
                       key={item.sku + i}
                       sx={{gap: '14px'}}
                     >
-                      <Image
-                        alt={item.name || 'Product image'}
-                        height={110}
-                        src={item.image_original_source || ''}
-                        width={94}
-                      />
+                      <Box sx={{width: 94, height: 110, position: 'relative'}}>
+                        <Image
+                          alt={item.name || 'Product image'}
+                          fill
+                          sizes="100vw"
+                          src={item.image_original_source || ''}
+                          styles={{objectFit: 'cover'}}
+                        />
+                      </Box>
                       <Box
                         sx={{
                           width: '100%',
@@ -90,7 +94,22 @@ export function OrderHistory(props) {
             </Box>
           ))
         ) : (
-          <Box>Empty STATE</Box>
+          <Box
+            className="centralize"
+            sx={{
+              width: '100%',
+              border: '2px solid #F2F2F2',
+              borderRadius: '10px',
+              flexDirection: 'column',
+              p: 7,
+              gap: 3,
+            }}
+          >
+            <LocalGroceryStoreIcon sx={{fontSize: '100px', fill: '#D6D6D6'}} />
+            <Typography sx={{fontSize: 21, fontWeight: 700, color: '#D6D6D6'}}>
+              You have no order
+            </Typography>
+          </Box>
         )}
       </Box>
     </Box>

@@ -50,6 +50,7 @@ function ReviewWithImages() {
                 }}
               >
                 <Image
+                  alt="review image"
                   fill
                   sizes="100vw"
                   src={image.image}

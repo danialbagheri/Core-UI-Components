@@ -12,6 +12,7 @@ function AppProvider(props) {
     },
     productQuestions: [],
     userAssets: null,
+    signUpEmail: '',
   }
   const [appState, setAppState] = React.useState(initState)
 

@@ -7,10 +7,11 @@ interface PropsTypes {
   variant?: 'outlined' | 'contained'
   sx?: SxProps
   loading?: boolean
+  error?: boolean
 }
 
 export function CustomButton(props: PropsTypes) {
-  const {onClick, variant, sx, children, loading} = props
+  const {onClick, variant, sx, children, loading, error} = props
 
   const theme = useTheme()
 
@@ -37,7 +38,7 @@ export function CustomButton(props: PropsTypes) {
 
         whiteSpace: 'nowrap',
 
-        border: `1px solid ${theme.palette.primary.main}`,
+        border: `1px solid ${error ? '#d32f2f' : theme.palette.primary.main}`,
 
         '&:hover': {
           bgcolor:

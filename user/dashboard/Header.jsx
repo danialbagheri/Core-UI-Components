@@ -4,6 +4,7 @@ import React from 'react'
 
 export function Header(props) {
   const {image, name} = props
+
   const theme = useTheme()
   return (
     <Box
@@ -27,7 +28,7 @@ export function Header(props) {
         textAlign="center"
       >
         <Typography color="primary" sx={{fontSize: '24px', fontWeight: 700}}>
-          Nice to see you{name ? `, ${name}!` : null}
+          Nice to see you{name.trim() ? `, ${name}!` : null}
         </Typography>
         <Typography sx={{fontSize: '15px', fontWeight: 700, mt: 2}}>
           You’re part of Calypso family!

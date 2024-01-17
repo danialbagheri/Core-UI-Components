@@ -8,8 +8,26 @@ interface PropsTypes {
   type: React.HTMLInputTypeAttribute
   value: string | number
   sx?: SxProps
-  error?: string[] | ''
+  error?: string[] | string
   disabled?: boolean
+}
+
+const ErrorMessage = (props: {error: string | string[] | undefined}) => {
+  const {error} = props
+  if (error) {
+    if (Array.isArray(error)) {
+      return (
+        <>
+          {error.map((err, i) => (
+            <Typography color="#d32f2f" key={i}>
+              {err}
+            </Typography>
+          ))}
+        </>
+      )
+    }
+    return <Typography color="#d32f2f">{error}</Typography>
+  }
 }
 
 export function CustomOutlinedInput(props: PropsTypes) {
@@ -53,13 +71,7 @@ export function CustomOutlinedInput(props: PropsTypes) {
         type={type}
         value={value}
       />
-      {error
-        ? error.map((err, i) => (
-            <Typography color="#d32f2f" key={i}>
-              {err}
-            </Typography>
-          ))
-        : null}
+      <ErrorMessage error={error} />
     </Box>
   )
 }
