@@ -108,7 +108,7 @@ export function AlreadyMember({sx = {}}) {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        px: '20px',
+        px: '40px',
         ...sx,
       }}
     >

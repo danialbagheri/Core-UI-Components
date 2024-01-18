@@ -220,6 +220,10 @@ function Navigation() {
             <IconButton
               id="nav_logo_container"
               onClick={() => router.push('./')}
+              sx={{
+                '&:hover': {boxShadow: 'none', bgcolor: 'unset'},
+                '&>span': {display: 'none'},
+              }}
             >
               <Image alt={WEBSITE} height="47" src={logo} width="100" />
             </IconButton>
