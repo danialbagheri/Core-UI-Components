@@ -13,7 +13,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import {CustomButton, CustomTextField, Title} from './localShared'
+import {Banner, CustomButton, CustomTextField, Title} from './localShared'
 import {postUserSignIn} from '../../services'
 
 /**
@@ -45,13 +45,17 @@ export function AlreadyMember({sx = {}}) {
   const [fields, setFields] = React.useState({[EMAIL]: '', [PASSWORD]: ''})
   const [error, setError] = React.useState(errorInitialState)
   const [keepSignedIn, setKeepSignedIn] = React.useState(false)
-
   const [loading, setLoading] = React.useState(false)
-
   const theme = useTheme()
   const router = useRouter()
 
   const isSignInPage = router.pathname.includes('sign-in')
+  //If the user come from the password reset page, show the banner
+  //using the query string .../?password_changed=true
+  const showBanner =
+    Object(router.query).hasOwnProperty('password_changed') &&
+    router.query.password_changed === 'true' &&
+    isSignInPage
 
   const changeHandler = (value, field) => {
     setFields(prev => ({...prev, [field]: value}))
@@ -104,14 +108,22 @@ export function AlreadyMember({sx = {}}) {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        px: '75px',
+        px: '20px',
         ...sx,
       }}
     >
-      <Title sx={{display: isSignInPage ? 'none' : {xs: 'none', md: 'block'}}}>
-        Already a member?
-      </Title>
-      <Title sx={{display: isSignInPage ? 'block' : 'none'}}>Sign in</Title>
+      {showBanner ? (
+        <Banner sx={{mb: 10}}>
+          Your password has been successfully changed
+        </Banner>
+      ) : null}
+      {isSignInPage ? (
+        <Title>Sign in</Title>
+      ) : (
+        <Title sx={{display: {xs: 'none', md: 'block'}}}>
+          Already a member?
+        </Title>
+      )}
 
       <Box
         sx={{
