@@ -31,7 +31,7 @@ export function Header(props) {
           Nice to see you{name.trim() ? `, ${name}!` : null}
         </Typography>
         <Typography sx={{fontSize: '15px', fontWeight: 700, mt: 2}}>
-          You’re part of Calypso family!
+          You’re part of the Calypso family!
         </Typography>
       </Box>
     </Box>
