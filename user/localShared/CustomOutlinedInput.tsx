@@ -63,9 +63,9 @@ export function CustomOutlinedInput(props: PropsTypes) {
           '&>input': {color: '#000'},
 
           '& fieldset': {
-            borderColor: `${
-              error ? '#d32f2f' : theme.palette.primary.main
-            } !important`,
+            borderColor: disabled
+              ? '#E0E0E0'
+              : `${error ? '#d32f2f' : theme.palette.primary.main} !important`,
           },
         }}
         type={type}
