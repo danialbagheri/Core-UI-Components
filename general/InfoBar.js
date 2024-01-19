@@ -74,7 +74,7 @@ export default function InfoBar() {
   React.useEffect(() => {
     getInfoBarStatus()
       .then(res => {
-        setItems(res[0].items)
+        setItems(res.items)
         setIsLoaded(true)
       })
       .catch(err => console.error(err))
