@@ -18,7 +18,7 @@ import Star from '@mui/icons-material/Star'
 /* ---------------------------- Local Components ---------------------------- */
 import TopBar from './topbar'
 import {getInfoBarStatus} from '../../services'
-import {hideHeaderLogoState} from 'utils'
+import {hideHeaderLogoOrInfoState} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 /* -------------------------------- CSS Files ------------------------------- */
@@ -31,7 +31,7 @@ export default function InfoBar() {
   const [items, setItems] = React.useState(null)
   const theme = useTheme()
   const router = useRouter()
-  const hideInfoBar = hideHeaderLogoState(router)
+  const {hideInfoBar} = hideHeaderLogoOrInfoState(router)
 
   const settings = {
     infinite: false,

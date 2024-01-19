@@ -7,14 +7,18 @@ interface PropsTypes {
   type: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   sx?: SxProps
+  error?: boolean
+  helperText?: string
 }
 
 export function CustomTextField(props: PropsTypes) {
-  const {id, label, type, onChange, sx} = props
+  const {id, label, type, onChange, sx, error, helperText} = props
   const theme = useTheme()
 
   return (
     <TextField
+      error={error}
+      helperText={helperText}
       id={id}
       label={label}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}

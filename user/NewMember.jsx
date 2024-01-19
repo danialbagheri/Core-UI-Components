@@ -1,11 +1,38 @@
-import {Box, IconButton, Typography} from '@mui/material'
+import * as React from 'react'
+
+import {Box} from '@mui/material'
 import Image from 'next/image'
 import {useRouter} from 'next/router'
-import React from 'react'
 import {CustomButton, Title} from './localShared'
+import {assetsEndPoints} from '../../utils'
 
-export function NewMember() {
+const Benefit = props => {
+  const {checkIconSrc, text} = props
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        gap: '10px',
+      }}
+    >
+      <Image alt="Check" height={18} src={checkIconSrc} width={18} />
+      <Title subTitle sx={{whiteSpace: 'nowrap'}}>
+        {text}
+      </Title>
+    </Box>
+  )
+}
+
+export function NewMember(props) {
+  const {assets} = props
+  const {userAccountTopIcons, checkIcon, creatingAccountBenefits} =
+    assetsEndPoints
+
   const router = useRouter()
+
+  const topIcon = assets[userAccountTopIcons]?.items[0]
 
   return (
     <Box
@@ -17,78 +44,113 @@ export function NewMember() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: {xs: 'column-reverse', md: 'column'},
+        flexDirection: 'column',
         px: '75px',
-        '&>img': {
+        '&>#new_member_sign_up_logo , &>#user_page_top_icon': {
           display: {xs: 'block', md: 'none'},
         },
       }}
     >
+      <Image
+        alt="logo"
+        height={32}
+        id="new_member_sign_up_logo"
+        src="/logo.svg"
+        width={161}
+      />
+
+      <Image
+        alt={topIcon.name || ''}
+        height={114}
+        id="user_page_top_icon"
+        src={topIcon.svg_icon || ''}
+        style={{marginTop: '28px'}}
+        width={114}
+      />
+
       <Title sx={{display: {xs: 'none', md: 'block'}}}>New member?</Title>
+      <Title sx={{display: {xs: 'block', md: 'none'}, mt: 1}}>
+        Create an account
+      </Title>
 
-      <Box mt={{xs: '64px', md: '60px'}}>
-        <Title subTitle> Sign in with your other accounts</Title>
-
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: '30px',
-            mt: 10,
-          }}
-        >
-          <IconButton>
-            <Image
-              alt="Google icon"
-              height={39}
-              src="/icons/social-media/google-logo.svg"
-              width={39}
-            />
-          </IconButton>
-          <IconButton>
-            <Image
-              alt="Facebook icon"
-              height={39}
-              src="/icons/social-media/facebook-logo.svg"
-              width={39}
-            />
-          </IconButton>
-          <IconButton>
-            <Image
-              alt="Apple icon"
-              height={39}
-              src="/icons/social-media/apple-logo.svg"
-              width={39}
-            />
-          </IconButton>
-        </Box>
+      <Box mt={{xs: '28px', md: '38px'}}>
+        {assets[creatingAccountBenefits]?.items.map(benefit => (
+          <Benefit
+            checkIconSrc={assets[checkIcon]?.items[0]?.svg_icon}
+            key={benefit.id}
+            text={benefit.text}
+          />
+        ))}
       </Box>
+
       <CustomButton
         onClick={e => {
           e.preventDefault()
-          router.push('/sign-up')
+          router.push('/user/sign-up')
         }}
-        sx={{mt: {xs: '20px', md: '90px'}}}
-        variant="outlined"
+        sx={{mt: {xs: '35px', md: '38px'}, width: 200, boxSizing: 'border-box'}}
+        variant="contained"
       >
         Sign up now
       </CustomButton>
-      <Typography
+
+      {/* This button will be shown only on mobile size and direct user to the 
+        sing-in page
+      */}
+      <CustomButton
+        onClick={e => {
+          e.preventDefault()
+          router.push('./user/sign-in')
+        }}
         sx={{
-          color: '#226F61',
-          textAlign: 'center',
-          fontSize: '18px',
-          fontStyle: 'normal',
-          fontWeight: 500,
-          lineHeight: 'normal',
+          mt: '10px',
+          width: 200,
+          boxSizing: 'border-box',
           display: {xs: 'block', md: 'none'},
-          mt: '50px',
+        }}
+        variant="outlined"
+      >
+        Sign in
+      </CustomButton>
+
+      {/* <Title subTitle sx={{mt: {xs: '44px', md: '64px'}}}>
+        Sign in with your other accounts
+      </Title>
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '30px',
+          mt: {xs: '30px', md: '40px'},
         }}
       >
-        New member?
-      </Typography>
-      <Image alt="logo" height={32} src="/logo.svg" width={161} />
+        <IconButton>
+          <Image
+            alt="Google icon"
+            height={39}
+            src="/icons/social-media/google-logo.svg"
+            width={39}
+          />
+        </IconButton>
+        <IconButton>
+          <Image
+            alt="Facebook icon"
+            height={39}
+            src="/icons/social-media/facebook-logo.svg"
+            width={39}
+          />
+        </IconButton>
+        <IconButton>
+          <Image
+            alt="Apple icon"
+            height={39}
+            src="/icons/social-media/apple-logo.svg"
+            width={39}
+          />
+        </IconButton>
+      </Box> */}
     </Box>
   )
 }
