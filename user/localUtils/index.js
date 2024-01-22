@@ -26,7 +26,7 @@ export async function useAuthFetch({
   } catch (err) {
     if (err.status === 401) {
       try {
-        const {access} = await asyncFunc({refresh: calref || 'refresh'})
+        const {access} = await asyncFunc({refresh: calref || 'null_token'})
         setCookie(null, 'calacc', access, {
           path: '/',
         })

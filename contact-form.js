@@ -1,251 +1,278 @@
 import * as React from 'react'
 
-import {Form, Formik, useField} from 'formik'
 import * as Yup from 'yup'
 import ReCAPTCHA from 'react-google-recaptcha'
-import data from '../data.json'
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  CircularProgress,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material'
+import {postContactUsSubmit} from '../services'
 
 const recaptchaRef = React.createRef()
 
-const MyTextInput = ({label, ...props}) => {
-  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-  // which we can spread on <input>. We can use field meta to show an error
-  // message if the field is invalid and it has been touched (i.e. visited)
-  const [field, meta] = useField(props)
+const NAME = 'name'
+const ADDRESS = 'address'
+const EMAIL = 'email'
+const REASON = 'reason'
+const MESSAGE = 'message'
+const RECAPTCHA = 'recaptcha'
 
-  return (
-    <div className="form-group">
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <input className="text-input" {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </div>
-  )
+const REASON_OPTIONS = [
+  'Product Question',
+  'Urgent: Change Order detail or Address',
+  'Wholesale, Discount, promo code query',
+  'Question about order or Delivery',
+  'Press Contact & Media',
+  'Other',
+]
+
+const errorInitial = {
+  [NAME]: null,
+  [ADDRESS]: null,
+  [EMAIL]: null,
+  [MESSAGE]: null,
+  [RECAPTCHA]: null,
 }
 
-const MyTextAreaInput = ({label, ...props}) => {
-  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-  // which we can spread on <input>. We can use field meta to show an error
-  // message if the field is invalid and it has been touched (i.e. visited)
-  const [field, meta] = useField(props)
-
-  return (
-    <div className="form-group">
-      <label htmlFor={props.id || props.name}>
-        {label}
-        <span className="CalypsoOrangeText">*</span>
-      </label>
-      <textarea className="form-control" {...field} {...props} rows="6" />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </div>
-  )
-}
-
-// const MyCheckbox = ({children, ...props}) => {
-//   const [field, meta] = useField({...props, type: 'checkbox'})
-//   return (
-//     <div className="form-check">
-//       <input
-//         className="form-check-input"
-//         type="checkbox"
-//         {...field}
-//         {...props}
-//       />
-//       <label className="form-check-label">{children}</label>
-//       {meta.touched && meta.error ? (
-//         <div className="error">{meta.error}</div>
-//       ) : null}
-//     </div>
-//   )
-// }
-
-const MySelect = ({label, ...props}) => {
-  const [field, meta] = useField(props)
-  return (
-    <div className="form-group">
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <select {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </div>
-  )
-}
-
-function submitContactForm(
-  values,
-  {setSubmitting, setFieldError, setStatus, setResponse},
-) {
-  setSubmitting(true)
-  const baseUrl = data.apiUrl
-  const finalUrl = baseUrl + 'web/contact-us/'
-  fetch(finalUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(values),
-  })
-    .then(r => {
-      if (r.status != 201) {
-        setStatus('There was a problem')
-        return r.json()
-      }
-      return r.json()
-    })
-    .then(result => {
-      setFieldError(result)
-      setResponse(result)
-    })
-    .catch(error => {
-      setStatus(
-        'There is a network connection problem, please try again later or send us an email to info@calypsosun.com',
-      )
-      console.error(error)
-    })
-}
-
-// And now we can use these
 const ContactUsForm = () => {
-  const [response, setResponse] = React.useState('')
+  const [data, setData] = React.useState({
+    [NAME]: null,
+    [ADDRESS]: null,
+    [EMAIL]: null,
+    [REASON]: REASON_OPTIONS[0],
+    [MESSAGE]: null,
+    [RECAPTCHA]: null,
+  })
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState({...errorInitial})
+  const [hasError, setHasError] = React.useState(false)
+  const [success, setSuccess] = React.useState(false)
+
+  const theme = useTheme()
+
+  const onChangeHandler = (value, field) => {
+    setData(prev => ({...prev, [field]: value}))
+  }
+
+  const errorHandler = async () => {
+    setError({...errorInitial})
+    setHasError(false)
+
+    const schema = Yup.object().shape({
+      [NAME]: Yup.string()
+        .max(35, 'Name must be 35 characters or less')
+        .required('Full name is required'),
+      [ADDRESS]: Yup.string()
+        .min(5, 'Address must be 5 characters or More')
+        .required('Address is required'),
+      [EMAIL]: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required'),
+      [MESSAGE]: Yup.string()
+        .min(5, 'Message must be 5 characters or More')
+        .required('Message is required'),
+      [RECAPTCHA]: Yup.string().required('Please verify you are human'),
+    })
+
+    const errorState = await schema
+      .validate(data, {abortEarly: false})
+      .then(() => false)
+      .catch(err => {
+        err.inner.forEach(e => {
+          setError(prev => ({...prev, [e.path]: e.message}))
+        })
+        return true
+      })
+    return errorState
+  }
+
+  const submitHandler = async () => {
+    setSuccess(false)
+    const errorState = await errorHandler()
+
+    setHasError(errorState)
+
+    if (!errorState) {
+      setLoading(true)
+      try {
+        await postContactUsSubmit(data)
+        setSuccess(true)
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+  }
+
   return (
-    <>
-      <Formik
-        initialValues={{
-          name: '',
-          address: '',
-          email: '',
-          // mailChimp: false,
-          reason: 'Product Question',
-          message: '',
-          recaptcha: '',
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        '&>div': {width: '100%'},
+        gap: 3,
+        mb: 10,
+        alignItems: 'flex-start',
+      }}
+    >
+      <Box>
+        <Typography fontWeight="700">Full name</Typography>
+        <TextField
+          error={error[NAME]}
+          fullWidth
+          helperText={error[NAME]}
+          onChange={e => onChangeHandler(e.target.value, NAME)}
+          placeholder="Jane"
+          size="small"
+          type="text"
+          value={data[NAME]}
+        />
+      </Box>
+      <Box>
+        <Typography fontWeight="700">Address (city,country)</Typography>
+        <TextField
+          error={error[ADDRESS]}
+          fullWidth
+          helperText={error[ADDRESS]}
+          onChange={e => onChangeHandler(e.target.value, ADDRESS)}
+          placeholder="Manchester, United Kingdom"
+          size="small"
+          type="text"
+          value={data[ADDRESS]}
+        />
+      </Box>
+      <Box>
+        <Typography fontWeight="700">Email Address</Typography>
+        <TextField
+          error={error[EMAIL]}
+          fullWidth
+          helperText={error[EMAIL]}
+          onChange={e => onChangeHandler(e.target.value, EMAIL)}
+          placeholder="jane@email.com"
+          size="small"
+          type="email"
+          value={data[EMAIL]}
+        />
+      </Box>
+      <Box>
+        <Typography fontWeight="700">Reason for contact</Typography>
+        <Select
+          fullWidth
+          id="contact-us-reason"
+          onChange={e => onChangeHandler(e.target.value, REASON)}
+          size="small"
+          value={data[REASON]}
+        >
+          {REASON_OPTIONS.map(option => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
+      <Box>
+        <Typography fontWeight="700">Your message</Typography>
+        <TextField
+          error={error[MESSAGE]}
+          fullWidth
+          helperText={error[MESSAGE]}
+          multiline
+          onChange={e => onChangeHandler(e.target.value, MESSAGE)}
+          placeholder="Dear Calypso team..."
+          rows={6}
+          size="small"
+          type="email"
+          value={data[MESSAGE]}
+        />
+      </Box>
+      <ReCAPTCHA
+        onChange={() => {
+          onChangeHandler(recaptchaRef.current.getValue(), RECAPTCHA)
         }}
-        onSubmit={(values, {setSubmitting, setFieldError, setStatus}) =>
-          submitContactForm(values, {
-            setSubmitting,
-            setFieldError,
-            setStatus,
-            setResponse,
-          })
-        }
-        validationSchema={Yup.object({
-          name: Yup.string()
-            .max(35, 'Must be 35 characters or less')
-            .required('Required'),
-          address: Yup.string()
-            .min(5, 'Must be 5 characters or More')
-            .required('Required'),
-          email: Yup.string()
-            .email('Invalid email address')
-            .required('Required'),
-          // mailChimp: Yup.boolean(),
-          reason: Yup.string()
-            .oneOf(
-              [
-                'Product Question',
-                'Urgent: Change Order detail or Address',
-                'Wholesale, Discount, promo code query',
-                'Question about order or Delivery',
-                'Press Contact & Media',
-                'Other',
-              ],
-              'Invalid Reason Type',
-            )
-            .required('Required'),
-          message: Yup.string()
-            .min(5, 'Must be 5 characters or More')
-            .required('Required'),
-          recaptcha: Yup.string().required(),
-        })}
-      >
-        {({status, setFieldValue}) => (
-          <Form>
-            <MyTextInput
-              className="form-control"
-              label="Your full name"
-              name="name"
-              placeholder="Jane"
-              type="text"
-            />
+        ref={recaptchaRef}
+        sitekey="6LfjPaEUAAAAAPGfkx7Nxp3glAdPGbLZE3lwY5c9"
+      />
 
-            <MyTextInput
-              className="form-control"
-              label="Address (city,country)"
-              name="address"
-              placeholder="Manchester, United Kingdom"
-              type="text"
-            />
+      {error[RECAPTCHA] ? (
+        <Typography color="#d32f2f" fontSize={'1.2rem'} ml="14px" mt={-3}>
+          {error[RECAPTCHA]}
+        </Typography>
+      ) : null}
 
-            <MyTextInput
-              className="form-control"
-              label="Email Address"
-              name="email"
-              placeholder="jane@email.com"
-              type="email"
-            />
+      <Box mt={8}>
+        {hasError ? (
+          <Alert severity="error">
+            <AlertTitle>Please resolve this errors:</AlertTitle>
+            <ul>
+              {Object.keys(error).map(key => {
+                if (error[key]) {
+                  return <li key={key}>{error[key]}</li>
+                }
+              })}
+            </ul>
+          </Alert>
+        ) : null}
+        {success ? (
+          <Alert severity="success">
+            Your message has been sent successfully
+          </Alert>
+        ) : null}
 
-            <MySelect
-              className="form-control"
-              label="Reason for contact"
-              name="reason"
-            >
-              <option value="Product Question">Product Question</option>
-              <option value="Urgent: Change Order detail or Address">
-                Urgent: Change Order detail or Address
-              </option>
-              <option value="Wholesale, Discount, promo code query">
-                Wholesale, Discount, promo code query
-              </option>
-              <option value="Question about order or Delivery">
-                Question about order or Delivery
-              </option>
-              <option value="Press Contact & Media">
-                Press Contact & Media
-              </option>
+        <Button
+          disabled={loading}
+          onClick={submitHandler}
+          sx={{
+            position: 'relative',
 
-              <option value="Other">Other</option>
-            </MySelect>
-            <MyTextAreaInput
-              className="form-control"
-              label="Your message"
-              name="message"
-              placeholder="Dear Calypso team..."
-              type="text"
-            />
+            textAlign: 'center',
+            fontSize: '18px',
+            fontStyle: 'normal',
+            fontWeight: 600,
+            lineHeight: 'normal',
+            textTransform: 'none',
+            color: '#FFFFFF',
+            width: 280,
+            height: 40,
+            mt: 2,
 
-            {/* <MyCheckbox name="mailChimp" className="form-check-input">
-                I would like to sign up to Calypso (Linco Care) newsletter.
-              </MyCheckbox> */}
-            <ReCAPTCHA
-              onChange={() => {
-                // setFieldValue("recaptcha", value);
-                setFieldValue('recaptcha', recaptchaRef.current.getValue())
+            p: '8px 50px',
+
+            borderRadius: '78px',
+
+            boxShadow: 'none',
+
+            whiteSpace: 'nowrap',
+
+            '&:hover': {
+              bgcolor: theme.palette.primary.main,
+              boxShadow: 'none !important',
+            },
+          }}
+          variant="contained"
+        >
+          {loading ? (
+            <CircularProgress
+              size={30}
+              sx={{
+                color: '#FFF',
+                position: 'absolute',
               }}
-              ref={recaptchaRef}
-              sitekey="6LfjPaEUAAAAAPGfkx7Nxp3glAdPGbLZE3lwY5c9"
             />
-            <div className="form-group mt-2">
-              <p className="text-danger">{status}</p>
-              <button
-                className="btn btn-wide"
-                type="submit"
-                // disabled={isSubmitting}
-              >
-                Submit
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-      {response.success == 'Success' ? (
-        <p className="text-success">Successfully submitted</p>
-      ) : (
-        <p className="text-danger">{response.message}</p>
-      )}
-    </>
+          ) : (
+            'SUBMIT'
+          )}
+        </Button>
+      </Box>
+    </Box>
   )
 }
 

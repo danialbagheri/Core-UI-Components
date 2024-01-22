@@ -107,7 +107,7 @@ export function OrderHistory(props) {
           >
             <LocalGroceryStoreIcon sx={{fontSize: '100px', fill: '#D6D6D6'}} />
             <Typography sx={{fontSize: 21, fontWeight: 700, color: '#D6D6D6'}}>
-              You have no order
+              No orders yet
             </Typography>
           </Box>
         )}
