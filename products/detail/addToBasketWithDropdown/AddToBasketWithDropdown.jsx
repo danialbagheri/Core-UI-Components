@@ -1,6 +1,6 @@
 import {useShopify} from '../../../hooks'
 import {Box, Button, useTheme} from '@mui/material'
-import {VariantSelector} from 'sharedComponents'
+import {VariantSelector} from '../../VariantSelector'
 
 export default function AddToBasketWithDropDown(props) {
   const {addVariant, checkoutState, openCart} = useShopify()
