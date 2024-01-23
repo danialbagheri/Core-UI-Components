@@ -2,13 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {Box} from '@mui/material'
 
-import BestSellerItems from './BestSellerItems'
 import {ProductItem} from '../../products/ProductItem'
 
 export default function BestSeller(props) {
   const collection = props.bestseller
-
-  console.log('collection::::', collection)
 
   if (!collection.items) {
     return
