@@ -36,7 +36,7 @@ export function Price(props) {
               SALE {`-${discountPercent}%`}
             </Typography>
           </Box>
-          <Typography color="#F00" fontSize={22} fontWeight={600}>
+          <Typography color="#F00" fontSize={19} fontWeight={600}>
             {symbol + price}
           </Typography>
           <Typography
@@ -50,8 +50,8 @@ export function Price(props) {
         </Box>
       ) : (
         <Box>
-          <Typography fontSize={22} fontWeight={600}>
-            {price}
+          <Typography fontSize={19} fontWeight={600}>
+            {symbol + price}
           </Typography>
         </Box>
       )}

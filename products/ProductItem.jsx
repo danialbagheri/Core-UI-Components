@@ -26,8 +26,8 @@ const ProductTag = props => {
         sx={{
           borderRadius: '4px',
 
-          fontSize: '12px',
-          fontWeight: 600,
+          fontSize: '11px',
+          fontWeight: 500,
           color: isOnSale ? '#FFF' : '#000',
 
           zIndex: 2,
@@ -39,7 +39,7 @@ const ProductTag = props => {
           boxShadow: '0px 2px 6px 0px rgba(0, 0, 0, 0.15)',
           backgroundColor: isOnSale ? '#F00' : '#fff',
 
-          padding: '4px 18px',
+          padding: '3px 13px',
         }}
       >
         {isOnSale ? 'SALE' : product.collection_names[0]}
@@ -107,14 +107,14 @@ export function ProductItem(props) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       sx={{
-        width: '100%',
+        width: 240,
         height: '100%',
 
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         flexGrow: 1,
-        gap: '18px',
+        gap: '10px',
         transition: 'all 1s',
       }}
     >
@@ -126,8 +126,8 @@ export function ProductItem(props) {
         onMouseEnter={() => setImageIsHovered(true)}
         onMouseLeave={() => setImageIsHovered(false)}
         sx={{
-          height: 369,
-          width: 260,
+          height: 350,
+          width: '100%',
 
           borderRadius: '10px',
           overflow: 'hidden',
@@ -138,10 +138,12 @@ export function ProductItem(props) {
 
           position: 'relative',
 
-          pt: '10px',
+          pt: '52px',
+          pb: '10px',
 
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'space-between',
           gap: '7px',
 
           cursor: 'pointer',
@@ -152,7 +154,7 @@ export function ProductItem(props) {
           <Image
             alt={product.name}
             fill
-            src={product.secondary_image}
+            src={product.secondary_image_resized}
             style={{
               objectFit: 'cover',
             }}
@@ -160,12 +162,10 @@ export function ProductItem(props) {
         ) : (
           <Box
             sx={{
-              width: 194,
-              minWidth: 194,
-              maxWidth: 194,
-              height: '300px',
-              maxHeight: '300px',
-              minHeight: '300px',
+              width: 212,
+
+              height: 270,
+
               margin: '0 auto',
               position: 'relative',
               transition: 'all 200ms',
@@ -178,7 +178,7 @@ export function ProductItem(props) {
                 activeVariant.image_list[0],
                 product.main_image,
               )}
-              style={{objectFit: 'cover'}}
+              style={{objectFit: 'contain'}}
             />
           </Box>
         )}
@@ -228,7 +228,7 @@ export function ProductItem(props) {
           justifyContent: 'space-between',
           gap: 3,
 
-          minHeight: 160,
+          minHeight: 140,
           flexGrow: 1,
         }}
       >
@@ -244,6 +244,7 @@ export function ProductItem(props) {
               overflow: 'hidden',
               WebkitLineClamp: 2 /* Number of lines to show */,
               textOverflow: 'ellipsis',
+              lineHeight: '27px',
             }}
           >
             {product.name}
