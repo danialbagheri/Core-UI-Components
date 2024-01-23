@@ -13,6 +13,7 @@ export function VariantSelector({
 }) {
   const searchParams = useSearchParams()
   const theme = useTheme()
+  const isSpfVariant = React.useRef(false)
 
   const urlSku = searchParams.get('sku')
 
@@ -27,67 +28,86 @@ export function VariantSelector({
 
     const renderProperName = () => {
       if (isAllVarSPF) {
+        isSpfVariant.current = true
         return variant.name.split(' ')[1]
       } else if (variant.name.toLowerCase().includes('size')) {
+        isSpfVariant.current = false
         return variant.size
+      } else if (variant.name.toLowerCase().includes('original')) {
+        isSpfVariant.current = false
+        return 0
+      } else if (variant.name.toLowerCase().includes('spf')) {
+        isSpfVariant.current = true
+        return variant.name.split(' ')[1].trim()
       }
+      isSpfVariant.current = false
       return variant.name
     }
 
     const renderStyles = () => {
+      let outerBoxStyles = {}
+      let innerBoxStyles = {}
+
       if (isInStock) {
         if (isSelected) {
-          return {
-            minWidth: 31,
-            height: 31,
+          innerBoxStyles = {
+            width: isSpfVariant.current ? 28 : 'unset',
+            height: 28,
             color: '#FFF',
             bgcolor: theme.palette.primary.main,
-            border: '2px solid #FFF',
-            boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
             cursor: 'initial',
           }
+          outerBoxStyles = {
+            p: '2px',
+            border: `2px solid ${theme.palette.primary.main}`,
+            borderRadius: '20px',
+          }
+        } else {
+          innerBoxStyles = {
+            minWidth: 30,
+            maxWidth: 30,
+            height: 30,
+            color: '#000',
+            bgcolor: '#FFF',
+            border: '1px solid #CCC',
+            cursor: 'pointer',
+          }
         }
-        return {
+      } else {
+        innerBoxStyles = {
           minWidth: 30,
+          maxWidth: isSpfVariant.current ? 28 : 'unset',
           height: 30,
-          color: '#000',
-          bgcolor: '#FFF',
-          border: '1px solid #CCC',
-          boxShadow: 'none',
-          cursor: 'pointer',
+          color: '#FFF',
+          bgcolor: '#E8E2D6',
+          border: 'none',
+          cursor: 'initial',
         }
       }
-      return {
-        minWidth: 30,
-        height: 30,
-        color: '#FFF',
-        bgcolor: '#E8E2D6',
-        border: 'none',
-        boxShadow: 'none',
-        cursor: 'initial',
-      }
+
+      return {outerBoxStyles, innerBoxStyles}
     }
 
     return (
-      <Box
-        className="centralize"
-        onClick={() => {
-          if (isInStock) {
-            setSelectedVariant(variant)
-          }
-        }}
-        sx={{
-          fontWeight: 400,
-          fontSize: 16,
-
-          borderRadius: '15px',
-
-          p: isAllVarSPF ? 0 : '6px 10px',
-          ...renderStyles(),
-        }}
-        textAlign={'center'}
-      >
-        {renderProperName()}
+      <Box className="centralize" sx={{...renderStyles().outerBoxStyles}}>
+        <Box
+          className="centralize"
+          onClick={() => {
+            if (isInStock) {
+              setSelectedVariant(variant)
+            }
+          }}
+          sx={{
+            fontWeight: 400,
+            fontSize: 16,
+            borderRadius: '15px',
+            ...renderStyles().innerBoxStyles,
+            p: isSpfVariant.current ? 0 : '6px 10px',
+          }}
+          textAlign={'center'}
+        >
+          {renderProperName()}
+        </Box>
       </Box>
     )
   }

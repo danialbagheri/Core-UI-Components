@@ -14,6 +14,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import {VariantSelector} from './VariantSelector'
 import {StarRating} from './StarRating'
 import {COMPARE_AT_PRICE, EURO_COMPARE_AT_PRICE, Price} from './Price'
+import {useShopify} from '../hooks'
 /* -------------------------------------------------------------------------- */
 
 const ProductTag = props => {
@@ -83,11 +84,13 @@ export function ProductItem(props) {
   const [activeVariant, setActiveVariant] = React.useState(product.variants[0])
   const [isHovered, setIsHovered] = React.useState(false)
   const [imageIsHovered, setImageIsHovered] = React.useState(false)
+  const {addVariant, checkoutState, openCart} = useShopify()
   const router = useRouter()
   const theme = useTheme()
 
   const isOnSale =
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
+  const isInStock = activeVariant.inventory_quantity > 0
 
   const imageSrcHandler = (variantImage, mainImage) => {
     if (variantImage) {
@@ -99,6 +102,17 @@ export function ProductItem(props) {
       return ''
     }
     return ''
+  }
+
+  function addToCartHandler(variantId, quantity) {
+    const lineItemsToAdd = [
+      {
+        variantId: variantId,
+        quantity: parseInt(quantity, 10),
+      },
+    ]
+    addVariant(checkoutState.id, lineItemsToAdd)
+    openCart()
   }
 
   return (
@@ -126,7 +140,7 @@ export function ProductItem(props) {
         onMouseEnter={() => setImageIsHovered(true)}
         onMouseLeave={() => setImageIsHovered(false)}
         sx={{
-          height: 350,
+          height: 365,
           width: '100%',
 
           borderRadius: '10px',
@@ -150,7 +164,9 @@ export function ProductItem(props) {
         }}
       >
         <ProductTag isOnSale={isOnSale} product={product} />
-        {imageIsHovered && product.secondary_image ? (
+
+        {/* Show secondary image on hover */}
+        {imageIsHovered && product.secondary_image_resized ? (
           <Image
             alt={product.name}
             fill
@@ -160,6 +176,7 @@ export function ProductItem(props) {
             }}
           />
         ) : (
+          // Show primary image by default and if secondary image is not available
           <Box
             sx={{
               width: 212,
@@ -191,7 +208,9 @@ export function ProductItem(props) {
             className="centralize"
             onClick={e => {
               e.stopPropagation()
-              console.log('ADD TO CART')
+              if (isInStock) {
+                addToCartHandler(activeVariant.graphql_id, 1)
+              }
             }}
             sx={{
               height: 40,
