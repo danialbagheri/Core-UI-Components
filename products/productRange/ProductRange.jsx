@@ -1,12 +1,13 @@
 import {Box, CircularProgress} from '@mui/material'
-import {ProductRangeItem} from '.'
+
+import {ProductItem} from '../ProductItem'
 
 export default function ProductRange(props) {
   return (
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 220px))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 260px))',
         gridTemplateRows: 'auto',
         rowGap: 4,
         columnGap: 3,
@@ -34,7 +35,7 @@ export default function ProductRange(props) {
               return 0
             })
             .map(product => (
-              <ProductRangeItem key={product.id} product={product} />
+              <ProductItem key={product.id} product={product} />
             ))}
         </>
       )}

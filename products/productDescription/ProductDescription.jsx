@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import {Stack} from '@mui/material'
 
-import {ShowPrice, VariantSelector} from 'sharedComponents'
+import {ShowPrice} from 'sharedComponents'
 import ShareButton from 'components/common/shareButton/ShareButton'
 import StarRating from '../StarRating/StarRating'
 import {AddButton} from './addButton'
@@ -10,6 +10,7 @@ import {OutOfStock} from './outOfStock'
 import {ProductTab} from './productTab'
 import {VariantSize} from './variantSize'
 import {ProductDropDown} from './productDropDown'
+import {VariantSelector} from '../VariantSelector'
 
 const ProductDescription = props => {
   const {product, selectedVariant, setSelectedVariant} = props

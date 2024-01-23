@@ -3,9 +3,12 @@ import Link from 'next/link'
 import {Box} from '@mui/material'
 
 import BestSellerItems from './BestSellerItems'
+import {ProductItem} from '../../products/ProductItem'
 
 export default function BestSeller(props) {
   const collection = props.bestseller
+
+  console.log('collection::::', collection)
 
   if (!collection.items) {
     return
@@ -92,14 +95,14 @@ export default function BestSeller(props) {
               width: '100%',
 
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
               gridTemplateRows: 'auto',
               rowGap: 4,
               columnGap: 2,
             }}
           >
             {collection.items?.slice(0, 6).map((item, index) => (
-              <BestSellerItems item={item} key={index} />
+              <ProductItem key={index} product={item.item} />
             ))}
           </Box>
         </Box>
