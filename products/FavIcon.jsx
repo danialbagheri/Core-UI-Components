@@ -3,7 +3,10 @@ import {AppContext} from '../appProvider/AppProvider'
 import {parseCookies, setCookie} from 'nookies'
 import {addProductToFavorite, postRefreshToken} from '../../services'
 import {Box} from '@mui/material'
+import Tooltip, {tooltipClasses} from '@mui/material/Tooltip'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import {styled} from '@mui/material/styles'
+import Link from 'next/link'
 
 export const FavIcon = props => {
   const {isHovered, slug, product} = props
@@ -71,22 +74,51 @@ export const FavIcon = props => {
     }
   }
 
+  const CustomTooltip = styled(({className, ...props}) => (
+    <Tooltip {...props} cc classes={{popper: className}} />
+  ))(() => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: '#FFF',
+      '&:before': {
+        border: '1px solid #000',
+      },
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: '#FFF',
+      color: '#000',
+      border: '1px solid #000',
+    },
+  }))
+
   return (
     <Box
       onClick={addToFavoriteHandler}
       sx={{
-        display: isHovered ? 'block' : 'none',
+        display: isHovered || isFavorite ? 'block' : 'none',
         position: 'absolute',
         top: 18,
         left: 18,
       }}
     >
-      <FavoriteIcon
-        fontSize="large"
-        sx={{
-          fill: isFavorite ? '#FF0000' : '#FFF',
-        }}
-      />
+      <CustomTooltip
+        arrow
+        title={
+          appState.isAuthenticate ? (
+            ''
+          ) : (
+            <div>
+              <Link href="/user/sign-in">Log in</Link> to use Wishlists!
+            </div>
+          )
+        }
+      >
+        <FavoriteIcon
+          fontSize="large"
+          sx={{
+            fill: isFavorite ? '#FF0000' : '#FFF',
+          }}
+        />
+      </CustomTooltip>
     </Box>
   )
 }
