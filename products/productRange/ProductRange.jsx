@@ -9,7 +9,7 @@ export default function ProductRange(props) {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 240px))',
         gridTemplateRows: 'auto',
-        rowGap: 15,
+        rowGap: 12,
         columnGap: 3,
         justifyContent: 'center',
         py: 12,

@@ -218,16 +218,21 @@ export function ProductItem(props) {
           justifyContent: 'space-between',
           gap: 3,
 
-          minHeight: 140,
+          minHeight: 123,
           flexGrow: 1,
         }}
       >
         <Box
-          sx={{display: 'flex', gap: 3, flexDirection: 'column', flexGrow: 1}}
+          sx={{
+            display: 'flex',
+            gap: '2px',
+            flexDirection: 'column',
+            flexGrow: 1,
+          }}
         >
           <Typography
-            fontSize={22}
-            fontWeight={700}
+            fontSize={16}
+            fontWeight={600}
             sx={{
               display: '-webkit-box',
               '-webkit-box-orient': 'vertical',
@@ -240,7 +245,7 @@ export function ProductItem(props) {
             {product.name}
           </Typography>
 
-          <Typography fontSize={14} fontWeight={400}>
+          <Typography fontSize={13} fontWeight={400}>
             {product.sub_title}
           </Typography>
           <Price variant={activeVariant} />
