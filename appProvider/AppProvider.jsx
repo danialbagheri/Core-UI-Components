@@ -13,6 +13,8 @@ function AppProvider(props) {
     productQuestions: [],
     userAssets: null,
     signUpEmail: '',
+    isAuthenticate: false,
+    favoriteProducts: null,
   }
   const [appState, setAppState] = React.useState(initState)
 

@@ -219,7 +219,7 @@ function Navigation() {
             {/* ------------------------------ Calypso Logo ------------------------------ */}
             <IconButton
               id="nav_logo_container"
-              onClick={() => router.push('./')}
+              onClick={() => router.push('/')}
               sx={{
                 '&:hover': {boxShadow: 'none', bgcolor: 'unset'},
                 '&>span': {display: 'none'},

@@ -7,7 +7,6 @@ import {useRouter} from 'next/navigation'
 
 /* ----------------------------- MUI Components ----------------------------- */
 import {Box, Typography, useTheme} from '@mui/material'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
@@ -15,6 +14,7 @@ import {VariantSelector} from './VariantSelector'
 import {StarRating} from './StarRating'
 import {COMPARE_AT_PRICE, EURO_COMPARE_AT_PRICE, Price} from './Price'
 import {useShopify} from '../hooks'
+import {FavIcon} from './FavIcon'
 /* -------------------------------------------------------------------------- */
 
 const ProductTag = props => {
@@ -47,35 +47,6 @@ const ProductTag = props => {
       </Box>
     )
   }
-}
-
-const FavIcon = props => {
-  const {isHovered} = props
-
-  const displayIconHandler = () => {
-    if (isHovered) {
-      return 'block'
-    }
-    return 'none'
-  }
-  return (
-    <Box
-      sx={{
-        display: displayIconHandler(),
-        position: 'absolute',
-        top: 18,
-        left: 18,
-        zIndex: 2,
-      }}
-    >
-      <FavoriteIcon
-        fontSize="large"
-        sx={{
-          fill: '#FFF',
-        }}
-      />
-    </Box>
-  )
 }
 
 export function ProductItem(props) {
@@ -200,7 +171,7 @@ export function ProductItem(props) {
           </Box>
         )}
 
-        <FavIcon isHovered={isHovered} />
+        <FavIcon isHovered={isHovered} product={product} slug={product.slug} />
 
         {/* Add to cart button which is hidden by default but shown on hover */}
         {isHovered ? (
