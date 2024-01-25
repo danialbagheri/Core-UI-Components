@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 /* ----------------------------- Next Components ---------------------------- */
-import Image from 'next/image'
+import NextImage from 'next/image'
 import {useRouter} from 'next/navigation'
 /* -------------------------------------------------------------------------- */
 
@@ -86,6 +86,14 @@ export function ProductItem(props) {
     openCart()
   }
 
+  React.useEffect(() => {
+    if (product.secondary_image_resized) {
+      const image = new Image()
+      image.src = product.secondary_image_resized
+      image.alt = product.name
+    }
+  }, [])
+
   return (
     <Box
       key={product.id}
@@ -138,7 +146,7 @@ export function ProductItem(props) {
 
         {/* Show secondary image on hover */}
         {imageIsHovered && product.secondary_image_resized ? (
-          <Image
+          <NextImage
             alt={product.name}
             fill
             src={product.secondary_image_resized}
@@ -159,7 +167,7 @@ export function ProductItem(props) {
               transition: 'all 200ms',
             }}
           >
-            <Image
+            <NextImage
               alt={product.name}
               fill
               src={imageSrcHandler(

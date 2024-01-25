@@ -13,103 +13,73 @@ export function VariantSelector({
 }) {
   const searchParams = useSearchParams()
   const theme = useTheme()
-  const isSpfVariant = React.useRef(false)
 
   const urlSku = searchParams.get('sku')
+  const isAllVarSPF = variants.every(variant => variant.name?.startsWith('SPF'))
 
-  // const isSingleVariant = variants.length === 1
+  const renderStyles = ({isInStock, isSelected, isAllVarSPF, variant}) => {
+    let outerBoxStyles = {}
+    let innerBoxStyles = {}
+    const isSpfVariant = renderVariantDetails({
+      isAllVarSPF,
+      variant,
+    }).isSpfVariant
 
-  const renderVariant = variant => {
-    const isInStock = variant.inventory_quantity > 0
-    const isSelected = selectedVariant.sku === variant.sku
-    const isAllVarSPF = variants.every(variant =>
-      variant.name?.startsWith('SPF'),
-    )
-
-    const renderProperName = () => {
-      if (isAllVarSPF) {
-        isSpfVariant.current = true
-        return variant.name.split(' ')[1]
-      } else if (variant.name.toLowerCase().includes('size')) {
-        isSpfVariant.current = false
-        return variant.size
-      } else if (variant.name.toLowerCase().includes('original')) {
-        isSpfVariant.current = false
-        return 0
-      } else if (variant.name.toLowerCase().includes('spf')) {
-        isSpfVariant.current = true
-        return variant.name.split(' ')[1].trim()
-      }
-      isSpfVariant.current = false
-      return variant.name
-    }
-
-    const renderStyles = () => {
-      let outerBoxStyles = {}
-      let innerBoxStyles = {}
-
-      if (isInStock) {
-        if (isSelected) {
-          innerBoxStyles = {
-            width: isSpfVariant.current ? 28 : 'unset',
-            height: 28,
-            color: '#FFF',
-            bgcolor: theme.palette.primary.main,
-            cursor: 'initial',
-          }
-          outerBoxStyles = {
-            p: '2px',
-            border: `2px solid ${theme.palette.primary.main}`,
-            borderRadius: '20px',
-          }
-        } else {
-          innerBoxStyles = {
-            minWidth: 30,
-            maxWidth: 30,
-            height: 30,
-            color: '#000',
-            bgcolor: '#FFF',
-            border: '1px solid #CCC',
-            cursor: 'pointer',
-          }
+    if (isInStock) {
+      if (isSelected) {
+        innerBoxStyles = {
+          width: isSpfVariant ? 28 : 'unset',
+          height: 28,
+          color: '#FFF',
+          bgcolor: theme.palette.primary.main,
+          cursor: 'initial',
+          p: 0,
+        }
+        outerBoxStyles = {
+          p: '2px',
+          border: `2px solid ${theme.palette.primary.main}`,
+          borderRadius: '20px',
         }
       } else {
         innerBoxStyles = {
           minWidth: 30,
-          maxWidth: isSpfVariant.current ? 28 : 'unset',
+          maxWidth: isSpfVariant ? 28 : 'unset',
           height: 30,
-          color: '#FFF',
-          bgcolor: '#E8E2D6',
-          border: 'none',
-          cursor: 'initial',
+          color: '#000',
+          bgcolor: '#FFF',
+          border: '1px solid #CCC',
+          cursor: 'pointer',
         }
       }
-
-      return {outerBoxStyles, innerBoxStyles}
+    } else {
+      innerBoxStyles = {
+        minWidth: 30,
+        maxWidth: isSpfVariant ? 28 : 'unset',
+        height: 30,
+        color: '#FFF',
+        bgcolor: '#E8E2D6',
+        border: 'none',
+        cursor: 'initial',
+      }
     }
 
-    return (
-      <Box className="centralize" sx={{...renderStyles().outerBoxStyles}}>
-        <Box
-          className="centralize"
-          onClick={() => {
-            if (isInStock) {
-              setSelectedVariant(variant)
-            }
-          }}
-          sx={{
-            fontWeight: 400,
-            fontSize: 16,
-            borderRadius: '15px',
-            ...renderStyles().innerBoxStyles,
-            p: isSpfVariant.current ? 0 : '6px 10px',
-          }}
-          textAlign={'center'}
-        >
-          {renderProperName()}
-        </Box>
-      </Box>
-    )
+    return {outerBoxStyles, innerBoxStyles}
+  }
+
+  const renderVariantDetails = ({isAllVarSPF, variant}) => {
+    if (isAllVarSPF) {
+      return {variantName: variant.name.split(' ')[1], isSpfVariant: true}
+    } else if (variant.name.toLowerCase().includes('size')) {
+      return {variantName: variant.size, isSpfVariant: false}
+    } else if (variant.name.toLowerCase().includes('original')) {
+      return {variantName: 'original', isSpfVariant: false}
+    } else if (variant.name.toLowerCase().includes('spf')) {
+      return {
+        variantName: variant.name.split(' ')[1].trim(),
+        isSpfVariant: true,
+      }
+    }
+    return {variantName: variant.name, isSpfVariant: false}
   }
 
   React.useEffect(() => {
@@ -133,6 +103,10 @@ export function VariantSelector({
     }
   }, [urlSku])
 
+  if (variants.length === 1 && !isAllVarSPF) {
+    return null
+  }
+
   return (
     <Box
       sx={{
@@ -143,7 +117,41 @@ export function VariantSelector({
       }}
       {...props}
     >
-      {variants.map(variant => renderVariant(variant))}
+      {variants.map(variant => {
+        const isInStock = variant.inventory_quantity > 0
+        const isSelected = selectedVariant.sku === variant.sku
+
+        const {innerBoxStyles, outerBoxStyles} = renderStyles({
+          isSelected,
+          isInStock,
+          isAllVarSPF,
+          variant,
+        })
+        return (
+          <Box className="centralize" key={variant.id} sx={{...outerBoxStyles}}>
+            <Box
+              className="centralize"
+              onClick={() => {
+                if (isInStock) {
+                  setSelectedVariant(variant)
+                }
+              }}
+              sx={{
+                fontWeight: 400,
+                fontSize: 16,
+                borderRadius: '15px',
+                ...innerBoxStyles,
+                p: renderVariantDetails({isAllVarSPF, variant}).isSpfVariant
+                  ? 0
+                  : '6px 10px',
+              }}
+              textAlign={'center'}
+            >
+              {renderVariantDetails({isAllVarSPF, variant}).variantName}
+            </Box>
+          </Box>
+        )
+      })}
     </Box>
   )
 }

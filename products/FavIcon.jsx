@@ -23,14 +23,15 @@ export const FavIcon = props => {
 
     if (appState.isAuthenticate) {
       try {
-        await addProductToFavorite(slug, calacc)
-
         let newFavoriteProducts = []
+
         if (isFavorite) {
+          await addProductToFavorite(slug, calacc, 'remove')
           newFavoriteProducts = appState.favoriteProducts.filter(
             product => product.slug !== slug,
           )
         } else {
+          await addProductToFavorite(slug, calacc, 'add')
           const initialFavoriteProducts = appState.favoriteProducts
           newFavoriteProducts = [...initialFavoriteProducts, product]
         }
@@ -46,14 +47,14 @@ export const FavIcon = props => {
               path: '/',
             })
 
-            await addProductToFavorite(slug, calacc)
-
             let newFavoriteProducts = []
             if (isFavorite) {
+              await addProductToFavorite(slug, access, 'remove')
               newFavoriteProducts = appState.favoriteProducts.filter(
                 product => product.slug !== slug,
               )
             } else {
+              await addProductToFavorite(slug, access, 'add')
               const initialFavoriteProducts = appState.favoriteProducts
               newFavoriteProducts = [...initialFavoriteProducts, product]
             }
