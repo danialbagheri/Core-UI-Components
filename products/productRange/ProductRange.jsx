@@ -7,7 +7,10 @@ export default function ProductRange(props) {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 240px))',
+        gridTemplateColumns: {
+          xs: 'repeat(2, minmax(160px, 240px))',
+          md: 'repeat(auto-fit, minmax(180px, 240px))',
+        },
         gridTemplateRows: 'auto',
         rowGap: 12,
         columnGap: 3,

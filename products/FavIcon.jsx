@@ -99,6 +99,11 @@ export const FavIcon = props => {
         position: 'absolute',
         top: 18,
         left: 18,
+        '&:hover': {
+          '& svg': {
+            fill: '#FF0000',
+          },
+        },
       }}
     >
       <CustomTooltip

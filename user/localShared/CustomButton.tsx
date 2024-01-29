@@ -18,7 +18,7 @@ export function CustomButton(props: PropsTypes) {
   return (
     <Button
       onClick={e => {
-        onClick ? onClick(e) : () => {}
+        onClick ? onClick(e) : e.preventDefault()
       }}
       sx={{
         position: 'relative',

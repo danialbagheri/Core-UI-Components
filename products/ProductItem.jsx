@@ -100,7 +100,7 @@ export function ProductItem(props) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       sx={{
-        width: 240,
+        width: {xs: '100%', msm: 240},
         height: '100%',
 
         display: 'flex',
@@ -108,7 +108,6 @@ export function ProductItem(props) {
         justifyContent: 'space-between',
         flexGrow: 1,
         gap: '10px',
-        transition: 'all 1s',
       }}
     >
       <Box
@@ -158,7 +157,7 @@ export function ProductItem(props) {
           // Show primary image by default and if secondary image is not available
           <Box
             sx={{
-              width: 212,
+              width: {xs: '100%', msm: 212},
 
               height: 270,
 
