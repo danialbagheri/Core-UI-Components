@@ -8,12 +8,9 @@ import {useRouter} from 'next/router'
 /* ----------------------------- MUI Components ----------------------------- */
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
-import {useScrollTrigger} from '@mui/material'
+import {Link, useScrollTrigger} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import SearchIcon from '@mui/icons-material/Search'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
@@ -22,6 +19,8 @@ import {getRetrieveMenu} from '../../services'
 import SearchModal from '../searchModal/SearchModal'
 import logo from '../../public/logo.svg'
 import {hideHeaderLogoOrInfoState} from 'utils'
+import {AppContext} from '../appProvider'
+import {assetsEndPoints, BURGER_ICON_ID, SEARCH_ICON_ID} from '../../utils'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
@@ -47,6 +46,7 @@ function Navigation() {
     text: 'More',
     url: '',
   })
+  const [appState] = React.useContext(AppContext)
   /* -------------------------------------------------------------------------- */
 
   /* ---------------------------------- Refs ---------------------------------- */
@@ -63,6 +63,16 @@ function Navigation() {
     threshold: 100,
     target: undefined,
   })
+
+  const searchIcon = appState.icons[assetsEndPoints.userAccount]?.items.find(
+    item => item.id === SEARCH_ICON_ID,
+  )
+
+  const menuIcon = appState.icons[assetsEndPoints.userAccount]?.items.find(
+    item => item.id === BURGER_ICON_ID,
+  )
+
+  console.log('appState.icons::::', appState.icons)
 
   const setNavItemsHandler = () => {
     const containerWidth =
@@ -140,8 +150,8 @@ function Navigation() {
             bgcolor: '#FFF',
             boxShadow: trigger ? '0 1px 7px 0 rgba(0, 0, 0, 0.15)' : 'none',
             p: trigger
-              ? {xs: '0 30px', md: '5px 30px'}
-              : {xs: '10px 30px', md: '20px 30px'},
+              ? {xs: '0 10px', md: '5px 30px'}
+              : {xs: '10px 10px', md: '20px 30px'},
           }}
         >
           <Toolbar
@@ -155,55 +165,92 @@ function Navigation() {
               width: '100%',
 
               position: 'relative',
+
+              //Calypso icon styles in different situations
               '&>#nav_logo_container': {
-                position: 'absolute',
-                left: '50%',
+                position: {
+                  xs: 'absolute',
+                  md: trigger ? 'relative' : 'absolute',
+                },
+                left: {xs: '50%', md: trigger ? 0 : '50%'},
                 top: '50%',
                 transform: {
                   xs: 'translate(-50%,-50%)',
-                  md: 'translate(-50%,-100%)',
+                  md: trigger ? 'unset' : 'translate(-50%,-100%)',
                 },
+
                 display: {
                   xs: hideLogo && !trigger ? 'none' : 'block',
-                  md: trigger ? 'none' : 'block',
                 },
-                px: 10,
+
+                '&:hover': {boxShadow: 'none', bgcolor: 'unset'},
+                '&>span': {display: 'none'},
+
+                px: 0,
+
                 '&>img': {width: {xs: 100, md: 150}},
               },
             }}
           >
+            {/* ------------------------------ Calypso Logo ------------------------------ */}
+            <Link href="/" id="nav_logo_container" sx={{}}>
+              <Image alt={WEBSITE} height="47" src={logo} width="100" />
+            </Link>
+
+            {/* -------------------------------------------------------------------------- */}
             {/* ------------------------ Menu Icon for mobile view ----------------------- */}
-            <IconButton
-              aria-label="open drawer"
-              color="inherit"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{
-                display: {md: 'none'},
-                height: '40px',
-                width: '40px',
-                px: 1,
-              }}
-            >
-              {mobileOpen ? (
-                <CloseIcon color="primary" />
-              ) : (
-                <MenuIcon color="primary" />
-              )}
-            </IconButton>
-            <IconButton
-              onClick={() => setOpenSearchModal(true)}
-              sx={{
-                display: {xs: 'block', md: 'none'},
-                height: '40px',
-                width: '40px',
-                ml: -1,
-                mr: 2,
-                px: 1,
-              }}
-            >
-              <SearchIcon color="primary" />
-            </IconButton>
+            <Box className="centralize" gap={3}>
+              <Box
+                aria-label="open drawer"
+                color="inherit"
+                onClick={handleDrawerToggle}
+                sx={{
+                  display: {md: 'none'},
+                  height: '30px',
+                  width: '30px',
+                }}
+              >
+                {mobileOpen ? (
+                  <CloseIcon color="primary" />
+                ) : (
+                  <Image
+                    alt={menuIcon?.name}
+                    height={30}
+                    src={menuIcon?.svg_icon}
+                    style={{
+                      contentFit: 'cover',
+                      filter:
+                        'invert(43%) sepia(75%) saturate(2599%) hue-rotate(2deg) brightness(112%) contrast(84%)',
+                    }}
+                    width={30}
+                  />
+                )}
+              </Box>
+
+              <Box
+                onClick={() => setOpenSearchModal(true)}
+                sx={{
+                  display: {xs: 'block', md: 'none'},
+                  height: '30px',
+                  width: '30px',
+                  mr: 2,
+                  px: 1,
+                  position: 'relative',
+                  cursor: 'pointer',
+                }}
+              >
+                <Image
+                  alt={searchIcon?.name}
+                  fill
+                  src={searchIcon?.svg_icon}
+                  style={{
+                    contentFit: 'cover',
+                    filter:
+                      'invert(43%) sepia(75%) saturate(2599%) hue-rotate(2deg) brightness(112%) contrast(84%)',
+                  }}
+                />
+              </Box>
+            </Box>
             {/* -------------------------------------------------------------------------- */}
 
             {/* -------------------------- Desktop Size App bar -------------------------- */}
@@ -214,20 +261,6 @@ function Navigation() {
               shrinkNavItems={shrinkNavItems}
               trigger={trigger}
             />
-            {/* -------------------------------------------------------------------------- */}
-
-            {/* ------------------------------ Calypso Logo ------------------------------ */}
-            <IconButton
-              id="nav_logo_container"
-              onClick={() => router.push('/')}
-              sx={{
-                '&:hover': {boxShadow: 'none', bgcolor: 'unset'},
-                '&>span': {display: 'none'},
-              }}
-            >
-              <Image alt={WEBSITE} height="47" src={logo} width="100" />
-            </IconButton>
-
             {/* -------------------------------------------------------------------------- */}
           </Toolbar>
         </AppBar>

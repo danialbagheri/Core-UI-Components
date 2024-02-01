@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search'
 /* ---------------------------- Local Components ---------------------------- */
 import {NavItem} from './NavItem'
 import {AppBarIcons} from './AppBarIcons'
+
 /* -------------------------------------------------------------------------- */
 
 export function DesktopMenu(props) {

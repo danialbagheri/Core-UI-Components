@@ -1,5 +1,7 @@
 import {useRouter} from 'next/router'
 import {destroyCookie, parseCookies, setCookie} from 'nookies'
+import {useContext} from 'react'
+import {AppContext} from '../../appProvider'
 
 export async function useAuthFetch({
   asyncFunc,
@@ -11,6 +13,7 @@ export async function useAuthFetch({
 }) {
   const {calacc, calref} = parseCookies()
   const router = useRouter()
+  const {setAppState} = useContext(AppContext)
 
   if (setError) {
     setError({...initialState})
@@ -22,6 +25,7 @@ export async function useAuthFetch({
 
   try {
     const response = await asyncFunc({data, token: calacc})
+    setAppState(perv => ({...perv, isAuthenticate: true}))
     return response
   } catch (err) {
     if (err.status === 401) {
@@ -30,6 +34,7 @@ export async function useAuthFetch({
         setCookie(null, 'calacc', access, {
           path: '/',
         })
+        setAppState(perv => ({...perv, isAuthenticate: true}))
 
         const response = await asyncFunc({data, token: access})
         return response
@@ -37,6 +42,7 @@ export async function useAuthFetch({
         if (err.status === 401) {
           destroyCookie(null, 'calacc', {path: '/'})
           destroyCookie(null, 'calref', {path: '/'})
+          setAppState(perv => ({...perv, isAuthenticate: false}))
           console.error(err)
           router.push('/user')
         } else {

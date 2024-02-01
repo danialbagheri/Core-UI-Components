@@ -4,6 +4,8 @@ import {MUIThemeProvider} from 'theme'
 const AppContext = React.createContext(undefined)
 
 function AppProvider(props) {
+  const {children, icons = {}} = props
+
   const initState = {
     searchValues: {
       value: '',
@@ -13,8 +15,9 @@ function AppProvider(props) {
     productQuestions: [],
     userAssets: null,
     signUpEmail: '',
-    isAuthenticate: false,
+    isAuthenticate: undefined,
     favoriteProducts: null,
+    icons,
   }
   const [appState, setAppState] = React.useState(initState)
 
@@ -22,9 +25,18 @@ function AppProvider(props) {
     return [appState, setAppState]
   }, [appState, setAppState])
 
+  React.useEffect(() => {
+    setAppState(prevState => {
+      return {
+        ...prevState,
+        icons,
+      }
+    })
+  }, [icons])
+
   return (
     <MUIThemeProvider>
-      <AppContext.Provider value={value()} {...props} />
+      <AppContext.Provider value={value()}>{children}</AppContext.Provider>
     </MUIThemeProvider>
   )
 }

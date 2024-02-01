@@ -7,6 +7,7 @@ import {Box, Typography} from '@mui/material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import LogoutIcon from '@mui/icons-material/Logout'
 import {destroyCookie} from 'nookies'
+import {AppContext} from '../../appProvider'
 
 const SIDE_BAR_ITEMS = [
   {id: 'my-dashboard', name: 'My dashboard', url: '/user/dashboard'},
@@ -34,6 +35,7 @@ const SIDE_BAR_BUTTONS = [
 export default function SideBar(props) {
   const {girlIcon, route} = props
   const router = useRouter()
+  const [, setAppState] = React.useContext(AppContext)
 
   const routerClickHandler = (id, url) => {
     if (id === route) {
@@ -122,7 +124,12 @@ export default function SideBar(props) {
         <Box
           bgcolor="sand.main"
           key={button.id}
-          onClick={() => button.onClick(router)}
+          onClick={() => {
+            button.onClick(router)
+            if (button.id === 'log-out') {
+              setAppState(prev => ({...prev, isAuthenticate: false}))
+            }
+          }}
           sx={{
             p: '12px 55px',
             borderRadius: '10px',

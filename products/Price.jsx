@@ -27,30 +27,38 @@ export function Price(props) {
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'flex-end',
-            gap: '15px',
+            alignItems: {xs: 'flex-start', msm: 'flex-end'},
+            gap: {xs: '4px', md: '15px'},
+            flexDirection: {xs: 'column', msm: 'row'},
+            mt: {xs: 2, msm: 0},
           }}
         >
           <Box sx={{bgcolor: '#FAF5EB', p: '2px 8px'}}>
-            <Typography fontSize={16} fontWeight={600}>
+            <Typography fontSize={{xs: 13, msm: 16}} fontWeight={600}>
               SALE {`-${discountPercent}%`}
             </Typography>
           </Box>
-          <Typography color="#F00" fontSize={16} fontWeight={600}>
-            {symbol + price}
-          </Typography>
-          <Typography
-            color="#A3A3A3"
-            fontSize={16}
-            fontWeight={400}
-            sx={{textDecoration: 'line-through'}}
-          >
-            {symbol + compareAtPrice}
-          </Typography>
+          <Box className="centralize" gap="15px">
+            <Typography
+              color="#F00"
+              fontSize={{xs: 13, msm: 16}}
+              fontWeight={600}
+            >
+              {symbol + price}
+            </Typography>
+            <Typography
+              color="#A3A3A3"
+              fontSize={{xs: 13, msm: 16}}
+              fontWeight={400}
+              sx={{textDecoration: 'line-through'}}
+            >
+              {symbol + compareAtPrice}
+            </Typography>
+          </Box>
         </Box>
       ) : (
         <Box>
-          <Typography fontSize={16} fontWeight={600}>
+          <Typography fontSize={{xs: 13, msm: 16}} fontWeight={600}>
             {symbol + price}
           </Typography>
         </Box>

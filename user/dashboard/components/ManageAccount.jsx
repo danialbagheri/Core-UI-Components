@@ -8,6 +8,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import {destroyCookie} from 'nookies'
 
 import {CustomButton} from '../../localShared'
+import {AppContext} from '../../../appProvider'
 
 const manageAccountList = [
   {
@@ -27,11 +28,13 @@ const manageAccountList = [
 export function ManageAccount() {
   const router = useRouter()
   const [loading, setLoading] = React.useState(false)
+  const [, setAppState] = React.useContext(AppContext)
 
   const logOutHandler = () => {
     setLoading(true)
     destroyCookie(null, 'calacc', {path: '/'})
     destroyCookie(null, 'calref', {path: '/'})
+    setAppState(perv => ({...perv, isAuthenticate: false}))
 
     router.push('/user/sign-in')
   }

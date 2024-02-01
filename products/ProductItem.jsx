@@ -20,7 +20,7 @@ import {FavIcon} from './FavIcon'
 const ProductTag = props => {
   const {product, isOnSale} = props
 
-  if (isOnSale || product.collection_names.length > 0) {
+  if (isOnSale || product?.collection_names?.length > 0) {
     return (
       <Box
         className="centralize"
@@ -118,7 +118,7 @@ export function ProductItem(props) {
         onMouseEnter={() => setImageIsHovered(true)}
         onMouseLeave={() => setImageIsHovered(false)}
         sx={{
-          height: 365,
+          height: {xs: 300, msm: 365},
           width: '100%',
 
           borderRadius: '10px',
@@ -238,7 +238,7 @@ export function ProductItem(props) {
           }}
         >
           <Typography
-            fontSize={16}
+            fontSize={{xs: 13, msm: 16}}
             fontWeight={600}
             sx={{
               display: '-webkit-box',
@@ -246,7 +246,7 @@ export function ProductItem(props) {
               overflow: 'hidden',
               WebkitLineClamp: 2 /* Number of lines to show */,
               textOverflow: 'ellipsis',
-              lineHeight: '27px',
+              lineHeight: '1.7rem',
             }}
           >
             {product.name}
