@@ -24,13 +24,37 @@ import {hideHeaderLogoOrInfoState} from 'utils'
 /* -------------------------------- CSS Files ------------------------------- */
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import {AppContext} from '../appProvider'
+import {
+  assetsEndPoints,
+  FREE_DELIVERY_ICON_ID,
+  MADE_IN_UK_ICON_ID,
+  STAR_RATE_ICON_ID,
+} from '../../utils'
+import {ApiSvgIcon} from '../shared'
 /* -------------------------------------------------------------------------- */
 
 export default function InfoBar() {
   const [isLoaded, setIsLoaded] = React.useState(false)
   const [items, setItems] = React.useState(null)
+  const [appState] = React.useContext(AppContext)
+
+  const apiIcons = appState.icons?.[assetsEndPoints.infoBar]?.items
+  const madeInUkIcon = apiIcons?.find(
+    icon => icon.id === MADE_IN_UK_ICON_ID,
+  )?.svg_icon_text
+  const freeDeliveryIcon = apiIcons?.find(
+    icon => icon.id === FREE_DELIVERY_ICON_ID,
+  )?.svg_icon_text
+  const starRateIcon = apiIcons?.find(
+    icon => icon.id === STAR_RATE_ICON_ID,
+  )?.svg_icon_text
+
+  const iconsHtml = [madeInUkIcon, freeDeliveryIcon, starRateIcon]
+
   const theme = useTheme()
   const router = useRouter()
+
   const {hideInfoBar} = hideHeaderLogoOrInfoState(router)
 
   const settings = {
@@ -64,11 +88,6 @@ export default function InfoBar() {
   }
 
   //TO DO::: We should import icons from backend
-  const icons = [
-    <Place color="primary" key={1} />,
-    <LocalShipping color="primary" key={2} />,
-    <Star color="primary" key={3} />,
-  ]
 
   //@Danial::: It gets 404 in Cabana on this API call
   React.useEffect(() => {
@@ -91,7 +110,11 @@ export default function InfoBar() {
             display: {xs: hideInfoBar ? 'none' : 'block', md: 'block'},
           }}
         >
-          <Box className="info-bar-icon">{icons[i]}</Box>
+          <ApiSvgIcon
+            className="centralize"
+            htmlContent={iconsHtml[i]}
+            sx={{fill: theme.palette.primary.main, width: 23, height: 23}}
+          />
           <Typography className="text-centre">{item.text}</Typography>
         </Box>
       )

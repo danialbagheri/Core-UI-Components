@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import {Box} from '@mui/material'
+import {Box, useTheme} from '@mui/material'
 
 import {useShopify} from '../../hooks'
 import {AppContext} from '../../appProvider'
@@ -11,14 +11,15 @@ import {
   USER_LOGGED_IN_ICON_ID,
   USER_LOGGED_OUT_ICON_ID,
 } from '../../../utils'
-import Image from 'next/image'
 import Link from 'next/link'
+import {ApiSvgIcon} from '../../shared'
 
 export function AppBarIcons(props) {
   const {trigger, sx, setOpenSearchModal} = props
   const {openCart, closeCart} = useShopify()
   const cartOpenState = React.useRef(false)
   const [appState] = React.useContext(AppContext)
+  const theme = useTheme()
 
   const isLoggedIn = appState.isAuthenticate
 
@@ -38,14 +39,12 @@ export function AppBarIcons(props) {
     item => item.id === SEARCH_ICON_ID,
   )
 
-  const userSvgSrc = isLoggedIn
-    ? userLoggedInIcon?.svg_icon
-    : userLoggedOutIcon?.svg_icon
+  const userSvgSrc = isLoggedIn ? userLoggedInIcon : userLoggedOutIcon
 
   return (
     <Box
       sx={{
-        gap: {xs: 1, msm: 2, sm: 3, md: trigger ? '15px' : '30px'},
+        gap: {xs: 4, md: trigger ? '20px' : '30px'},
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -56,43 +55,36 @@ export function AppBarIcons(props) {
         ...sx,
       }}
     >
-      <Box
+      <ApiSvgIcon
+        className="centralize"
+        htmlContent={searchIcon?.svg_icon_text}
         onClick={() => setOpenSearchModal(true)}
         sx={{
-          width: '30px',
-          height: '30px',
+          width: 20,
+          height: 20,
           display: {xs: 'none', md: trigger ? 'block' : 'none'},
-          cursor: 'pointer',
-          position: 'relative',
-        }}
-      >
-        <Image
-          alt={searchIcon?.name}
-          fill
-          src={searchIcon?.svg_icon}
-          style={{
-            contentFit: 'cover',
+          fill: theme.palette.primary.main,
 
-            filter:
-              'invert(43%) sepia(75%) saturate(2599%) hue-rotate(2deg) brightness(112%) contrast(84%)',
-          }}
-        />
-      </Box>
+          position: 'relative',
+          cursor: 'pointer',
+        }}
+      />
 
       <Link href="/user">
-        <Image
-          alt={userLoggedInIcon?.name}
-          height={30}
-          src={userSvgSrc || ''}
-          style={{
-            filter:
-              'invert(43%) sepia(75%) saturate(2599%) hue-rotate(2deg) brightness(112%) contrast(84%)',
+        <ApiSvgIcon
+          className="centralize"
+          htmlContent={userSvgSrc?.svg_icon_text}
+          sx={{
+            width: {xs: 20, md: 25},
+            height: {xs: 20, md: 25},
+            fill: theme.palette.primary.main,
           }}
-          width={30}
         />
       </Link>
 
-      <Box
+      <ApiSvgIcon
+        className="centralize"
+        htmlContent={cartIcon?.svg_icon_text}
         onClick={e => {
           e.preventDefault()
           if (!cartOpenState.current) {
@@ -104,23 +96,12 @@ export function AppBarIcons(props) {
           }
         }}
         sx={{
-          width: '30px',
-          height: '30px',
-          p: 0,
+          width: {xs: 20, md: 25},
+          height: {xs: 20, md: 25},
+          fill: theme.palette.primary.main,
           cursor: 'pointer',
         }}
-      >
-        <Image
-          alt={cartIcon?.name}
-          height={30}
-          src={cartIcon?.svg_icon}
-          style={{
-            filter:
-              'invert(43%) sepia(75%) saturate(2599%) hue-rotate(2deg) brightness(112%) contrast(84%)',
-          }}
-          width={30}
-        />
-      </Box>
+      />
     </Box>
   )
 }

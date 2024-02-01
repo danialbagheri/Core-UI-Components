@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import Link from 'next/link'
-import Image from 'next/image'
 
 import {styled} from '@mui/material/styles'
 import {Box} from '@mui/material'
@@ -16,6 +15,7 @@ import {
   WISH_LIST_FILL_ICON_ID,
   WISH_LIST_OUTLINED_ICON_ID,
 } from '../../utils/getAssets'
+import {ApiSvgIcon} from '../shared'
 
 export const FavIcon = props => {
   const {isHovered, slug, product} = props
@@ -34,6 +34,7 @@ export const FavIcon = props => {
   const heartOutlineIcon = userAccountIcons?.find(
     icon => icon.id === WISH_LIST_OUTLINED_ICON_ID,
   )
+
   /* -------------------------------------------------------------------------- */
 
   const addToFavoriteHandler = async e => {
@@ -118,20 +119,6 @@ export const FavIcon = props => {
         position: 'absolute',
         top: 18,
         left: 18,
-        '& img': {
-          filter: isFavorite
-            ? 'brightness(0) saturate(100%) invert(30%) sepia(81%) saturate(7482%) hue-rotate(354deg) brightness(113%) contrast(128%)'
-            : {
-                xs: 'brightness(0) saturate(100%) invert(88%) sepia(16%) saturate(266%) hue-rotate(3deg) brightness(89%) contrast(83%)',
-                md: 'brightness(0) saturate(100%) invert(100%) sepia(55%) saturate(2%) hue-rotate(186deg) brightness(112%) contrast(101%)',
-              },
-        },
-        '& #products_fill_heart_icon': {
-          display: {xs: isFavorite ? 'block' : 'none', md: 'block'},
-        },
-        '& #products_outline_heart_icon': {
-          display: {xs: isFavorite ? 'none' : 'block', md: 'none'},
-        },
       }}
     >
       <CustomTooltip
@@ -146,19 +133,25 @@ export const FavIcon = props => {
           )
         }
       >
-        <Image
-          alt={heartFilledIcon?.name || 'heart'}
-          height={24}
+        <ApiSvgIcon
+          htmlContent={heartFilledIcon?.svg_icon_text}
           id="products_fill_heart_icon"
-          src={heartFilledIcon?.svg_icon || ''}
-          width={25}
+          sx={{
+            width: 25,
+            height: 24,
+            fill: isFavorite ? '#FF0000' : '#FFF',
+            display: {xs: isFavorite ? 'block' : 'none', md: 'block'},
+          }}
         />
-        <Image
-          alt={heartOutlineIcon?.name || 'heart'}
-          height={24}
+        <ApiSvgIcon
+          htmlContent={heartOutlineIcon?.svg_icon_text}
           id="products_outline_heart_icon"
-          src={heartOutlineIcon?.svg_icon || ''}
-          width={25}
+          sx={{
+            width: 25,
+            height: 24,
+            fill: '#CAC1AE',
+            display: {xs: isFavorite ? 'none' : 'block', md: 'none'},
+          }}
         />
       </CustomTooltip>
     </Box>

@@ -9,7 +9,7 @@ import {useRouter} from 'next/router'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import {Link, useScrollTrigger} from '@mui/material'
+import {Link, useScrollTrigger, useTheme} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 /* -------------------------------------------------------------------------- */
 
@@ -21,6 +21,7 @@ import logo from '../../public/logo.svg'
 import {hideHeaderLogoOrInfoState} from 'utils'
 import {AppContext} from '../appProvider'
 import {assetsEndPoints, BURGER_ICON_ID, SEARCH_ICON_ID} from '../../utils'
+import {ApiSvgIcon} from '../shared'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
@@ -53,6 +54,7 @@ function Navigation() {
   const menuItemsEle = React.useRef(null)
   const navItemsDetail = React.useRef({state: null, itemsWidth: []})
   /* -------------------------------------------------------------------------- */
+  const theme = useTheme()
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState)
@@ -71,8 +73,6 @@ function Navigation() {
   const menuIcon = appState.icons[assetsEndPoints.userAccount]?.items.find(
     item => item.id === BURGER_ICON_ID,
   )
-
-  console.log('appState.icons::::', appState.icons)
 
   const setNavItemsHandler = () => {
     const containerWidth =
@@ -140,6 +140,8 @@ function Navigation() {
     window.addEventListener('resize', setNavItemsHandler)
   }, [navItems])
 
+  console.log('hidelogo', hideLogo && !trigger)
+
   return (
     <>
       <SearchModal open={openSearchModal} setOpen={setOpenSearchModal} />
@@ -149,9 +151,7 @@ function Navigation() {
           sx={{
             bgcolor: '#FFF',
             boxShadow: trigger ? '0 1px 7px 0 rgba(0, 0, 0, 0.15)' : 'none',
-            p: trigger
-              ? {xs: '0 10px', md: '5px 30px'}
-              : {xs: '10px 10px', md: '20px 30px'},
+            p: {xs: '0 10px', md: trigger ? '5px 30px' : '20px 30px'},
           }}
         >
           <Toolbar
@@ -163,6 +163,7 @@ function Navigation() {
               maxWidth: '1400px',
               margin: '0 auto',
               width: '100%',
+              minHeight: '55px !important',
 
               position: 'relative',
 
@@ -181,6 +182,7 @@ function Navigation() {
 
                 display: {
                   xs: hideLogo && !trigger ? 'none' : 'block',
+                  md: 'block',
                 },
 
                 '&:hover': {boxShadow: 'none', bgcolor: 'unset'},
@@ -198,58 +200,48 @@ function Navigation() {
             </Link>
 
             {/* -------------------------------------------------------------------------- */}
+
             {/* ------------------------ Menu Icon for mobile view ----------------------- */}
             <Box className="centralize" gap={3}>
-              <Box
-                aria-label="open drawer"
-                color="inherit"
-                onClick={handleDrawerToggle}
-                sx={{
-                  display: {md: 'none'},
-                  height: '30px',
-                  width: '30px',
-                }}
-              >
-                {mobileOpen ? (
-                  <CloseIcon color="primary" />
-                ) : (
-                  <Image
-                    alt={menuIcon?.name}
-                    height={30}
-                    src={menuIcon?.svg_icon}
-                    style={{
-                      contentFit: 'cover',
-                      filter:
-                        'invert(43%) sepia(75%) saturate(2599%) hue-rotate(2deg) brightness(112%) contrast(84%)',
-                    }}
-                    width={30}
-                  />
-                )}
-              </Box>
+              {mobileOpen ? (
+                <CloseIcon
+                  color="primary"
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    width: 20,
+                    height: 20,
+                    fill: theme.palette.primary.main,
+                  }}
+                />
+              ) : (
+                <ApiSvgIcon
+                  className="centralize"
+                  htmlContent={menuIcon?.svg_icon_text}
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    width: 18,
+                    height: 18,
+                    fill: theme.palette.primary.main,
+                    display: {md: 'none'},
+                  }}
+                />
+              )}
 
-              <Box
+              <ApiSvgIcon
+                className="centralize"
+                htmlContent={searchIcon?.svg_icon_text}
                 onClick={() => setOpenSearchModal(true)}
                 sx={{
+                  width: 25,
+                  height: 25,
                   display: {xs: 'block', md: 'none'},
-                  height: '30px',
-                  width: '30px',
+                  fill: theme.palette.primary.main,
                   mr: 2,
                   px: 1,
                   position: 'relative',
                   cursor: 'pointer',
                 }}
-              >
-                <Image
-                  alt={searchIcon?.name}
-                  fill
-                  src={searchIcon?.svg_icon}
-                  style={{
-                    contentFit: 'cover',
-                    filter:
-                      'invert(43%) sepia(75%) saturate(2599%) hue-rotate(2deg) brightness(112%) contrast(84%)',
-                  }}
-                />
-              </Box>
+              />
             </Box>
             {/* -------------------------------------------------------------------------- */}
 
@@ -268,7 +260,6 @@ function Navigation() {
           mobileOpen={mobileOpen}
           navItems={navItems}
           setMobileOpen={setMobileOpen}
-          trigger={trigger}
         />
       </Box>
     </>

@@ -67,7 +67,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
 }))
 
 export function MenuDrawer(props) {
-  const {setMobileOpen, mobileOpen, navItems, window, trigger} = props
+  const {setMobileOpen, mobileOpen, navItems, window} = props
   const [expanded, setExpanded] = React.useState(null)
   const theme = useTheme()
   const router = useRouter()
@@ -76,23 +76,25 @@ export function MenuDrawer(props) {
     window !== undefined ? () => window().document.body : undefined
 
   const handleDrawerToggle = e => {
-    e.stopPropagation()
+    e?.stopPropagation()
     setMobileOpen(prevState => !prevState)
   }
 
   const handleChange = panel => (event, newExpanded) => {
-    event.stopPropagation()
+    event?.stopPropagation()
     setExpanded(newExpanded ? panel : false)
   }
 
   const accordionSummaryClickHandler = (subMenuLength, url) => {
     if (!subMenuLength) {
       router.push(url)
+      handleDrawerToggle()
     }
   }
 
   const subMenuClickHandler = url => {
     router.push(url)
+    handleDrawerToggle()
   }
 
   const drawer = (
@@ -204,7 +206,7 @@ export function MenuDrawer(props) {
           },
 
           '&>.MuiPaper-root': {
-            top: trigger ? 63 : 80,
+            top: 55,
           },
 
           '& .MuiBackdrop-root': {
