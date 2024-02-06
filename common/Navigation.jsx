@@ -188,13 +188,24 @@ function Navigation() {
 
                 px: 0,
 
-                '&>img': {width: {xs: 100, md: 150}},
+                zIndex: 10,
+                cursor: 'pointer',
+
+                '& #calypso_main_logo': {
+                  width: {xs: 100, md: 150},
+                },
               },
             }}
           >
             {/* ------------------------------ Calypso Logo ------------------------------ */}
-            <Link href="/" id="nav_logo_container" sx={{}}>
-              <Image alt={WEBSITE} height="47" src={logo} width="100" />
+            <Link href="/" id="nav_logo_container">
+              <Image
+                alt={WEBSITE}
+                height="47"
+                id="calypso_main_logo"
+                src={logo}
+                width="100"
+              />
             </Link>
 
             {/* -------------------------------------------------------------------------- */}
