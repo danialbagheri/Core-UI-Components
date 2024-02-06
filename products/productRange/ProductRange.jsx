@@ -1,6 +1,8 @@
 import * as React from 'react'
 
-import {Box, CircularProgress} from '@mui/material'
+import ReactPlayer from 'react-player/lazy'
+
+import {Box, CircularProgress, Typography} from '@mui/material'
 
 import {ProductItem} from '../ProductItem'
 import Image from 'next/image'
@@ -12,13 +14,12 @@ const COLUMN_GAP = 12
 export default function ProductRange(props) {
   const {products, limit, banner} = props
 
-  console.log('🚀 🙂  banner:::', banner)
-
   const [bannerSpecs, setBannerSpecs] = React.useState({
     columnsCount: 2,
     bannerHeight: 212,
     bannerSrc: banner.mobile,
   })
+  const [initialized, setInitialized] = React.useState(false)
   const productsContainer = React.useRef(null)
 
   const columnCountHandler = container => {
@@ -47,6 +48,12 @@ export default function ProductRange(props) {
     columnCountHandler(productsContainer)
   }, [])
 
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setInitialized(true)
+    }
+  }, [])
+
   return (
     <Box
       ref={productsContainer}
@@ -60,9 +67,48 @@ export default function ProductRange(props) {
         rowGap: 12,
         columnGap: `${COLUMN_GAP}px`,
         justifyContent: 'center',
-        py: 12,
+        pt: 4,
       }}
     >
+      {/* --------------------------- Product page video --------------------------- */}
+      {initialized ? (
+        <Box
+          sx={{
+            width: '100%',
+            height: 'auto',
+            overflow: 'hidden',
+            position: 'relative',
+            gridColumn: `1 / span ${bannerSpecs.columnsCount}`,
+            gridRow: '1',
+            '& video': {
+              borderRadius: '10px',
+            },
+          }}
+        >
+          <Typography
+            sx={{
+              position: 'absolute',
+              left: '56px',
+              top: '56px',
+              fontSize: 35,
+              fontWeight: 700,
+              color: '#FFF',
+            }}
+          >
+            Featured product
+          </Typography>
+          <ReactPlayer
+            height="auto"
+            loop={true}
+            muted
+            playing={true}
+            url="/videos/product-page-header.mp4"
+            width="100%"
+          />
+        </Box>
+      ) : null}
+
+      {/* -------------------------------------------------------------------------- */}
       {products.length < 1 ? (
         <Box
           sx={{
@@ -95,7 +141,7 @@ export default function ProductRange(props) {
           position: 'relative',
           height: bannerSpecs.bannerHeight,
           gridColumn: `1 / span ${bannerSpecs.columnsCount}`, // Ensure the image spans across all columns
-          gridRow: '3',
+          gridRow: '4',
           cursor: 'pointer',
         }}
       >

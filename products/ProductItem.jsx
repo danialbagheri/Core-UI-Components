@@ -244,7 +244,6 @@ export function ProductItem(props) {
           justifyContent: 'space-between',
           gap: 3,
 
-          minHeight: 123,
           flexGrow: 1,
         }}
       >
