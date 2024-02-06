@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {Box} from '@mui/material'
 
-import {ProductItem} from '../../products/ProductItem'
+import BestSellerItems from './BestSellerItems'
 
 export default function BestSeller(props) {
   const collection = props.bestseller
@@ -92,14 +92,14 @@ export default function BestSeller(props) {
               width: '100%',
 
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
               gridTemplateRows: 'auto',
               rowGap: 4,
               columnGap: 2,
             }}
           >
             {collection.items?.slice(0, 6).map((item, index) => (
-              <ProductItem key={index} product={item.item} />
+              <BestSellerItems item={item} key={index} />
             ))}
           </Box>
         </Box>

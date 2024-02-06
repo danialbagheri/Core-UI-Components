@@ -10,9 +10,6 @@ import Slider from 'react-slick'
 
 /* ----------------------------- MUI Components ----------------------------- */
 import {Box, Typography, useTheme} from '@mui/material'
-import Place from '@mui/icons-material/Place'
-import LocalShipping from '@mui/icons-material/LocalShipping'
-import Star from '@mui/icons-material/Star'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */

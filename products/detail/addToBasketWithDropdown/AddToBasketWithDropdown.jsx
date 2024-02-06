@@ -36,8 +36,8 @@ export default function AddToBasketWithDropDown(props) {
           gap: {xs: 5, sm: 4},
         },
         '& .SPF_variants': {
-          width: 30,
-          height: 30,
+          // width: 30,
+          // height: 30,
           fontSize: 12,
           // backgroundColor: theme.palette.primary.main,
           // boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
@@ -63,6 +63,7 @@ export default function AddToBasketWithDropDown(props) {
           addToBasket(activeVariant.graphql_id, 1)
         }}
         sx={{
+          mt: 4,
           fontWeight: 700,
           '&:hover': {
             boxShadow: `0 0 2px 1px ${theme.palette.primary.main}`,

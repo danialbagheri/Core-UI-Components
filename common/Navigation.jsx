@@ -140,8 +140,6 @@ function Navigation() {
     window.addEventListener('resize', setNavItemsHandler)
   }, [navItems])
 
-  console.log('hidelogo', hideLogo && !trigger)
-
   return (
     <>
       <SearchModal open={openSearchModal} setOpen={setOpenSearchModal} />

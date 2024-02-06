@@ -6,6 +6,7 @@ import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import {useRouter} from 'next/router'
+import Link from 'next/link'
 
 const Accordion = styled(props => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -45,12 +46,6 @@ export const NavItem = props => {
   const open = Boolean(anchorEl)
   const id = open ? data.id : undefined
 
-  const handleClick = url => {
-    if (url) {
-      router.push(url)
-    }
-  }
-
   const openPopover = event => {
     setAnchorEl(event.currentTarget)
   }
@@ -70,15 +65,11 @@ export const NavItem = props => {
     }
   }
 
-  const subMenuClickHandler = url => {
-    router.push(url)
-  }
-
   return (
     <Box onMouseLeave={closePopover}>
       <Button
         key={data.id}
-        onClick={() => handleClick(data.url)}
+        // onClick={() => handleClick(data.url)}
         onMouseEnter={openPopover}
         sx={{
           color: '#333',
@@ -88,6 +79,9 @@ export const NavItem = props => {
           textWrap: 'nowrap',
           minWidth: 'fit-content',
           maxWidth: 'fit-content',
+          '& a': {
+            textDecoration: 'none',
+          },
           '&::before': {
             content: "''",
             position: 'absolute',
@@ -104,7 +98,7 @@ export const NavItem = props => {
           },
         }}
       >
-        {data.name}
+        <Link href={data.url}>{data.name}</Link>
       </Button>
       {data.sub_menus.length ? (
         <Popper
@@ -166,7 +160,7 @@ export const NavItem = props => {
                 </AccordionSummary>
                 {item.sub_menus.length ? (
                   <AccordionDetails sx={{pl: 5, bgcolor: '#FFF', py: 0}}>
-                    <Box onClick={() => subMenuClickHandler(item.url)}>
+                    <Box>
                       <Button
                         sx={{
                           color: '#333',
@@ -179,16 +173,16 @@ export const NavItem = props => {
                           position: 'relative',
                           p: '5px 8px',
                           pt: 0,
+                          '& a': {
+                            textDecoration: 'none',
+                          },
                         }}
                       >
-                        {item.name}
+                        <Link href={item.url}>{item.name}</Link>
                       </Button>
                     </Box>
                     {item.sub_menus.map(_item => (
-                      <Box
-                        key={_item.id}
-                        onClick={() => subMenuClickHandler(_item.url)}
-                      >
+                      <Box key={_item.id}>
                         <Button
                           sx={{
                             color: '#333',
@@ -201,7 +195,7 @@ export const NavItem = props => {
                             p: 2,
                           }}
                         >
-                          {_item.name}
+                          <Link href={_item.url}>{_item.name}</Link>
                         </Button>
                       </Box>
                     ))}

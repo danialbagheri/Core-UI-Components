@@ -17,6 +17,12 @@ import {useShopify} from '../hooks'
 import {FavIcon} from './FavIcon'
 /* -------------------------------------------------------------------------- */
 
+/* --------------------------------- Styles --------------------------------- */
+import styles from './styles.module.css'
+/* -------------------------------------------------------------------------- */
+
+const LIFE_STYLE = 'LS'
+
 const ProductTag = props => {
   const {product, isOnSale} = props
 
@@ -59,10 +65,18 @@ export function ProductItem(props) {
   const router = useRouter()
   const theme = useTheme()
 
+  const isLifeStyleImage =
+    product.secondary_image_data?.image_type === LIFE_STYLE
   const isOnSale =
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
   const isInStock = activeVariant.inventory_quantity > 0
 
+  /**
+   *
+   * @param {string} variantImage - The image of the variant
+   * @param {string} mainImage - The main image of the product
+   * @returns {string} - Proper image source. If variant image is not available, main image is returned
+   */
   const imageSrcHandler = (variantImage, mainImage) => {
     if (variantImage) {
       if (variantImage.image) {
@@ -87,6 +101,7 @@ export function ProductItem(props) {
   }
 
   React.useEffect(() => {
+    //These are used to preload images
     if (product.secondary_image_resized) {
       const image = new Image()
       image.src = product.secondary_image_resized
@@ -124,9 +139,10 @@ export function ProductItem(props) {
           borderRadius: '10px',
           overflow: 'hidden',
 
-          background: isHovered
-            ? 'linear-gradient(180deg, #FFCFA3 0%, rgba(255, 255, 255, 0.00) 100%)'
-            : 'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)',
+          background:
+            isHovered && !isLifeStyleImage
+              ? 'linear-gradient(180deg, #FFCFA3 0%, rgba(255, 255, 255, 0.00) 100%)'
+              : 'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)',
 
           position: 'relative',
 
@@ -144,9 +160,12 @@ export function ProductItem(props) {
         <ProductTag isOnSale={isOnSale} product={product} />
 
         {/* Show secondary image on hover */}
-        {imageIsHovered && product.secondary_image_resized ? (
+        {imageIsHovered &&
+        product.secondary_image_resized &&
+        isLifeStyleImage ? (
           <NextImage
             alt={product.name}
+            className={styles.fadeIn}
             fill
             src={product.secondary_image_resized}
             style={{
