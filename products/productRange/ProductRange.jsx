@@ -41,17 +41,19 @@ export default function ProductRange(props) {
     setBannerSpecs({columnsCount, bannerHeight, bannerSrc})
   }
 
+  const initializeWindowsHandler = window => {
+    if (typeof window !== 'undefined') {
+      setInitialized(true)
+    }
+  }
+
   React.useEffect(() => {
     window.addEventListener('resize', () =>
       columnCountHandler(productsContainer),
     )
     columnCountHandler(productsContainer)
-  }, [])
 
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setInitialized(true)
-    }
+    initializeWindowsHandler(window)
   }, [])
 
   return (
@@ -106,7 +108,9 @@ export default function ProductRange(props) {
             width="100%"
           />
         </Box>
-      ) : null}
+      ) : (
+        <Box height={400} />
+      )}
 
       {/* -------------------------------------------------------------------------- */}
       {products.length < 1 ? (
@@ -130,9 +134,7 @@ export default function ProductRange(props) {
               return 0
             })
             .map(product => (
-              <>
-                <ProductItem key={product.id} product={product} />
-              </>
+              <ProductItem key={product.id} product={product} />
             ))}
         </>
       )}
