@@ -61,6 +61,7 @@ export function ProductItem(props) {
   const [activeVariant, setActiveVariant] = React.useState(product.variants[0])
   const [isHovered, setIsHovered] = React.useState(false)
   const [imageIsHovered, setImageIsHovered] = React.useState(false)
+  const [displayImage, setDisplayImage] = React.useState(false)
   const {addVariant, checkoutState, openCart} = useShopify()
   const router = useRouter()
   const theme = useTheme()
@@ -100,6 +101,17 @@ export function ProductItem(props) {
     openCart()
   }
 
+  function mouseMoveHandler(state) {
+    setImageIsHovered(state)
+    if (state) {
+      setDisplayImage(true)
+    } else {
+      setTimeout(() => {
+        setDisplayImage(state)
+      }, 250)
+    }
+  }
+
   React.useEffect(() => {
     //These are used to preload images
     if (product.secondary_image_resized) {
@@ -126,12 +138,13 @@ export function ProductItem(props) {
       }}
     >
       <Box
+        className={styles.fadeOut}
         onClick={e => {
           e.preventDefault()
           router.push(`/products/${product.slug}`)
         }}
-        onMouseEnter={() => setImageIsHovered(true)}
-        onMouseLeave={() => setImageIsHovered(false)}
+        onMouseEnter={() => mouseMoveHandler(true)}
+        onMouseLeave={() => mouseMoveHandler(false)}
         sx={{
           height: {xs: 300, msm: 365},
           width: '100%',
@@ -160,12 +173,10 @@ export function ProductItem(props) {
         <ProductTag isOnSale={isOnSale} product={product} />
 
         {/* Show secondary image on hover */}
-        {imageIsHovered &&
-        product.secondary_image_resized &&
-        isLifeStyleImage ? (
+        {displayImage && product.secondary_image_resized && isLifeStyleImage ? (
           <NextImage
             alt={product.name}
-            className={styles.fadeIn}
+            className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
             fill
             src={product.secondary_image_resized}
             style={{
@@ -227,7 +238,11 @@ export function ProductItem(props) {
             </Typography>
           </Box>
         ) : (
-          <Box className="centralize" gap="10px">
+          <Box
+            className="centralize"
+            gap="10px"
+            sx={{display: displayImage ? 'none !important' : 'flex !important'}}
+          >
             <StarRating
               name={product.name}
               score={product.review_average_score}
