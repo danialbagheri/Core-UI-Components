@@ -141,7 +141,7 @@ export function ProductItem(props) {
 
           background:
             isHovered && !isLifeStyleImage
-              ? 'linear-gradient(180deg, #FFCFA3 0%, rgba(255, 255, 255, 0.00) 100%)'
+              ? 'linear-gradient(180deg, #FFE6C9 0%, rgba(255, 255, 255, 0.00) 100%)'
               : 'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)',
 
           position: 'relative',

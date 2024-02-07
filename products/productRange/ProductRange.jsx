@@ -1,46 +1,93 @@
 import * as React from 'react'
 
-import ReactPlayer from 'react-player/lazy'
-
-import {Box, CircularProgress, Typography} from '@mui/material'
-
-import {ProductItem} from '../ProductItem'
-import Image from 'next/image'
+/* ---------------------------- NextJs Components --------------------------- */
 import Link from 'next/link'
+import Image from 'next/image'
+import {useRouter} from 'next/router'
+/* -------------------------------------------------------------------------- */
+
+/* ------------------------- Video player Component ------------------------- */
+import ReactPlayer from 'react-player/lazy'
+/* -------------------------------------------------------------------------- */
+
+/* ----------------------------- MUI Components ----------------------------- */
+import {Box, CircularProgress, Typography} from '@mui/material'
+/* -------------------------------------------------------------------------- */
+
+/* ---------------------------- Local Components ---------------------------- */
+import {ProductItem} from '../ProductItem'
+/* -------------------------------------------------------------------------- */
 
 const COLUMN_MAX_WIDTH = 240
 const COLUMN_GAP = 12
 
 export default function ProductRange(props) {
-  const {products, limit, banner} = props
+  const {products, banner} = props
 
   const [bannerSpecs, setBannerSpecs] = React.useState({
     columnsCount: 2,
+    gridRow: 4,
     bannerHeight: 212,
     bannerSrc: banner.mobile,
   })
   const [initialized, setInitialized] = React.useState(false)
   const productsContainer = React.useRef(null)
+  const router = useRouter()
 
-  const columnCountHandler = container => {
-    const containerWidth =
-      container.current?.getBoundingClientRect().width ?? 1000
-    const columnWidth = COLUMN_MAX_WIDTH + COLUMN_GAP
-    const columnsCount =
-      containerWidth / columnWidth > 2
-        ? Math.floor(containerWidth / columnWidth)
-        : 2
-    const bannerHeight = columnsCount > 2 ? 113 : 212
-    let bannerSrc = banner.mobile
-    if (columnsCount > 3) {
-      bannerSrc = banner.lg
-    } else if (columnsCount === 3) {
-      bannerSrc = banner.md
+  const category = router.query.category
+
+  //This is to calculate the count of product columns in order to set the banner's width.
+  const gridContainerSpecsHandler = (container, window) => {
+    if (window && container.current) {
+      const gridStyles = window?.getComputedStyle(container.current)
+      const gridWidth = container.current?.clientWidth ?? 1000
+      const gridHeight = container.current?.clientHeight ?? 1000
+
+      // Calculate height and width of each element
+      const gridRowHeight =
+        parseInt(gridStyles.getPropertyValue('grid-auto-rows'), 10) ||
+        parseInt(gridStyles.getPropertyValue('grid-template-rows'), 10)
+      const gridColumnWidth =
+        parseInt(gridStyles.getPropertyValue('grid-auto-columns'), 10) ||
+        parseInt(gridStyles.getPropertyValue('grid-template-columns'), 10)
+
+      //Get row gaps
+      const gridRowGap = parseInt(gridStyles.getPropertyValue('row-gap'), 10)
+      const gridColumnGap = parseInt(
+        gridStyles.getPropertyValue('column-gap'),
+        10,
+      )
+
+      const columnWidth = gridColumnWidth + gridColumnGap
+      const rowHeight = gridRowHeight + gridRowGap
+
+      const rowsCount = Math.floor(gridHeight / rowHeight)
+
+      const gridRow = rowsCount < 3 ? rowsCount + 1 : 4
+
+      const columnsCount =
+        gridWidth / columnWidth > 2 ? Math.floor(gridWidth / columnWidth) : 2
+
+      const bannerHeight = columnsCount > 2 ? 113 : 212
+
+      //Set proper source of banner based on the columns counts
+      let bannerSrc = banner.mobile
+      if (columnsCount > 3) {
+        bannerSrc = banner.lg
+      } else if (columnsCount === 3) {
+        bannerSrc = banner.md
+      }
+
+      setBannerSpecs({columnsCount, bannerHeight, bannerSrc, gridRow})
     }
-
-    setBannerSpecs({columnsCount, bannerHeight, bannerSrc})
   }
 
+  /**
+   *
+   * @param {any} window
+   * As nextJs works SSR, it is used inside useEffect function so after
+   * initializing window object, the video will be rendered
+   */
   const initializeWindowsHandler = window => {
     if (typeof window !== 'undefined') {
       setInitialized(true)
@@ -49,9 +96,9 @@ export default function ProductRange(props) {
 
   React.useEffect(() => {
     window.addEventListener('resize', () =>
-      columnCountHandler(productsContainer),
+      gridContainerSpecsHandler(productsContainer, window),
     )
-    columnCountHandler(productsContainer)
+    gridContainerSpecsHandler(productsContainer, window)
 
     initializeWindowsHandler(window)
   }, [])
@@ -70,6 +117,7 @@ export default function ProductRange(props) {
         columnGap: `${COLUMN_GAP}px`,
         justifyContent: 'center',
         pt: 4,
+        pb: 40,
       }}
     >
       {/* --------------------------- Product page video --------------------------- */}
@@ -78,10 +126,12 @@ export default function ProductRange(props) {
           sx={{
             width: '100%',
             height: 'auto',
+            maxHeight: '365px',
             overflow: 'hidden',
             position: 'relative',
             gridColumn: `1 / span ${bannerSpecs.columnsCount}`,
             gridRow: '1',
+            borderRadius: '10px',
             '& video': {
               borderRadius: '10px',
             },
@@ -97,7 +147,7 @@ export default function ProductRange(props) {
               color: '#FFF',
             }}
           >
-            Featured product
+            {category}
           </Typography>
           <ReactPlayer
             height="auto"
@@ -126,7 +176,6 @@ export default function ProductRange(props) {
       ) : (
         <>
           {products
-            .slice(0, limit)
             .sort(function (a) {
               if (a.collection_names[0] === 'New') {
                 return -1
@@ -138,12 +187,13 @@ export default function ProductRange(props) {
             ))}
         </>
       )}
+      {/* -------------------------- Product finder Banner ------------------------- */}
       <Box
         sx={{
           position: 'relative',
           height: bannerSpecs.bannerHeight,
           gridColumn: `1 / span ${bannerSpecs.columnsCount}`, // Ensure the image spans across all columns
-          gridRow: '4',
+          gridRow: bannerSpecs.gridRow,
           cursor: 'pointer',
         }}
       >
@@ -156,6 +206,7 @@ export default function ProductRange(props) {
           />
         </Link>
       </Box>
+      {/* -------------------------------------------------------------------------- */}
     </Box>
   )
 }
