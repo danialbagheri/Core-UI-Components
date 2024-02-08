@@ -6,10 +6,6 @@ import Image from 'next/image'
 import {useRouter} from 'next/router'
 /* -------------------------------------------------------------------------- */
 
-/* ------------------------- Video player Component ------------------------- */
-import ReactPlayer from 'react-player/lazy'
-/* -------------------------------------------------------------------------- */
-
 /* ----------------------------- MUI Components ----------------------------- */
 import {Box, CircularProgress, Typography} from '@mui/material'
 /* -------------------------------------------------------------------------- */
@@ -22,7 +18,7 @@ const COLUMN_MAX_WIDTH = 240
 const COLUMN_GAP = 12
 
 export default function ProductRange(props) {
-  const {products, banner} = props
+  const {products, banner, videoBanner} = props
 
   const [bannerSpecs, setBannerSpecs] = React.useState({
     columnsCount: 2,
@@ -35,6 +31,7 @@ export default function ProductRange(props) {
   const router = useRouter()
 
   const category = router.query.category
+  const videoCode = videoBanner?.[0].slides?.[0]?.slide?.custom_code
 
   //This is to calculate the count of product columns in order to set the banner's width.
   const gridContainerSpecsHandler = (container, window) => {
@@ -149,14 +146,11 @@ export default function ProductRange(props) {
           >
             {category}
           </Typography>
-          <ReactPlayer
-            height="auto"
-            loop={true}
-            muted
-            playing={true}
-            url="/videos/product-page-header.mp4"
-            width="100%"
-          />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: videoCode,
+            }}
+          ></div>
         </Box>
       ) : (
         <Box height={400} />

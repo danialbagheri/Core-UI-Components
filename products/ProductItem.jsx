@@ -194,6 +194,8 @@ export function ProductItem(props) {
               margin: '0 auto',
               position: 'relative',
               transition: 'all 200ms',
+
+              border: 'none',
             }}
           >
             <NextImage
