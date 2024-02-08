@@ -3,7 +3,7 @@ import * as React from 'react'
 import {useSearchParams} from 'next/navigation'
 
 import Box from '@mui/material/Box'
-import {useTheme} from '@mui/material'
+import {Typography, useTheme} from '@mui/material'
 
 export function VariantSelector({
   variants,
@@ -17,55 +17,37 @@ export function VariantSelector({
   const urlSku = searchParams.get('sku')
   const isAllVarSPF = variants.every(variant => variant.name?.startsWith('SPF'))
 
-  const renderStyles = ({isInStock, isSelected, isAllVarSPF, variant}) => {
-    let outerBoxStyles = {}
-    let innerBoxStyles = {}
-    const isSpfVariant = renderVariantDetails({
-      isAllVarSPF,
-      variant,
-    }).isSpfVariant
-
-    if (isInStock) {
-      if (isSelected) {
-        innerBoxStyles = {
-          width: isSpfVariant ? 28 : 'unset',
-          height: 28,
-          color: '#FFF',
-          bgcolor: theme.palette.primary.main,
-          cursor: 'initial',
-          p: 0,
-        }
-        outerBoxStyles = {
-          p: '2px',
-          border: `2px solid ${theme.palette.primary.main}`,
-          borderRadius: '20px',
-        }
-      } else {
-        innerBoxStyles = {
-          minWidth: 30,
-          maxWidth: isSpfVariant ? 28 : 'unset',
-          height: 30,
-          color: '#000',
-          bgcolor: '#FFF',
-          border: '1px solid #CCC',
-          cursor: 'pointer',
-        }
-      }
-    } else {
-      innerBoxStyles = {
-        minWidth: 30,
-        maxWidth: isSpfVariant ? 28 : 'unset',
-        height: 30,
-        color: '#FFF',
-        bgcolor: '#E8E2D6',
-        border: 'none',
+  const renderStyles = ({isInStock, isSelected}) => {
+    if (isSelected) {
+      return {
+        color: theme.palette.primary.main,
+        fontWeight: 600,
         cursor: 'initial',
+        borderBottom: `2px solid ${theme.palette.primary.main}`,
+      }
+    } else if (!isInStock) {
+      return {
+        color: '#C6C6C6',
+        cursor: 'initial',
+        fontWeight: 400,
       }
     }
-
-    return {outerBoxStyles, innerBoxStyles}
+    return {
+      color: '#000',
+      fontWeight: 400,
+      cursor: 'pointer',
+    }
   }
 
+  /**
+   *
+   * @param {boolean} isAllVarSPF - If all variants are SPF
+   * @param {object} variant - The variant object
+   * @returns {object} - The variant proper name and if it's an SPF variant
+   * @example renderVariantDetails({isAllVarSPF, variant})
+   * @returns {variantName: 'original', isSpfVariant: false}
+   * @returns {variantName: 'spf30', isSpfVariant: true}
+   */
   const renderVariantDetails = ({isAllVarSPF, variant}) => {
     if (isAllVarSPF) {
       return {variantName: variant.name.split(' ')[1], isSpfVariant: true}
@@ -121,14 +103,8 @@ export function VariantSelector({
         const isInStock = variant.inventory_quantity > 0
         const isSelected = selectedVariant.sku === variant.sku
 
-        const {innerBoxStyles, outerBoxStyles} = renderStyles({
-          isSelected,
-          isInStock,
-          isAllVarSPF,
-          variant,
-        })
         return (
-          <Box className="centralize" key={variant.id} sx={{...outerBoxStyles}}>
+          <Box className="centralize" key={variant.id}>
             <Box
               className="centralize"
               onClick={() => {
@@ -136,18 +112,15 @@ export function VariantSelector({
                   setSelectedVariant(variant)
                 }
               }}
-              sx={{
-                fontWeight: 400,
-                fontSize: 16,
-                borderRadius: '15px',
-                ...innerBoxStyles,
-                p: renderVariantDetails({isAllVarSPF, variant}).isSpfVariant
-                  ? 0
-                  : '6px 10px',
-              }}
               textAlign={'center'}
             >
-              {renderVariantDetails({isAllVarSPF, variant}).variantName}
+              <Typography
+                fontSize={16}
+                px
+                sx={{...renderStyles({isInStock, isSelected}), px: 1}}
+              >
+                {renderVariantDetails({isAllVarSPF, variant}).variantName}
+              </Typography>
             </Box>
           </Box>
         )

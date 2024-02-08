@@ -111,7 +111,7 @@ export function QuestionCards(props) {
       >
         <IconButton
           onClick={backArrowClickHandler}
-          sx={{position: 'absolute', left: -4, top: 0}}
+          sx={{position: 'absolute', left: -4, top: -5}}
         >
           <Image
             alt="back"

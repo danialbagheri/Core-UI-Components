@@ -94,7 +94,7 @@ export function InfoCards(props) {
           key="btn_2"
           mt="10px"
           onClick={showResultsHandler}
-          sx={{mt: '10px', borderColor: '#226F61', py: '10px'}}
+          sx={{mt: '10px', borderColor: '#226F61'}}
           variant="outlined"
         >
           Show me the result here
