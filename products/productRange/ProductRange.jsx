@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import _ from 'lodash'
+
 /* ---------------------------- NextJs Components --------------------------- */
 import Link from 'next/link'
 import Image from 'next/image'
@@ -18,7 +20,7 @@ const COLUMN_MAX_WIDTH = 240
 const COLUMN_GAP = 12
 
 export default function ProductRange(props) {
-  const {products, banner, videoBanner} = props
+  const {banner, videoBanner} = props
 
   const [bannerSpecs, setBannerSpecs] = React.useState({
     columnsCount: 2,
@@ -30,10 +32,11 @@ export default function ProductRange(props) {
   const productsContainer = React.useRef(null)
   const router = useRouter()
 
-  const category = router.query.category
-  const videoCode = videoBanner?.[0].slides?.[0]?.slide?.custom_code
+  const category = props.category ?? router.query.category
+  const videoCode = videoBanner?.[0]?.slides?.[0]?.slide?.custom_code
 
-  //This is to calculate the count of product columns in order to set the banner's width.
+  //This is to calculate the count of product columns and rows in order to set the banner's width.
+  //and row
   const gridContainerSpecsHandler = (container, window) => {
     if (window && container.current) {
       const gridStyles = window?.getComputedStyle(container.current)
@@ -59,7 +62,6 @@ export default function ProductRange(props) {
       const rowHeight = gridRowHeight + gridRowGap
 
       const rowsCount = Math.floor(gridHeight / rowHeight)
-
       const gridRow = rowsCount < 3 ? rowsCount + 1 : 4
 
       const columnsCount =
@@ -78,6 +80,13 @@ export default function ProductRange(props) {
       setBannerSpecs({columnsCount, bannerHeight, bannerSrc, gridRow})
     }
   }
+
+  const products = _.orderBy(
+    // checks if product is in multiple collections meaning it's more popular than others
+    props.products,
+    [item => item.types[0].id, item => item.collection_names.length],
+    ['asc', 'desc'],
+  )
 
   /**
    *
