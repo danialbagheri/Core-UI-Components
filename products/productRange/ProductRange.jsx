@@ -5,11 +5,10 @@ import _ from 'lodash'
 /* ---------------------------- NextJs Components --------------------------- */
 import Link from 'next/link'
 import Image from 'next/image'
-import {useRouter} from 'next/router'
 /* -------------------------------------------------------------------------- */
 
 /* ----------------------------- MUI Components ----------------------------- */
-import {Box, CircularProgress, Typography} from '@mui/material'
+import {Box, CircularProgress} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
@@ -30,9 +29,8 @@ export default function ProductRange(props) {
   })
   const [initialized, setInitialized] = React.useState(false)
   const productsContainer = React.useRef(null)
-  const router = useRouter()
 
-  const category = props.category ?? router.query.category
+  const category = props.category
   const videoCode = videoBanner?.[0]?.slides?.[0]?.slide?.custom_code
 
   //This is to calculate the count of product columns and rows in order to set the banner's width.
@@ -127,43 +125,17 @@ export default function ProductRange(props) {
       }}
     >
       {/* --------------------------- Product page video --------------------------- */}
-      {initialized ? (
+      {initialized && category ? (
         <Box
-          sx={{
-            width: '100%',
-            height: 'auto',
-            maxHeight: '365px',
-            overflow: 'hidden',
-            position: 'relative',
-            gridColumn: `1 / span ${bannerSpecs.columnsCount}`,
-            gridRow: '1',
-            borderRadius: '10px',
-            '& video': {
-              borderRadius: '10px',
-            },
+          dangerouslySetInnerHTML={{
+            __html: videoCode,
           }}
-        >
-          <Typography
-            sx={{
-              position: 'absolute',
-              left: '56px',
-              top: '56px',
-              fontSize: 35,
-              fontWeight: 700,
-              color: '#FFF',
-            }}
-          >
-            {category}
-          </Typography>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: videoCode,
-            }}
-          ></div>
-        </Box>
-      ) : (
-        <Box height={400} />
-      )}
+          sx={{
+            gridColumn: `1 / span ${bannerSpecs.columnsCount}`,
+            gridRow: 1,
+          }}
+        ></Box>
+      ) : null}
 
       {/* -------------------------------------------------------------------------- */}
       {products.length < 1 ? (
@@ -194,19 +166,17 @@ export default function ProductRange(props) {
       <Box
         sx={{
           position: 'relative',
-          height: bannerSpecs.bannerHeight,
+          height: {xs: 150, msm: bannerSpecs.bannerHeight},
           gridColumn: `1 / span ${bannerSpecs.columnsCount}`, // Ensure the image spans across all columns
           gridRow: bannerSpecs.gridRow,
           cursor: 'pointer',
+          '& img': {
+            objectFit: {xs: 'contain', msm: 'cover'},
+          },
         }}
       >
         <Link href="/product-finder">
-          <Image
-            alt="Product finder"
-            fill
-            src={bannerSpecs?.bannerSrc || ''}
-            style={{objectFit: 'cover'}}
-          />
+          <Image alt="Product finder" fill src={bannerSpecs?.bannerSrc || ''} />
         </Link>
       </Box>
       {/* -------------------------------------------------------------------------- */}
