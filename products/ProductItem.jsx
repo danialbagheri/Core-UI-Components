@@ -201,13 +201,14 @@ export function ProductItem(props) {
           >
             <NextImage
               alt={product.name}
-              fill
-              sizes="(max-width: 900px) 50vw, 20vw "
+              height={270}
+              sizes="(max-width: 900px) 50vw, 30vw"
               src={imageSrcHandler(
                 activeVariant.image_list[0],
                 product.main_image,
               )}
               style={{objectFit: 'contain'}}
+              width={212}
             />
           </Box>
         )}
