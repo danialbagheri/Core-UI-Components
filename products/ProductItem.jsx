@@ -207,7 +207,6 @@ export function ProductItem(props) {
                 activeVariant.image_list[0],
                 product.main_image,
               )}
-              style={{objectFit: 'contain'}}
               width={212}
             />
           </Box>
