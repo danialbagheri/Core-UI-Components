@@ -202,7 +202,7 @@ export function ProductItem(props) {
             <NextImage
               alt={product.name}
               fill
-              sizes="(max-width: 900px) 50vw, 20vw"
+              sizes="(max-width: 900px) 50vw, 20vw "
               src={imageSrcHandler(
                 activeVariant.image_list[0],
                 product.main_image,
