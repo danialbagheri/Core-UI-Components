@@ -1,2 +1,5 @@
 export * from './Header'
 export * from './Body'
+export * from './SideBar'
+export * from './Container'
+export * from './FavoriteProductsList'

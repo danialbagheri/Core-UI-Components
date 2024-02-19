@@ -63,6 +63,7 @@ export function ProductItem(props) {
   const [imageIsHovered, setImageIsHovered] = React.useState(false)
   const [displayImage, setDisplayImage] = React.useState(false)
   const {addVariant, checkoutState, openCart} = useShopify()
+
   const router = useRouter()
   const theme = useTheme()
 
@@ -97,6 +98,7 @@ export function ProductItem(props) {
         quantity: parseInt(quantity, 10),
       },
     ]
+
     addVariant(checkoutState.id, lineItemsToAdd)
     openCart()
   }
@@ -178,6 +180,7 @@ export function ProductItem(props) {
             alt={product.name}
             className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
             fill
+            sizes="(max-width: 900px) 50vw, 20vw"
             src={product.secondary_image_resized}
             style={{
               objectFit: 'cover',
@@ -201,6 +204,7 @@ export function ProductItem(props) {
             <NextImage
               alt={product.name}
               fill
+              sizes="(max-width: 900px) 50vw, 20vw"
               src={imageSrcHandler(
                 activeVariant.image_list[0],
                 product.main_image,

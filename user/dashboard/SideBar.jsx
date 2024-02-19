@@ -32,7 +32,7 @@ const SIDE_BAR_BUTTONS = [
   },
 ]
 
-export default function SideBar(props) {
+export function SideBar(props) {
   const {girlIcon, route} = props
   const router = useRouter()
   const [, setAppState] = React.useContext(AppContext)

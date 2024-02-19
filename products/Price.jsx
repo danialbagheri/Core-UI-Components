@@ -1,25 +1,24 @@
 import React from 'react'
 
-import {useCurrency} from '../customHooks'
+/* ----------------------------- MUI Components ----------------------------- */
 import {Box, Typography} from '@mui/material'
+/* -------------------------------------------------------------------------- */
 
+/* ---------------------------- Local Components ---------------------------- */
+import {useCurrency} from 'components/customHooks'
+/* -------------------------------------------------------------------------- */
+
+/* -------------------------------- Constants ------------------------------- */
 export const COMPARE_AT_PRICE = 'compare_at_price'
 export const EURO_COMPARE_AT_PRICE = 'euro_compare_at_price'
 export const PRICE = 'price'
 export const EURO_PRICE = 'euro_price'
+/* -------------------------------------------------------------------------- */
 
 export function Price(props) {
   const {variant} = props
-  const {isGBP, symbol} = useCurrency()
-
-  const isOnSale = variant[COMPARE_AT_PRICE] || variant[EURO_COMPARE_AT_PRICE]
-  const price = Number(isGBP ? variant[PRICE] : variant[EURO_PRICE])
-  const compareAtPrice = Number(
-    isGBP ? variant[COMPARE_AT_PRICE] : variant[EURO_COMPARE_AT_PRICE],
-  )
-  const discountPercent = Math.round(
-    ((compareAtPrice - price) / compareAtPrice) * 100,
-  )
+  const {symbol, isOnSale, discountPercent, price, compareAtPrice} =
+    useCurrency(variant)
 
   return (
     <Box>

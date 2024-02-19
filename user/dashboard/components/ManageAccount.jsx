@@ -1,14 +1,23 @@
 import * as React from 'react'
 
+/* ---------------------------- NextJs Components --------------------------- */
 import {useRouter} from 'next/router'
+import Link from 'next/link'
+/* -------------------------------------------------------------------------- */
 
+/* ----------------------------- MUI Components ----------------------------- */
 import {Box, Divider, Typography} from '@mui/material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+/* -------------------------------------------------------------------------- */
 
+/* ------------------------------- Libraries ------------------------------- */
 import {destroyCookie} from 'nookies'
+/* -------------------------------------------------------------------------- */
 
-import {CustomButton} from '../../localShared'
-import {AppContext} from '../../../appProvider'
+/* ---------------------------- Local Components ---------------------------- */
+import {AppContext} from 'components/appProvider'
+import {CustomButton} from 'components/user/localShared'
+/* -------------------------------------------------------------------------- */
 
 const manageAccountList = [
   {
@@ -22,6 +31,12 @@ const manageAccountList = [
     title: 'Password',
     description: 'To set or change your password',
     route: '/user/dashboard/password',
+  },
+  {
+    id: 'favorite_products',
+    title: 'Favorite products',
+    description: 'List of your favorite products',
+    route: '/user/dashboard/favorite-products',
   },
 ]
 
@@ -49,16 +64,19 @@ export function ManageAccount() {
         <>
           <Box
             key={item.id}
-            onClick={() => router.push(item.route)}
             sx={{
               display: 'flex',
               width: '100%',
               justifyContent: 'space-between',
               alignItems: 'center',
               cursor: 'pointer',
+
+              '&>a': {
+                textDecoration: 'none',
+              },
             }}
           >
-            <Box>
+            <Link href={item.route}>
               <Typography
                 color="primary"
                 sx={{fontSize: '18px', fontWeight: 700}}
@@ -70,7 +88,8 @@ export function ManageAccount() {
               >
                 {item.description}
               </Typography>
-            </Box>
+            </Link>
+
             <ArrowForwardIosIcon color="primary" fontSize="small" />
           </Box>
           <Divider sx={{borderColor: '#F2F2F2', my: 3}} />
