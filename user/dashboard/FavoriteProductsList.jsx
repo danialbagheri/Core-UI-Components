@@ -1,90 +1,53 @@
 import * as React from 'react'
 
 /* ----------------------------- MUI Components ----------------------------- */
-import {
-  Box,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@mui/material'
-
+import {Box} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
+import {MobileFavList} from './components'
+import {CustomButton} from '../localShared'
+import {getFavoriteProductsHandler} from 'utils'
 import {AppContext} from 'components/appProvider'
 import {useAuthFetch} from 'components/customHooks'
-import {getFavoriteProductsHandler} from 'utils'
-// import {Price} from './components'
+import DesktopFavList from './components/DesktopFavList'
 /* -------------------------------------------------------------------------- */
 
 export function FavoriteProductsList() {
   const [appState, setAppState] = React.useContext(AppContext)
+  const [loading, setLoading] = React.useState(true)
+
   const authFetchHandler = useAuthFetch()
 
   const getFavoriteProducts = async () => {
+    setLoading(true)
     try {
       await getFavoriteProductsHandler({setAppState, authFetchHandler})
     } catch (err) {
       console.error(err)
+    } finally {
+      setLoading(false)
     }
   }
 
+  //Get user favorite list if not already fetched
   React.useEffect(() => {
     if (!appState.favoriteProducts) {
       getFavoriteProducts()
+    } else {
+      setLoading(false)
     }
   }, [])
 
   return (
-    <Box sx={{width: '100%'}}>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow
-            sx={{
-              '& th': {
-                fontSize: 16,
-                fontWeight: 700,
-                px: 0,
-                py: '7px',
-                lineHeight: 'normal',
-              },
-            }}
-          >
-            <TableCell>Product name</TableCell>
-            {/* <TableCell>Unit Price</TableCell> */}
-            <TableCell> </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {appState?.favoriteProducts?.length ? (
-            appState?.favoriteProducts.map(product => (
-              <TableRow
-                key={product.id}
-                sx={{'& td': {px: 0, lineHeight: 'normal', py: '32px'}}}
-              >
-                <TableCell sx={{fontWeight: 500, fontSize: 16}}>
-                  {product.name}
-                </TableCell>
-                {/* <TableCell>
-                  <Price variant={product.variants[0]} />
-                </TableCell> */}
-                <TableCell>
-                  <Button>Add to cart</Button>
-                </TableCell>
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell> No favorite products found</TableCell>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+    <Box className="centralize" sx={{width: '100%', flexDirection: 'column'}}>
+      <DesktopFavList loading={loading} />
+      <MobileFavList loading={loading} />
+      {appState?.favoriteProducts?.length && !loading ? (
+        <CustomButton sx={{mt: '60px', height: 52}} variant="contained">
+          Add all to cart
+        </CustomButton>
+      ) : null}
     </Box>
   )
 }
