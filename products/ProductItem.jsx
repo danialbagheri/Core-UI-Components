@@ -66,7 +66,7 @@ export function ProductItem(props) {
   const router = useRouter()
   const theme = useTheme()
 
-  const isLifeStyleImage =
+  const hasLifeStyleImage =
     product.secondary_image_data?.image_type === LIFE_STYLE
   const isOnSale =
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
@@ -112,15 +112,6 @@ export function ProductItem(props) {
     }
   }
 
-  React.useEffect(() => {
-    //These are used to preload images
-    if (product.secondary_image_resized) {
-      const image = new Image()
-      image.src = product.secondary_image_resized
-      image.alt = product.name
-    }
-  }, [])
-
   return (
     <Box
       key={product.id}
@@ -153,7 +144,7 @@ export function ProductItem(props) {
           overflow: 'hidden',
 
           background:
-            isHovered && !isLifeStyleImage
+            isHovered && !hasLifeStyleImage
               ? 'linear-gradient(180deg, #FFE6C9 0%, rgba(255, 255, 255, 0.00) 100%)'
               : 'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)',
 
@@ -172,12 +163,15 @@ export function ProductItem(props) {
       >
         <ProductTag isOnSale={isOnSale} product={product} />
 
-        {/* Show secondary image on hover */}
-        {displayImage && product.secondary_image_resized && isLifeStyleImage ? (
+        {/*Secondary image on hover */}
+        {displayImage &&
+        product.secondary_image_resized &&
+        hasLifeStyleImage ? (
           <NextImage
             alt={product.name}
             className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
             fill
+            loading="eager"
             sizes="(max-width: 900px) 50vw, 20vw"
             src={product.secondary_image_resized}
             style={{
@@ -201,13 +195,14 @@ export function ProductItem(props) {
           >
             <NextImage
               alt={product.name}
-              height={270}
-              sizes="(max-width: 900px) 50vw, 30vw"
+              fill
+              priority
+              sizes="(max-width: 900px) 50vw, 20vw"
               src={imageSrcHandler(
                 activeVariant.image_list[0],
                 product.main_image,
               )}
-              width={212}
+              style={{objectFit: 'contain'}}
             />
           </Box>
         )}
