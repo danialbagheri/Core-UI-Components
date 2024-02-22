@@ -120,21 +120,23 @@ export default function ProductRange(props) {
         rowGap: 12,
         columnGap: `${COLUMN_GAP}px`,
         justifyContent: 'center',
-        pt: 4,
+        pt: 12,
         pb: 40,
       }}
     >
-      {/* --------------------------- Product page video --------------------------- */}
+      {/* ------------------------------ Video Banner ------------------------------ */}
       {initialized && category ? (
         <Box
           dangerouslySetInnerHTML={{
             __html: videoCode,
           }}
+          id="product_page_video"
           sx={{
             gridColumn: `1 / span ${bannerSpecs.columnsCount}`,
             gridRow: 1,
+            marginBottom: '-30px',
           }}
-        ></Box>
+        />
       ) : null}
 
       {/* -------------------------------------------------------------------------- */}
