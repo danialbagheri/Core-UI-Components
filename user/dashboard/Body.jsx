@@ -1,8 +1,15 @@
+import * as React from 'react'
+
 import {Box, Divider} from '@mui/material'
-import {ManageAccount, OrderHistory} from './components'
+import {DashboardFavLink, ManageAccount, OrderHistory} from './components'
+import {AppContext} from 'components/appProvider'
 
 export function Body(props) {
   const {orders} = props
+  const [appState] = React.useContext(AppContext)
+
+  console.log('🚀 🙂  appState:::', appState)
+
   return (
     <Box
       sx={{
@@ -17,7 +24,20 @@ export function Body(props) {
         m: '0 auto',
       }}
     >
-      <OrderHistory orders={orders} />
+      <Box width="100%">
+        <OrderHistory orders={orders} />
+        <Divider
+          sx={{
+            borderColor: '#F1F1F1',
+            mt: 11,
+            mb: 8,
+            width: 'calc(100%  - 28px)',
+            mx: 'auto',
+            display: {xs: 'block', md: 'none'},
+          }}
+        />
+        <DashboardFavLink />
+      </Box>
       <Divider
         sx={{
           borderColor: '#F1F1F1',
