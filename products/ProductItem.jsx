@@ -22,6 +22,7 @@ import styles from './styles.module.css'
 /* -------------------------------------------------------------------------- */
 
 const LIFE_STYLE = 'LS'
+const PRODUCT_IMAGE = 'PI'
 
 const ProductTag = props => {
   const {product, isOnSale} = props
@@ -72,24 +73,35 @@ export function ProductItem(props) {
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
   const isInStock = activeVariant.inventory_quantity > 0
 
+  const getProperVariantImage = imageList => {
+    const mainImage = imageList.find(image => image.main)
+    const isPIImage = mainImage?.image_type === PRODUCT_IMAGE
+
+    if (mainImage && isPIImage) {
+      return mainImage.image
+    }
+
+    const piImage = imageList.find(image => image?.image_type === PRODUCT_IMAGE)
+    return piImage?.image || ''
+  }
+
   /**
    *
    * @param {string} variantImage - The image of the variant
    * @param {string} mainImage - The main image of the product
    * @returns {string} - Proper image source. If variant image is not available, main image is returned
    */
-  const imageSrcHandler = (variantImage, mainImage) => {
+  const imageSrcHandler = (imageList, mainImage) => {
+    const variantImage = getProperVariantImage(imageList)
+
     if (variantImage) {
-      if (variantImage.image) {
-        return variantImage.image
-      } else if (mainImage) {
-        return mainImage
-      }
-      return ''
+      return variantImage
+    } else if (mainImage) {
+      return mainImage
     }
+
     return ''
   }
-
   function addToCartHandler(variantId, quantity) {
     const lineItemsToAdd = [
       {
@@ -199,7 +211,7 @@ export function ProductItem(props) {
               priority
               sizes="(max-width: 900px) 50vw, 20vw"
               src={imageSrcHandler(
-                activeVariant.image_list[0],
+                activeVariant.image_list,
                 product.main_image,
               )}
               style={{objectFit: 'contain'}}
