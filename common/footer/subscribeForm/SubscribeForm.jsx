@@ -123,7 +123,11 @@ function SubscribeForm() {
         <Collapse
           in={showFields}
           orientation="vertical"
-          sx={{flexGrow: 1, '& .MuiCollapse-wrapperInner': {width: '100%'}}}
+          sx={{
+            flexGrow: 1,
+            width: '100%',
+            '& .MuiCollapse-wrapperInner': {width: '100%'},
+          }}
         >
           <Box
             sx={{
