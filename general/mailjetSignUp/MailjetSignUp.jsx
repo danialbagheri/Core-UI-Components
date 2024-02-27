@@ -20,6 +20,7 @@ const SIGNED_UP = 'signedUp'
 
 export default function MailjetSignUp() {
   const [showPopUp, setShowPopUp] = React.useState(false)
+
   const [fieldData, setFieldData] = React.useState({
     email: '',
     firstName: '',
@@ -68,7 +69,7 @@ export default function MailjetSignUp() {
     setSnackBarOpen(false)
   }
 
-  const submitHandler = e => {
+  const submitHandler = async e => {
     e.preventDefault()
 
     if (!fieldData.email) {
@@ -85,40 +86,76 @@ export default function MailjetSignUp() {
       lastName: fieldData.lastName,
       email: fieldData.email,
     }
-    registerContact(data)
-      .then(res => {
-        if (res.status < 400) {
-          localStorage.setItem(SUBSCRIPTION_STATE, SIGNED_UP)
-          setLoading(false)
-          setApiResponse({
-            message: <span>Thank you for subscribing &#128522;</span>,
-            success: true,
-          })
-          setSnackBarOpen(true)
-          setTimeout(() => setShowPopUp(false), 2000)
-        } else {
-          res.json().then(res => {
-            setLoading(false)
-            setApiResponse({
-              message: res.message,
-              success: false,
-            })
-            setSnackBarOpen(true)
-            if (res.message.includes('Email already exists')) {
-              setError('This email address already exists!')
-            }
-          })
-        }
-      })
-      .catch(err => {
-        setLoading(false)
+
+    try {
+      const response = await registerContact(data)
+      if (response.status < 400) {
+        localStorage.setItem(SUBSCRIPTION_STATE, SIGNED_UP)
         setApiResponse({
-          message: err,
-          success: false,
+          message: <span>Thank you for subscribing &#128522;</span>,
+          success: true,
         })
         setSnackBarOpen(true)
-        setError(err)
+        setTimeout(() => setShowPopUp(false), 2000)
+      } else {
+        response.json().then(res => {
+          setLoading(false)
+          setApiResponse({
+            message: res.message,
+            success: false,
+          })
+          setSnackBarOpen(true)
+          if (res.message.includes('Email already exists')) {
+            setError('This email address already exists!')
+          }
+        })
+      }
+    } catch (err) {
+      console.error(err)
+      setApiResponse({
+        message: 'Something went wrong! please try again later.',
+        success: false,
       })
+      setSnackBarOpen(true)
+      setError('Something went wrong! please try again later.')
+    } finally {
+      setLoading(false)
+    }
+
+    // registerContact(data)
+    //   .then(res => {
+    //     if (res.status < 400) {
+    //       localStorage.setItem(SUBSCRIPTION_STATE, SIGNED_UP)
+    //       setLoading(false)
+    //       setApiResponse({
+    //         message: <span>Thank you for subscribing &#128522;</span>,
+    //         success: true,
+    //       })
+    //       setSnackBarOpen(true)
+    //       setTimeout(() => setShowPopUp(false), 2000)
+    //     } else {
+    //       res.json().then(res => {
+    //         setLoading(false)
+    //         setApiResponse({
+    //           message: res.message,
+    //           success: false,
+    //         })
+    //         setSnackBarOpen(true)
+    //         if (res.message.includes('Email already exists')) {
+    //           setError('This email address already exists!')
+    //         }
+    //       })
+    //     }
+    //   })
+    //   .catch(err => {
+    //     setLoading(false)
+    //     setApiResponse({
+    //       message: err,
+    //       success: false,
+    //     })
+    //     setSnackBarOpen(true)
+    //     setError(err)
+    //   })
   }
 
   const onScroll = () => {
@@ -181,8 +218,8 @@ export default function MailjetSignUp() {
           sx={{
             top: 0,
             left: 0,
-            width: '37px',
-            height: '340px',
+            width: {xs: '100%', sm: '37px'},
+            height: {xs: '37px', sm: '340px'},
             position: 'absolute',
             display: 'inline-block',
             backgroundColor: 'primary.main',
@@ -266,10 +303,18 @@ export default function MailjetSignUp() {
               <Button
                 color="primary"
                 onClick={e => submitHandler(e)}
-                sx={{'&>span': {color: 'white'}}}
+                sx={{
+                  color: 'white',
+                  boxShadow: 'none',
+                  '&:hover': {backgroundColor: '#FF6B00', boxShadow: 'none'},
+                }}
                 variant="contained"
               >
-                {loading ? <CircularProgress size={23} /> : 'SUBSCRIBE'}
+                {loading ? (
+                  <CircularProgress size={23} sx={{'& svg': {color: '#FFF'}}} />
+                ) : (
+                  'SUBSCRIBE'
+                )}
               </Button>
             </Box>
           </Box>

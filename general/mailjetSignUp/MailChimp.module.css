@@ -34,7 +34,7 @@
   height: 340px;
   position: absolute;
   display: inline-block;
-  background: #ec6b1d 0% 0% no-repeat padding-box;
+  background: #ff6b00 0% 0% no-repeat padding-box;
   padding: 3px;
   cursor: pointer;
 }
@@ -117,13 +117,13 @@
   margin: -5px;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 600px) {
   .NewsLetterContainerOpen,
   .NewsLetterContainerClose {
     top: 30vh;
   }
 }
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 600px) {
   .ModalbackgroundShown {
     display: block;
     position: fixed; /* Stay in place */
