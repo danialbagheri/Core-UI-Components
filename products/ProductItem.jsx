@@ -74,15 +74,24 @@ export function ProductItem(props) {
   const isInStock = activeVariant.inventory_quantity > 0
 
   const getProperVariantImage = imageList => {
-    const mainImage = imageList.find(image => image.main)
-    const isPIImage = mainImage?.image_type === PRODUCT_IMAGE
+    // Get images with angle FRONT
+    const frontImages = imageList.filter(image => image.image_angle === 'FRONT')
+    // Get the main image from the front images
+    const mainImage = frontImages.find(image => image.main)
+    // Check if the main image is a product image
+    const isMainImagePI = mainImage?.image_type === PRODUCT_IMAGE
 
-    if (mainImage && isPIImage) {
+    if (mainImage && isMainImagePI) {
       return mainImage.image
     }
 
     const piImage = imageList.find(image => image?.image_type === PRODUCT_IMAGE)
-    return piImage?.image || ''
+
+    if (piImage) {
+      return piImage?.image || ''
+    }
+
+    return frontImages[0]?.image
   }
 
   /**
