@@ -15,7 +15,6 @@ import CloseIcon from '@mui/icons-material/Close'
 
 /* ---------------------------- Local Components ---------------------------- */
 import {DesktopMenu, MenuDrawer} from './localComponents'
-import {getRetrieveMenu} from '../../services'
 import SearchModal from '../searchModal/SearchModal'
 import logo from '../../public/logo.svg'
 import {hideHeaderLogoOrInfoState} from 'utils'
@@ -26,13 +25,14 @@ import {ApiSvgIcon} from '../shared'
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 
-function Navigation() {
+function Navigation(props) {
+  const {navItems = []} = props
   const router = useRouter()
   const {hideLogo} = hideHeaderLogoOrInfoState(router)
   /* --------------------------------- States --------------------------------- */
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [openSearchModal, setOpenSearchModal] = React.useState(false)
-  const [navItems, setNavItems] = React.useState([])
+
   const [shrinkNavItems, setShrinkNavItems] = React.useState([])
   const [moreButton, setMoreButton] = React.useState({
     id: 'more',
@@ -102,19 +102,6 @@ function Navigation() {
       }
     }
   }
-
-  React.useEffect(() => {
-    //To Do:::: This api doesn't work for cabana
-    //    getMegaMenuProducts()
-    //      .then(res => setProductsPageMegaMenu(res.items))
-    //      .catch(err => console.error(err))
-
-    getRetrieveMenu()
-      .then(res => {
-        setNavItems(res.sub_menus)
-      })
-      .catch(err => console.error(err))
-  }, [])
 
   React.useEffect(() => {
     //Here we looking in app bar items and find which items is
