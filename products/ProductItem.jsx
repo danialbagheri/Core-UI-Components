@@ -58,8 +58,6 @@ const ProductTag = props => {
 export function ProductItem(props) {
   const {product} = props
 
-  console.log('🚀 🙂  product:::', product)
-
   const [activeVariant, setActiveVariant] = React.useState(product.variants[0])
   const [isHovered, setIsHovered] = React.useState(false)
   const [imageIsHovered, setImageIsHovered] = React.useState(false)

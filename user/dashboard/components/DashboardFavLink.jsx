@@ -27,7 +27,7 @@ export function DashboardFavLink() {
       <Box className="centralize" gap={4}>
         <Box
           dangerouslySetInnerHTML={{
-            __html: heartIcon.svg_icon_text,
+            __html: heartIcon?.svg_icon_text,
           }}
           sx={{
             height: 24,
