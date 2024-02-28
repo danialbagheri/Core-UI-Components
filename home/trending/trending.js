@@ -66,8 +66,6 @@ const settings = {
 export default function Trending() {
   const [topSeller, setTopSeller] = React.useState([])
 
-  console.log('🚀 🙂  topSeller:::', topSeller)
-
   const [loading, setLoading] = React.useState(true)
 
   const getTrendingHandler = async () => {

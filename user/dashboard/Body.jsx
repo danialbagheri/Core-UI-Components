@@ -2,13 +2,9 @@ import * as React from 'react'
 
 import {Box, Divider} from '@mui/material'
 import {DashboardFavLink, ManageAccount, OrderHistory} from './components'
-import {AppContext} from 'components/appProvider'
 
 export function Body(props) {
   const {orders} = props
-  const [appState] = React.useContext(AppContext)
-
-  console.log('🚀 🙂  appState:::', appState)
 
   return (
     <Box

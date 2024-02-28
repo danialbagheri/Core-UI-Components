@@ -15,7 +15,6 @@ import CloseIcon from '@mui/icons-material/Close'
 
 /* ---------------------------- Local Components ---------------------------- */
 import {DesktopMenu, MenuDrawer} from './localComponents'
-import {getRetrieveMenu} from '../../services'
 import SearchModal from '../searchModal/SearchModal'
 import logo from '../../public/logo.svg'
 import {hideHeaderLogoOrInfoState} from 'utils'
