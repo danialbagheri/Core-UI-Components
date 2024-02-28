@@ -11,12 +11,11 @@ import {
 } from '@mui/material'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
-import {registerContact} from 'services'
-import Link from 'next/link'
 
-const SUBSCRIPTION_STATE = 'subscriptionState'
+import Link from 'next/link'
+import {userSubscription} from 'services'
+
 const SUB_PANEL_OPEN = 'sub panel open'
-const SIGNED_UP = 'signedUp'
 
 export default function MailjetSignUp() {
   const [showPopUp, setShowPopUp] = React.useState(false)
@@ -88,36 +87,20 @@ export default function MailjetSignUp() {
     }
 
     try {
-      const response = await registerContact(data)
-      if (response.status < 400) {
-        localStorage.setItem(SUBSCRIPTION_STATE, SIGNED_UP)
-        setApiResponse({
-          message: <span>Thank you for subscribing &#128522;</span>,
-          success: true,
-        })
-        setSnackBarOpen(true)
-        setTimeout(() => setShowPopUp(false), 2000)
-      } else {
-        response.json().then(res => {
-          setLoading(false)
-          setApiResponse({
-            message: res.message,
-            success: false,
-          })
-          setSnackBarOpen(true)
-          if (res.message.includes('Email already exists')) {
-            setError('This email address already exists!')
-          }
-        })
-      }
+      await userSubscription(data)
+      setApiResponse({
+        message: <span>Thank you for subscribing &#128522;</span>,
+        success: true,
+      })
+      setSnackBarOpen(true)
+      setTimeout(() => setShowPopUp(false), 2000)
     } catch (err) {
       console.error(err)
       setApiResponse({
-        message: 'Something went wrong! please try again later.',
+        message: 'Subscription was unsuccessful',
         success: false,
       })
       setSnackBarOpen(true)
-      setError('Something went wrong! please try again later.')
     } finally {
       setLoading(false)
     }
