@@ -1,12 +1,27 @@
+import {useEffect, useState} from 'react'
+
+import Image from 'next/image'
+import {useRouter} from 'next/router'
+
+import {Box, Skeleton} from '@mui/material'
+
 import Slider from 'react-slick'
+
+import {getCollectionBanner} from 'services'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import {Box} from '@mui/material'
-import {useEffect, useState} from 'react'
-import Image from 'next/image'
-import {useRouter} from 'next/router'
+const height = {xs: 350, ssm: 450, msm: 300, sm: 350, md: 400}
+const settings = {
+  arrows: true,
+  dots: true,
+  infinite: true,
+  speed: 500,
+  lazyLoad: 'progressive',
+  slidesToScroll: 1,
+  dotsClass: 'dot',
+}
 
 const SliderItem = slide => {
   const [imgSrc, setImgSrc] = useState('xl_image')
@@ -58,13 +73,15 @@ const SliderItem = slide => {
       onClick={clickHandler}
       sx={{
         position: 'relative',
-        height: {xs: 350, ssm: 450, msm: 300, sm: 350, md: 400},
+        height,
         cursor: 'pointer',
       }}
     >
       <Image
         alt={slide.slide.image_alt_text}
         fill
+        lazy
+        sizes="100vw"
         src={slide.slide[imgSrc]}
         style={{objectFit: 'cover'}}
       />
@@ -72,31 +89,46 @@ const SliderItem = slide => {
   )
 }
 
-export default function HomeSlider({slides, second}) {
-  const settings = {
-    arrows: true,
-    dots: true,
-    infinite: true,
-    speed: 500,
-    lazyLoad: 'progressive',
-    slidesToScroll: 1,
-    dotsClass: 'dot',
+export default function HomeSlider({isSecondBanner}) {
+  const [slides, setSlides] = useState([])
+
+  const [loading, setLoading] = useState(true)
+
+  const getBannerHandler = async () => {
+    const bannerSrc = isSecondBanner ? 'secondary' : 'homepage'
+    try {
+      const response = await getCollectionBanner(bannerSrc)
+      setSlides(response.results)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
   }
+
+  useEffect(() => {
+    getBannerHandler(isSecondBanner)
+  }, [])
 
   return (
     <Box
       sx={{
-        mt: second ? '5rem' : 0,
+        height,
+        mt: isSecondBanner ? '5rem' : 0,
         '& button.slick-arrow': {
           display: 'none !important',
         },
       }}
     >
-      <Slider {...settings}>
-        {slides[0]?.slider_slides.map(slide => (
-          <SliderItem key={slide.id} slide={slide} />
-        ))}
-      </Slider>
+      {loading ? (
+        <Skeleton sx={{height}} variant="rectangular" width="100%" />
+      ) : (
+        <Slider {...settings}>
+          {slides[0]?.slider_slides.map(slide => (
+            <SliderItem key={slide.id} slide={slide} />
+          ))}
+        </Slider>
+      )}
     </Box>
   )
 }

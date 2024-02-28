@@ -25,14 +25,120 @@ import {ApiSvgIcon} from '../shared'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
+const initialNavItems = [
+  {
+    id: 2,
+    slug: 'sun-protection',
+    name: 'Sun Protection',
+    text: '',
+    url: '/products/categories/sun-protection',
+    image: null,
+    svg_image: null,
+    is_mega_menu: false,
+    is_active: true,
+    sub_menus: [],
+    position: 0,
+  },
+  {
+    id: 8,
+    slug: 'after-sun',
+    name: 'After Sun',
+    text: '',
+    url: '/products/categories/after-sun',
+    image: null,
+    svg_image: null,
+    is_mega_menu: false,
+    is_active: true,
+    sub_menus: [],
+    position: 1,
+  },
+  {
+    id: 9,
+    slug: 'kids',
+    name: 'Kids',
+    text: '',
+    url: '/products/categories/kids',
+    image: null,
+    svg_image: null,
+    is_mega_menu: false,
+    is_active: true,
+    sub_menus: [],
+    position: 2,
+  },
+  {
+    id: 10,
+    slug: 'tanning',
+    name: 'Tanning',
+    text: '',
+    url: '/products/categories/tanning',
+    image: null,
+    svg_image: null,
+    is_mega_menu: false,
+    is_active: true,
+    sub_menus: [],
+    position: 3,
+  },
+  {
+    id: 11,
+    slug: 'health-care',
+    name: 'Health Care',
+    text: '',
+    url: '/products/categories/health-care',
+    image: null,
+    svg_image: null,
+    is_mega_menu: false,
+    is_active: true,
+    sub_menus: [],
+    position: 4,
+  },
+  {
+    id: 12,
+    slug: 'be-sun-ready',
+    name: 'Be Sun Ready',
+    text: '',
+    url: '/be-sun-ready',
+    image: null,
+    svg_image: null,
+    is_mega_menu: true,
+    is_active: true,
+    sub_menus: [],
+    position: 5,
+  },
+  {
+    id: 13,
+    slug: 'advice',
+    name: 'Advice',
+    text: '',
+    url: '/advice',
+    image: null,
+    svg_image: null,
+    is_mega_menu: false,
+    is_active: true,
+    sub_menus: [],
+    position: 6,
+  },
+  {
+    id: 14,
+    slug: 'about-us',
+    name: 'About Us',
+    text: '',
+    url: '/about',
+    image: null,
+    svg_image: null,
+    is_mega_menu: false,
+    is_active: true,
+    sub_menus: [],
+    position: 7,
+  },
+]
 
-function Navigation() {
+function Navigation(props) {
+  const {navItems = initialNavItems} = props
   const router = useRouter()
   const {hideLogo} = hideHeaderLogoOrInfoState(router)
   /* --------------------------------- States --------------------------------- */
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [openSearchModal, setOpenSearchModal] = React.useState(false)
-  const [navItems, setNavItems] = React.useState([])
   const [shrinkNavItems, setShrinkNavItems] = React.useState([])
   const [moreButton, setMoreButton] = React.useState({
     id: 'more',
@@ -102,19 +208,6 @@ function Navigation() {
       }
     }
   }
-
-  React.useEffect(() => {
-    //To Do:::: This api doesn't work for cabana
-    //    getMegaMenuProducts()
-    //      .then(res => setProductsPageMegaMenu(res.items))
-    //      .catch(err => console.error(err))
-
-    getRetrieveMenu()
-      .then(res => {
-        setNavItems(res.sub_menus)
-      })
-      .catch(err => console.error(err))
-  }, [])
 
   React.useEffect(() => {
     //Here we looking in app bar items and find which items is

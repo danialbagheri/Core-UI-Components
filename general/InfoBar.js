@@ -16,23 +16,22 @@ import {Box, Typography, useTheme} from '@mui/material'
 import TopBar from './topbar'
 import {getInfoBarStatus} from '../../services'
 import {hideHeaderLogoOrInfoState} from 'utils'
-/* -------------------------------------------------------------------------- */
-
-/* -------------------------------- CSS Files ------------------------------- */
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 import {AppContext} from '../appProvider'
 import {
   assetsEndPoints,
   FREE_DELIVERY_ICON_ID,
   MADE_IN_UK_ICON_ID,
   STAR_RATE_ICON_ID,
-} from '../../utils'
+} from 'utils'
 import {ApiSvgIcon} from '../shared'
 /* -------------------------------------------------------------------------- */
 
+/* -------------------------------- CSS Files ------------------------------- */
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+/* -------------------------------------------------------------------------- */
+
 export default function InfoBar() {
-  const [isLoaded, setIsLoaded] = React.useState(false)
   const [items, setItems] = React.useState(null)
   const [appState] = React.useContext(AppContext)
 
@@ -84,57 +83,58 @@ export default function InfoBar() {
     ],
   }
 
-  //TO DO::: We should import icons from backend
-
   //@Danial::: It gets 404 in Cabana on this API call
   React.useEffect(() => {
     getInfoBarStatus()
       .then(res => {
         setItems(res.items)
-        setIsLoaded(true)
       })
       .catch(err => console.error(err))
   }, [])
 
-  if (isLoaded) {
-    const infoBarItems = items.map((item, i) => {
-      return (
-        <Box
-          className="info-bar-item"
-          key={item.id}
-          sx={{
-            alignItems: 'center',
-            display: {xs: hideInfoBar ? 'none' : 'block', md: 'block'},
-          }}
-        >
-          <ApiSvgIcon
-            className="centralize"
-            htmlContent={iconsHtml[i]}
-            sx={{fill: theme.palette.primary.main, width: 23, height: 23}}
-          />
-          <Typography className="text-centre">{item.text}</Typography>
-        </Box>
-      )
-    })
+  const infoBarItems = items?.map((item, i) => {
     return (
-      <Box sx={{display: {xs: hideInfoBar ? 'none' : 'block', md: 'block'}}}>
-        <TopBar />
-        <Box
-          className="info-bar"
-          sx={{
-            backgroundColor: theme.palette.sand.main,
-            padding: '10px 0',
-
-            '& .slick-track': {
-              display: 'flex',
-              alignItems: 'center',
-            },
-          }}
-        >
-          <Slider {...settings}>{infoBarItems}</Slider>
-        </Box>
+      <Box
+        className="info-bar-item"
+        key={item.id}
+        sx={{
+          alignItems: 'center',
+          display: {xs: hideInfoBar ? 'none' : 'block', md: 'block'},
+        }}
+      >
+        <ApiSvgIcon
+          className="centralize"
+          htmlContent={iconsHtml[i]}
+          sx={{fill: theme.palette.primary.main, width: 23, height: 23}}
+        />
+        <Typography className="text-centre">{item.text}</Typography>
       </Box>
     )
-  }
-  return null
+  })
+
+  return (
+    <Box
+      sx={{
+        display: {xs: hideInfoBar ? 'none' : 'block', md: 'block'},
+      }}
+    >
+      <TopBar />
+      <Box
+        className="info-bar"
+        sx={{
+          backgroundColor: theme.palette.sand.main,
+          padding: '10px 0',
+
+          height: 43,
+
+          '& .slick-track': {
+            display: 'flex',
+            alignItems: 'center',
+          },
+        }}
+      >
+        <Slider {...settings}>{infoBarItems}</Slider>
+      </Box>
+    </Box>
+  )
 }

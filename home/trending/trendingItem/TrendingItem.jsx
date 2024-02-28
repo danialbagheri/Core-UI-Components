@@ -9,9 +9,10 @@ import {useRouter} from 'next/router'
 import Box from '@mui/system/Box'
 import Typography from '@mui/material/Typography'
 import Rating from '@mui/material/Rating'
+import {Skeleton} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
-function TrendingItem({item}) {
+function TrendingItem({item = {}, loading}) {
   const {
     main_image,
     name,
@@ -54,6 +55,8 @@ function TrendingItem({item}) {
         alignItems: 'flex-start',
         justifyContent: 'center',
         gap: 4,
+        width: {xs: '150px', sm: '240px', lg: '260px'},
+        margin: '0 auto',
 
         cursor: 'pointer',
       }}
@@ -64,8 +67,8 @@ function TrendingItem({item}) {
         sx={{
           position: 'relative',
 
-          width: {xs: '150px', smd: '240px', lg: '260px'},
-          height: {xs: '230px', smd: '360px', lg: '400px'},
+          width: {xs: '150px', sm: '240px', lg: '260px'},
+          height: {xs: '230px', sm: '360px', lg: '400px'},
 
           borderRadius: 1,
 
@@ -74,31 +77,55 @@ function TrendingItem({item}) {
           backgroundColor: '#E7EBEE',
         }}
       >
-        <Image alt={name} fill objectFit="cover" src={imageSrc || ''} />
+        {loading ? (
+          <Skeleton height="100%" variant="rectangular" width="100%" />
+        ) : (
+          <Image
+            alt={name}
+            fill
+            objectFit="cover"
+            sizes="(max-width: 600px) 50vw,  33vw"
+            src={imageSrc || ''}
+          />
+        )}
       </Box>
-      <Box>
-        <Typography variant={'h4'}>{name}</Typography>
-        <Typography mt={1}>{sub_title}</Typography>
-      </Box>
-      <Typography className="trending-box-price">
-        From £{lowest_variant_price}
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 3,
-        }}
-      >
-        <Rating
-          defaultValue={Number(review_average_score)}
-          name="size-medium"
-          precision={0.5}
-          readOnly
-        />
-        <Typography>{review_average_score}</Typography>
-      </Box>
+
+      {loading ? (
+        <Skeleton width="100%" />
+      ) : (
+        <Box>
+          <Typography variant={'h4'}>{name}</Typography>
+          <Typography mt={1}>{sub_title}</Typography>
+        </Box>
+      )}
+
+      {loading ? (
+        <Skeleton width="80%" />
+      ) : (
+        <Typography className="trending-box-price">
+          From £{lowest_variant_price}
+        </Typography>
+      )}
+      {loading ? (
+        <Skeleton width="50%" />
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 3,
+          }}
+        >
+          <Rating
+            defaultValue={Number(review_average_score)}
+            name="size-medium"
+            precision={0.5}
+            readOnly
+          />
+          <Typography>{review_average_score}</Typography>
+        </Box>
+      )}
     </Box>
   )
 }
