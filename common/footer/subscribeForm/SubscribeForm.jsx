@@ -1,19 +1,9 @@
 import Button from '@mui/material/Button'
-import {
-  Alert,
-  Box,
-  CircularProgress,
-  Collapse,
-  Snackbar,
-  TextField,
-} from '@mui/material'
+import {Alert, Box, CircularProgress, Snackbar, TextField} from '@mui/material'
 import * as React from 'react'
-import {registerContact} from 'services'
+import {userSubscription} from 'services'
 
 function SubscribeForm() {
-  const SUBSCRIPTION_STATE = 'subscriptionState'
-  const SIGNED_UP = 'signedUp'
-
   const [fieldData, setFieldData] = React.useState({
     email: '',
     firstName: '',
@@ -26,7 +16,6 @@ function SubscribeForm() {
     message: '',
   })
   const [snackBarOpen, setSnackBarOpen] = React.useState(false)
-  const [showFields, setShowFields] = React.useState(false)
 
   const fieldStyle = {
     borderRadius: 1,
@@ -65,7 +54,7 @@ function SubscribeForm() {
     setSnackBarOpen(false)
   }
 
-  const submitHandler = e => {
+  const submitHandler = async e => {
     e.preventDefault()
 
     if (!fieldData.email) {
@@ -82,30 +71,25 @@ function SubscribeForm() {
       lastName: fieldData.lastName,
       email: fieldData.email,
     }
-    registerContact(data).then(res => {
-      if (res.status < 400) {
-        localStorage.setItem(SUBSCRIPTION_STATE, SIGNED_UP)
-        setLoading(false)
-        setApiResponse({
-          message: <span>Thank you for subscribing &#128522;</span>,
-          success: true,
-        })
-        setSnackBarOpen(true)
-        setTimeout(() => setShowFields(false), 2000)
-      } else {
-        res.json().then(res => {
-          setLoading(false)
-          setApiResponse({
-            message: res.message,
-            success: false,
-          })
-          setSnackBarOpen(true)
-          if (res.message.includes('Email already exists')) {
-            setError('This email address already exists!')
-          }
-        })
-      }
-    })
+
+    try {
+      await userSubscription(data)
+      setApiResponse({
+        message: <span>Thank you for subscribing &#128522;</span>,
+        success: true,
+      })
+      setSnackBarOpen(true)
+      setTimeout(() => setSnackBarOpen(false), 2000)
+    } catch (err) {
+      console.error(err)
+      setApiResponse({
+        message: 'Subscription was unsuccessful',
+        success: false,
+      })
+      setSnackBarOpen(true)
+    } finally {
+      setLoading(false)
+    }
   }
   return (
     <>
@@ -119,49 +103,12 @@ function SubscribeForm() {
           alignItems: 'flex-start',
         }}
       >
-        {' '}
-        <Collapse
-          in={showFields}
-          orientation="vertical"
-          sx={{
-            flexGrow: 1,
-            width: '100%',
-            '& .MuiCollapse-wrapperInner': {width: '100%'},
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              width: '100%',
-            }}
-          >
-            <TextField
-              id="outlined"
-              label="First Name"
-              onChange={e => changeHandler('firstName', e.target.value)}
-              sx={{...fieldStyle}}
-              type="text"
-              value={fieldData.firstName}
-            />
-            <TextField
-              id="outlined"
-              label="Last Name"
-              onChange={e => changeHandler('lastName', e.target.value)}
-              sx={{...fieldStyle}}
-              type="text"
-              value={fieldData.lastName}
-            />
-          </Box>
-        </Collapse>
         <TextField
           error={error}
           helperText={error}
           id="outlined-required"
           label="Email address"
           onChange={e => changeHandler('email', e.target.value)}
-          onClick={() => setShowFields(true)}
           required
           sx={{...fieldStyle}}
           type="email"
@@ -181,10 +128,15 @@ function SubscribeForm() {
             sx={theme => {
               return {
                 border: 'none',
+                color: '#FFF',
                 background: `${theme.palette.golden.main}`,
                 p: '4px 20px',
                 fontWeight: '600',
                 borderRadius: 3,
+                '&:hover': {
+                  background: `${theme.palette.golden.main}`,
+                  boxShadow: 'none',
+                },
               }
             }}
             variant="primary"

@@ -104,41 +104,6 @@ export default function MailjetSignUp() {
     } finally {
       setLoading(false)
     }
-
-    // registerContact(data)
-    //   .then(res => {
-    //     if (res.status < 400) {
-    //       localStorage.setItem(SUBSCRIPTION_STATE, SIGNED_UP)
-    //       setLoading(false)
-    //       setApiResponse({
-    //         message: <span>Thank you for subscribing &#128522;</span>,
-    //         success: true,
-    //       })
-    //       setSnackBarOpen(true)
-    //       setTimeout(() => setShowPopUp(false), 2000)
-    //     } else {
-    //       res.json().then(res => {
-    //         setLoading(false)
-    //         setApiResponse({
-    //           message: res.message,
-    //           success: false,
-    //         })
-    //         setSnackBarOpen(true)
-    //         if (res.message.includes('Email already exists')) {
-    //           setError('This email address already exists!')
-    //         }
-    //       })
-    //     }
-    //   })
-    //   .catch(err => {
-    //     setLoading(false)
-    //     setApiResponse({
-    //       message: err,
-    //       success: false,
-    //     })
-    //     setSnackBarOpen(true)
-    //     setError(err)
-    //   })
   }
 
   const onScroll = () => {
@@ -233,7 +198,7 @@ export default function MailjetSignUp() {
             padding: 4,
             display: 'flex',
             flexDirection: 'column',
-            gap: 3,
+            gap: 6,
             backgroundColor: '#fdf8f1c7',
           }}
         >
@@ -256,22 +221,6 @@ export default function MailjetSignUp() {
                 flexGrow: 1,
               }}
             >
-              <TextField
-                id="outlined"
-                label="First Name"
-                onChange={e => changeHandler('firstName', e.target.value)}
-                sx={{...fieldStyle}}
-                type="text"
-                value={fieldData.firstName}
-              />
-              <TextField
-                id="outlined"
-                label="Last Name"
-                onChange={e => changeHandler('lastName', e.target.value)}
-                sx={{...fieldStyle}}
-                type="text"
-                value={fieldData.lastName}
-              />
               <TextField
                 error={error}
                 helperText={error}
