@@ -9,18 +9,20 @@ import {useRouter} from 'next/router'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import {Link, useScrollTrigger, useTheme} from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import {Link, useScrollTrigger} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
 import {DesktopMenu, MenuDrawer} from './localComponents'
 import SearchModal from '../searchModal/SearchModal'
-import logo from '../../public/logo.svg'
 import {hideHeaderLogoOrInfoState} from 'utils'
-import {AppContext} from '../appProvider'
-import {assetsEndPoints, BURGER_ICON_ID, SEARCH_ICON_ID} from '../../utils'
-import {ApiSvgIcon} from '../shared'
+/* -------------------------------------------------------------------------- */
+
+/* ------------------------------- Local Icons ------------------------------ */
+import logo from '../../public/logo.svg'
+import burger from '../../public/icons/burger.svg'
+import remove from '../../public/icons/remove.svg'
+import search from '../../public/icons/search.svg'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
@@ -47,14 +49,13 @@ function Navigation(props) {
     text: 'More',
     url: '',
   })
-  const [appState] = React.useContext(AppContext)
+
   /* -------------------------------------------------------------------------- */
 
   /* ---------------------------------- Refs ---------------------------------- */
   const menuItemsEle = React.useRef(null)
   const navItemsDetail = React.useRef({state: null, itemsWidth: []})
   /* -------------------------------------------------------------------------- */
-  const theme = useTheme()
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState)
@@ -65,14 +66,6 @@ function Navigation(props) {
     threshold: 100,
     target: undefined,
   })
-
-  const searchIcon = appState.icons[assetsEndPoints.userAccount]?.items.find(
-    item => item.id === SEARCH_ICON_ID,
-  )
-
-  const menuIcon = appState.icons[assetsEndPoints.userAccount]?.items.find(
-    item => item.id === BURGER_ICON_ID,
-  )
 
   const setNavItemsHandler = () => {
     const containerWidth =
@@ -200,44 +193,50 @@ function Navigation(props) {
             {/* ------------------------ Menu Icon for mobile view ----------------------- */}
             <Box className="centralize" gap={3}>
               {mobileOpen ? (
-                <CloseIcon
-                  color="primary"
+                <Box
                   onClick={handleDrawerToggle}
                   sx={{
-                    width: 20,
-                    height: 20,
-                    fill: theme.palette.primary.main,
-                  }}
-                />
-              ) : (
-                <ApiSvgIcon
-                  className="centralize"
-                  htmlContent={menuIcon?.svg_icon_text}
-                  onClick={handleDrawerToggle}
-                  sx={{
-                    width: 18,
-                    height: 18,
-                    fill: theme.palette.primary.main,
+                    position: 'absolute',
+                    zIndex: '10',
                     display: {md: 'none'},
                   }}
-                />
+                >
+                  <Image
+                    alt="burger_icon"
+                    height={40}
+                    src={remove}
+                    width={40}
+                  />
+                </Box>
+              ) : (
+                <Box
+                  className="centralize"
+                  sx={{
+                    position: 'absolute',
+                    gap: 3,
+                    left: 0,
+                    zIndex: '10',
+                    display: {xs: 'flex', md: 'none !important'},
+                  }}
+                >
+                  <Box onClick={handleDrawerToggle}>
+                    <Image
+                      alt="burger_icon"
+                      height={18}
+                      src={burger}
+                      width={18}
+                    />
+                  </Box>
+                  <Box onClick={() => setOpenSearchModal(true)}>
+                    <Image
+                      alt="burger_icon"
+                      height={18}
+                      src={search}
+                      width={18}
+                    />
+                  </Box>
+                </Box>
               )}
-
-              <ApiSvgIcon
-                className="centralize"
-                htmlContent={searchIcon?.svg_icon_text}
-                onClick={() => setOpenSearchModal(true)}
-                sx={{
-                  width: 25,
-                  height: 25,
-                  display: {xs: 'block', md: 'none'},
-                  fill: theme.palette.primary.main,
-                  mr: 2,
-                  px: 1,
-                  position: 'relative',
-                  cursor: 'pointer',
-                }}
-              />
             </Box>
             {/* -------------------------------------------------------------------------- */}
 
