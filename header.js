@@ -5,9 +5,9 @@ import Cart from './shopify/cart'
 import Navigation from './common/Navigation'
 
 // import store from "../redux/store";
-export default function Header() {
+export default function Header(props) {
+  const {navItems} = props
   const {createShop, createCheckout, fetchProducts} = useShopify()
-  //   const { search, showSearch } = useState(false);
 
   React.useEffect(() => {
     createShop()
@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <header>
-      <Navigation />
+      <Navigation navItems={navItems} />
       <Cart />
     </header>
   )

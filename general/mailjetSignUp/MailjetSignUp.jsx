@@ -11,15 +11,15 @@ import {
 } from '@mui/material'
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
-import {registerContact} from 'services'
-import Link from 'next/link'
 
-const SUBSCRIPTION_STATE = 'subscriptionState'
+import Link from 'next/link'
+import {userSubscription} from 'services'
+
 const SUB_PANEL_OPEN = 'sub panel open'
-const SIGNED_UP = 'signedUp'
 
 export default function MailjetSignUp() {
   const [showPopUp, setShowPopUp] = React.useState(false)
+
   const [fieldData, setFieldData] = React.useState({
     email: '',
     firstName: '',
@@ -68,7 +68,7 @@ export default function MailjetSignUp() {
     setSnackBarOpen(false)
   }
 
-  const submitHandler = e => {
+  const submitHandler = async e => {
     e.preventDefault()
 
     if (!fieldData.email) {
@@ -85,40 +85,25 @@ export default function MailjetSignUp() {
       lastName: fieldData.lastName,
       email: fieldData.email,
     }
-    registerContact(data)
-      .then(res => {
-        if (res.status < 400) {
-          localStorage.setItem(SUBSCRIPTION_STATE, SIGNED_UP)
-          setLoading(false)
-          setApiResponse({
-            message: <span>Thank you for subscribing &#128522;</span>,
-            success: true,
-          })
-          setSnackBarOpen(true)
-          setTimeout(() => setShowPopUp(false), 2000)
-        } else {
-          res.json().then(res => {
-            setLoading(false)
-            setApiResponse({
-              message: res.message,
-              success: false,
-            })
-            setSnackBarOpen(true)
-            if (res.message.includes('Email already exists')) {
-              setError('This email address already exists!')
-            }
-          })
-        }
+
+    try {
+      await userSubscription(data)
+      setApiResponse({
+        message: <span>Thank you for subscribing &#128522;</span>,
+        success: true,
       })
-      .catch(err => {
-        setLoading(false)
-        setApiResponse({
-          message: err,
-          success: false,
-        })
-        setSnackBarOpen(true)
-        setError(err)
+      setSnackBarOpen(true)
+      setTimeout(() => setShowPopUp(false), 2000)
+    } catch (err) {
+      console.error(err)
+      setApiResponse({
+        message: 'Subscription was unsuccessful',
+        success: false,
       })
+      setSnackBarOpen(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const onScroll = () => {
@@ -181,8 +166,8 @@ export default function MailjetSignUp() {
           sx={{
             top: 0,
             left: 0,
-            width: '37px',
-            height: '340px',
+            width: {xs: '100%', sm: '37px'},
+            height: {xs: '37px', sm: '340px'},
             position: 'absolute',
             display: 'inline-block',
             backgroundColor: 'primary.main',
@@ -213,7 +198,7 @@ export default function MailjetSignUp() {
             padding: 4,
             display: 'flex',
             flexDirection: 'column',
-            gap: 3,
+            gap: 6,
             backgroundColor: '#fdf8f1c7',
           }}
         >
@@ -237,22 +222,6 @@ export default function MailjetSignUp() {
               }}
             >
               <TextField
-                id="outlined"
-                label="First Name"
-                onChange={e => changeHandler('firstName', e.target.value)}
-                sx={{...fieldStyle}}
-                type="text"
-                value={fieldData.firstName}
-              />
-              <TextField
-                id="outlined"
-                label="Last Name"
-                onChange={e => changeHandler('lastName', e.target.value)}
-                sx={{...fieldStyle}}
-                type="text"
-                value={fieldData.lastName}
-              />
-              <TextField
                 error={error}
                 helperText={error}
                 id="outlined-required"
@@ -266,10 +235,18 @@ export default function MailjetSignUp() {
               <Button
                 color="primary"
                 onClick={e => submitHandler(e)}
-                sx={{'&>span': {color: 'white'}}}
+                sx={{
+                  color: 'white',
+                  boxShadow: 'none',
+                  '&:hover': {backgroundColor: '#FF6B00', boxShadow: 'none'},
+                }}
                 variant="contained"
               >
-                {loading ? <CircularProgress size={23} /> : 'SUBSCRIBE'}
+                {loading ? (
+                  <CircularProgress size={23} sx={{'& svg': {color: '#FFF'}}} />
+                ) : (
+                  'SUBSCRIBE'
+                )}
               </Button>
             </Box>
           </Box>

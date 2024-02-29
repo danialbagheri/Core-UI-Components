@@ -22,6 +22,7 @@ import styles from './styles.module.css'
 /* -------------------------------------------------------------------------- */
 
 const LIFE_STYLE = 'LS'
+const PRODUCT_IMAGE = 'PI'
 
 const ProductTag = props => {
   const {product, isOnSale} = props
@@ -67,11 +68,32 @@ export function ProductItem(props) {
   const router = useRouter()
   const theme = useTheme()
 
-  const isLifeStyleImage =
+  const hasLifeStyleImage =
     product.secondary_image_data?.image_type === LIFE_STYLE
   const isOnSale =
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
   const isInStock = activeVariant.inventory_quantity > 0
+
+  const getProperVariantImage = imageList => {
+    // Get images with angle FRONT
+    const frontImages = imageList.filter(image => image.image_angle === 'FRONT')
+    // Get the main image from the front images
+    const mainImage = frontImages.find(image => image.main)
+    // Check if the main image is a product image
+    const isMainImagePI = mainImage?.image_type === PRODUCT_IMAGE
+
+    if (mainImage && isMainImagePI) {
+      return mainImage.image
+    }
+
+    const piImage = imageList.find(image => image?.image_type === PRODUCT_IMAGE)
+
+    if (piImage) {
+      return piImage?.image || ''
+    }
+
+    return frontImages[0]?.image
+  }
 
   /**
    *
@@ -79,18 +101,17 @@ export function ProductItem(props) {
    * @param {string} mainImage - The main image of the product
    * @returns {string} - Proper image source. If variant image is not available, main image is returned
    */
-  const imageSrcHandler = (variantImage, mainImage) => {
+  const imageSrcHandler = (imageList, mainImage) => {
+    const variantImage = getProperVariantImage(imageList)
+
     if (variantImage) {
-      if (variantImage.image) {
-        return variantImage.image
-      } else if (mainImage) {
-        return mainImage
-      }
-      return ''
+      return variantImage
+    } else if (mainImage) {
+      return mainImage
     }
+
     return ''
   }
-
   function addToCartHandler(variantId, quantity) {
     const lineItemsToAdd = [
       {
@@ -113,15 +134,6 @@ export function ProductItem(props) {
       }, 250)
     }
   }
-
-  React.useEffect(() => {
-    //These are used to preload images
-    if (product.secondary_image_resized) {
-      const image = new Image()
-      image.src = product.secondary_image_resized
-      image.alt = product.name
-    }
-  }, [])
 
   return (
     <Box
@@ -155,7 +167,7 @@ export function ProductItem(props) {
           overflow: 'hidden',
 
           background:
-            isHovered && !isLifeStyleImage
+            isHovered && !hasLifeStyleImage
               ? 'linear-gradient(180deg, #FFE6C9 0%, rgba(255, 255, 255, 0.00) 100%)'
               : 'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)',
 
@@ -174,12 +186,15 @@ export function ProductItem(props) {
       >
         <ProductTag isOnSale={isOnSale} product={product} />
 
-        {/* Show secondary image on hover */}
-        {displayImage && product.secondary_image_resized && isLifeStyleImage ? (
+        {/*Secondary image on hover */}
+        {displayImage &&
+        product.secondary_image_resized &&
+        hasLifeStyleImage ? (
           <NextImage
             alt={product.name}
             className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
             fill
+            loading="eager"
             sizes="(max-width: 900px) 50vw, 20vw"
             src={product.secondary_image_resized}
             style={{
@@ -187,7 +202,6 @@ export function ProductItem(props) {
             }}
           />
         ) : (
-          // Show primary image by default and if secondary image is not available
           <Box
             sx={{
               width: {xs: '100%', msm: 212},
@@ -204,9 +218,10 @@ export function ProductItem(props) {
             <NextImage
               alt={product.name}
               fill
+              priority
               sizes="(max-width: 900px) 50vw, 20vw"
               src={imageSrcHandler(
-                activeVariant.image_list[0],
+                activeVariant.image_list,
                 product.main_image,
               )}
               style={{objectFit: 'contain'}}
