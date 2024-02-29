@@ -12,7 +12,7 @@ import {TrendingItem} from './trendingItem'
 import {getTrendingUrls} from 'services'
 
 const settings = {
-  slidesToShow: 2,
+  slidesToShow: 5,
   arrows: true,
   dots: false,
   slidesToScroll: 1,
