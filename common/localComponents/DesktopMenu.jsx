@@ -1,26 +1,25 @@
 import * as React from 'react'
+
+/* ---------------------------- NextJs Components --------------------------- */
+import Image from 'next/image'
+/* -------------------------------------------------------------------------- */
+
 /* ----------------------------- MUI Components ----------------------------- */
-import {Box, Typography, useTheme} from '@mui/material'
+import {Box, Typography} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
 import {NavItem} from './NavItem'
 import {AppBarIcons} from './AppBarIcons'
-import {ApiSvgIcon} from '../../shared'
-import {AppContext} from '../../appProvider'
-import {assetsEndPoints, SEARCH_ICON_ID} from '../../../utils'
+/* -------------------------------------------------------------------------- */
 
+/* ------------------------------- Local icons ------------------------------ */
+import search from '../../../public/icons/search.svg'
 /* -------------------------------------------------------------------------- */
 
 export function DesktopMenu(props) {
   const {trigger, setOpenSearchModal, shrinkNavItems, menuItemsEle, navItems} =
     props
-  const [appState] = React.useContext(AppContext)
-  const theme = useTheme()
-
-  const searchIcon = appState.icons[assetsEndPoints.userAccount]?.items.find(
-    item => item.id === SEARCH_ICON_ID,
-  )
 
   const renderNavItems = () => {
     if (shrinkNavItems.length) {
@@ -59,17 +58,7 @@ export function DesktopMenu(props) {
           }}
         >
           <Typography color="primary">Search</Typography>
-          <ApiSvgIcon
-            className="centralize"
-            htmlContent={searchIcon?.svg_icon_text}
-            sx={{
-              width: 15,
-              height: 15,
-              fill: theme.palette.primary.main,
-
-              position: 'relative',
-            }}
-          />
+          <Image alt="search-icon" height={15} src={search} width={15} />
         </Box>
         {/* -------------------------------------------------------------------------- */}
 
