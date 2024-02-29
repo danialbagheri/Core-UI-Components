@@ -7,6 +7,7 @@ import BlogCard from './BlogCard'
 import 'slick-carousel/slick/slick.css'
 
 import 'slick-carousel/slick/slick-theme.css'
+
 function BlogSlider() {
   const BLOG = 'staff-picked'
   const [, setLoading] = React.useState(true)
@@ -68,19 +69,24 @@ function BlogSlider() {
 
       <Box
         ref={sliderContainer}
-        sx={{width: {xs: '90%', sm: '85%', md: '70%'}, margin: '50px auto'}}
+        sx={{
+          width: {xs: '95%', sm: '85%', md: '70%'},
+          margin: '50px auto',
+        }}
       >
-        <Slider {...settings}>
-          {blogItems.length
-            ? blogItems.map((blogItem, i) => (
-                <BlogCard
-                  blog={blogItem.item}
-                  index={i}
-                  key={blogItem.item.id}
-                />
-              ))
-            : null}
-        </Slider>
+        {blogItems.length ? (
+          <Slider {...settings}>
+            {blogItems.map((blogItem, i) => (
+              <Box
+                className="centralize"
+                key={blogItem.item.id}
+                sx={{display: 'flex !important'}}
+              >
+                <BlogCard blog={blogItem.item} index={i} />
+              </Box>
+            ))}
+          </Slider>
+        ) : null}
       </Box>
     </Box>
   )
