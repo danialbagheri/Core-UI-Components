@@ -12,23 +12,23 @@ export default function Trending(props) {
   const topSeller = props.trending
 
   const settings = {
-    slidesToShow: 5,
+    slidesToShow: 6,
     arrows: true,
     dots: false,
     slidesToScroll: 1,
     infinite: false,
     responsive: [
       {
-        breakpoint: 1400,
+        breakpoint: 1500,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 5,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 1200,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
@@ -40,7 +40,7 @@ export default function Trending(props) {
         },
       },
       {
-        breakpoint: 640,
+        breakpoint: 700,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -54,7 +54,7 @@ export default function Trending(props) {
   }
 
   return (
-    <Box sx={{maxWidth: 'min(1400px , 90%)', margin: '0 auto', mt: '5rem'}}>
+    <Box sx={{px: 4}}>
       <Typography color="earth.main" sx={{mb: 4}} variant="h3">
         Trending
       </Typography>

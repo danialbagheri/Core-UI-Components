@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {Box, Typography} from '@mui/material'
-import BestSellerItems from './BestSellerItems'
+// import BestSellerItems from './BestSellerItems'
+import {ProductItem} from '../../products/ProductItem'
 
 export default function BestSeller(props) {
   const collection = props.bestseller
@@ -11,7 +12,7 @@ export default function BestSeller(props) {
   }
 
   return (
-    <Box sx={{maxWidth: '1440px', margin: '0 auto', mt: '5rem'}}>
+    <Box sx={{maxWidth: '1600px', margin: '0 auto', mt: 5}}>
       <Typography color="earth.main" sx={{textAlign: 'center'}} variant="h3">
         Top Seller products
       </Typography>
@@ -84,7 +85,6 @@ export default function BestSeller(props) {
                 fill
                 src={collection.image || ''}
                 style={{objectFit: 'cover'}}
-                // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             )}
           </Box>
@@ -92,14 +92,15 @@ export default function BestSeller(props) {
             sx={{
               width: '100%',
               display: 'grid',
+              maxHeight: {md: 'auto', xl: '700px'},
               gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
               gridTemplateRows: 'auto',
-              rowGap: 4,
-              columnGap: 2,
+              rowGap: {xs: 20, md: 20, xl: 30},
+              columnGap: 10,
             }}
           >
             {collection.items?.slice(0, 6).map((item, index) => (
-              <BestSellerItems item={item} key={index} />
+              <ProductItem key={index} product={item.item} />
             ))}
           </Box>
         </Box>
