@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import {Container, Box, Typography} from '@mui/material'
+import {Box, Container, Typography} from '@mui/material'
 import {getBlogs} from 'services'
 import Slider from 'react-slick'
 import BlogCard from './BlogCard'
@@ -64,7 +64,7 @@ function BlogSlider() {
   return (
     <Container>
       <Box mt={{xs: 10, sm: 20, my: 7}}>
-        <Typography variant="h3" color="earth.main">
+        <Typography color="earth.main" variant="h3">
           Editor&#39;s picks
         </Typography>
 

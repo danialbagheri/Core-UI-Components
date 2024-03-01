@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {Box} from '@mui/material'
-import {ProductItem} from '../../products/ProductItem'
 import BestSellerItems from './BestSellerItems'
 
 export default function BestSeller(props) {

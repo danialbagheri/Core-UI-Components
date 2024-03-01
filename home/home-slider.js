@@ -73,7 +73,7 @@ const SliderItem = slide => {
   )
 }
 
-export default function HomeSlider({slides, second}) {
+export default function HomeSlider({second, slides}) {
   const settings = {
     arrows: true,
     dots: true,
@@ -83,9 +83,9 @@ export default function HomeSlider({slides, second}) {
     slidesToScroll: 1,
     dotsClass: 'dot',
   }
-  if (slides.length == 0)
-    return <Skeleton variant="rectangular" width={'100%'} height={400} />
-
+  if (slides.length == 0) {
+    return <Skeleton height={400} variant="rectangular" width={'100%'} />
+  }
   return (
     <Box
       sx={{
