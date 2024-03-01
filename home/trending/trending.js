@@ -4,8 +4,8 @@ import 'slick-carousel/slick/slick-theme.css'
 import Loader from 'react-loaders'
 import 'loaders.css/loaders.min.css'
 
-import {TrendingItem} from './trendingItem'
-import {Box} from '@mui/material'
+import {ProductItem} from '../../products/ProductItem'
+import {Box, Typography} from '@mui/material'
 
 export default function Trending(props) {
   const isLoaded = true
@@ -55,13 +55,15 @@ export default function Trending(props) {
 
   return (
     <Box sx={{maxWidth: 'min(1400px , 90%)', margin: '0 auto', mt: '5rem'}}>
-      <h1>Trending</h1>
+      <Typography color="earth.main" sx={{mb: 4}} variant="h3">
+        Trending
+      </Typography>
 
       {isLoaded ? (
         <Slider {...settings}>
-          {topSeller.map(({item}) => (
-            <TrendingItem item={{...item}} key={item.id} />
-          ))}
+          {topSeller.map(item => {
+            return <ProductItem key={item.item.id} product={item.item} />
+          })}
         </Slider>
       ) : (
         <Loader

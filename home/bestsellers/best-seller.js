@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import {Box} from '@mui/material'
+import {Box, Typography} from '@mui/material'
 import BestSellerItems from './BestSellerItems'
 
 export default function BestSeller(props) {
@@ -12,7 +12,9 @@ export default function BestSeller(props) {
 
   return (
     <Box sx={{maxWidth: '1440px', margin: '0 auto', mt: '5rem'}}>
-      <h1 className="textCenter">Top Seller products</h1>
+      <Typography color="earth.main" sx={{textAlign: 'center'}} variant="h3">
+        Top Seller products
+      </Typography>
       {collection ? (
         <Box
           sx={{
