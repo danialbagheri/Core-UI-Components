@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import {Box} from '@mui/material'
-
+import {ProductItem} from '../../products/ProductItem'
 import BestSellerItems from './BestSellerItems'
 
 export default function BestSeller(props) {
@@ -90,7 +90,6 @@ export default function BestSeller(props) {
           <Box
             sx={{
               width: '100%',
-
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
               gridTemplateRows: 'auto',

@@ -6,6 +6,7 @@ import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import PinterestIcon from '@mui/icons-material/Pinterest'
 import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded'
+import XIcon from '@mui/icons-material/X'
 
 export default function SharingSocialIcons(props) {
   const {showSharingIcons, text, media} = props
@@ -61,7 +62,7 @@ export default function SharingSocialIcons(props) {
       </Link>
       <Link href={shareUrlsWithParams.twitter} target="_blank">
         <IconButton color="primary">
-          <TwitterIcon />
+          <XIcon />
         </IconButton>
       </Link>
       <Link href={shareUrlsWithParams.facebook} target="_blank">

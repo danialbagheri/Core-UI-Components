@@ -22,7 +22,7 @@ export default function BestSellerItems(props) {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        gap: 4,
+        gap: 2,
       }}
     >
       <Box
@@ -36,9 +36,11 @@ export default function BestSellerItems(props) {
       >
         <Box
           sx={{
-            background: 'rgba(245,245,247,1)',
+            background:
+              'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)',
             width: '100%',
-            height: '400px',
+            borderRadius: '10px',
+            height: {xs: 300, msm: 365},
             margin: '0 auto',
             position: 'relative',
             cursor: 'pointer',
@@ -46,7 +48,9 @@ export default function BestSellerItems(props) {
         >
           <Image
             alt={activeVariant.image_list[0].alternate_text || ''}
-            fill={true}
+            fill
+            loading="eager"
+            sizes="(max-width: 900px) 50vw, 20vw"
             src={
               showButton
                 ? i.secondary_image_resized || ''
@@ -56,8 +60,21 @@ export default function BestSellerItems(props) {
           />
         </Box>
 
-        <Typography variant="h5">{i.name}</Typography>
-        <Typography>
+        <Typography
+          fontSize={{xs: 13, msm: 16}}
+          fontWeight={600}
+          sx={{
+            display: '-webkit-box',
+            '-webkit-box-orient': 'vertical',
+            overflow: 'hidden',
+            WebkitLineClamp: 2 /* Number of lines to show */,
+            textOverflow: 'ellipsis',
+            lineHeight: '1.7rem',
+          }}
+        >
+          {i.name}
+        </Typography>
+        <Typography fontSize={13} fontWeight={400}>
           {i.sub_title} {activeVariant.name}
         </Typography>
       </Box>

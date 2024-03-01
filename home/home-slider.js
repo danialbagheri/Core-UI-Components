@@ -1,4 +1,5 @@
 import Slider from 'react-slick'
+import Skeleton from '@mui/material/Skeleton'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -82,6 +83,8 @@ export default function HomeSlider({slides, second}) {
     slidesToScroll: 1,
     dotsClass: 'dot',
   }
+  if (slides.length == 0)
+    return <Skeleton variant="rectangular" width={'100%'} height={400} />
 
   return (
     <Box
