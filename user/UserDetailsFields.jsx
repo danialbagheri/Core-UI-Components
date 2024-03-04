@@ -65,7 +65,7 @@ export default function UserDetailsFields(props) {
           id={'account_details_first_name'}
           label="First name"
           onChange={e => changeHandler(e.target.value, FIRST_NAME)}
-          placeholder="David"
+          placeholder="First name"
           sx={{width: '100%'}}
           type="text"
           value={fieldData[FIRST_NAME]}
@@ -78,7 +78,7 @@ export default function UserDetailsFields(props) {
           id={'account_details_last_name'}
           label="Last name"
           onChange={e => changeHandler(e.target.value, LAST_NAME)}
-          placeholder="Johnes"
+          placeholder="Last name"
           sx={{width: '100%'}}
           type="text"
           value={fieldData[LAST_NAME]}

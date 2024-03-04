@@ -15,7 +15,9 @@ export function VariantSelector({
   const theme = useTheme()
 
   const urlSku = searchParams.get('sku')
-  const isAllVarSPF = variants.every(variant => variant.name?.startsWith('SPF'))
+  const isAllVarSPF = variants?.every(variant =>
+    variant?.name?.startsWith('SPF'),
+  )
 
   const renderStyles = ({isInStock, isSelected}) => {
     if (isSelected) {
@@ -50,42 +52,42 @@ export function VariantSelector({
    */
   const renderVariantDetails = ({isAllVarSPF, variant}) => {
     if (isAllVarSPF) {
-      return {variantName: variant.name.split(' ')[1], isSpfVariant: true}
-    } else if (variant.name.toLowerCase().includes('size')) {
-      return {variantName: variant.size, isSpfVariant: false}
-    } else if (variant.name.toLowerCase().includes('original')) {
+      return {variantName: variant?.name.split(' ')[1], isSpfVariant: true}
+    } else if (variant?.name.toLowerCase().includes('size')) {
+      return {variantName: variant?.size, isSpfVariant: false}
+    } else if (variant?.name.toLowerCase().includes('original')) {
       return {variantName: 'original', isSpfVariant: false}
-    } else if (variant.name.toLowerCase().includes('spf')) {
+    } else if (variant?.name.toLowerCase().includes('spf')) {
       return {
-        variantName: variant.name.split(' ')[1].trim(),
+        variantName: variant?.name.split(' ')[1].trim(),
         isSpfVariant: true,
       }
     }
-    return {variantName: variant.name, isSpfVariant: false}
+    return {variantName: variant?.name, isSpfVariant: false}
   }
 
   React.useEffect(() => {
     if (urlSku) {
-      const variant = variants.find(variant => variant.sku === urlSku)
+      const variant = variants?.find(variant => variant?.sku === urlSku)
 
       if (variant) {
         setSelectedVariant(variant)
       }
     } else {
-      for (let i = 0; i < variants.length; i++) {
+      for (let i = 0; i < variants?.length; i++) {
         const variant = variants[i]
 
-        if (variant.inventory_quantity > 0) {
+        if (variant?.inventory_quantity > 0) {
           setSelectedVariant(variant)
           break
-        } else if (i === variants.length - 1) {
+        } else if (i === variants?.length - 1) {
           setSelectedVariant(variants[0])
         }
       }
     }
   }, [urlSku])
 
-  if (variants.length === 1 && !isAllVarSPF) {
+  if (variants?.length === 1 && !isAllVarSPF) {
     return null
   }
 
@@ -99,12 +101,12 @@ export function VariantSelector({
       }}
       {...props}
     >
-      {variants.map(variant => {
-        const isInStock = variant.inventory_quantity > 0
-        const isSelected = selectedVariant.sku === variant.sku
+      {variants?.map(variant => {
+        const isInStock = variant?.inventory_quantity > 0
+        const isSelected = selectedVariant.sku === variant?.sku
 
         return (
-          <Box className="centralize" key={variant.id}>
+          <Box className="centralize" key={variant?.id}>
             <Box
               className="centralize"
               onClick={() => {

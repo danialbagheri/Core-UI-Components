@@ -50,16 +50,18 @@ const ProductTag = props => {
           padding: '3px 13px',
         }}
       >
-        {isOnSale ? 'SALE' : product.collection_names[0]}
+        {isOnSale ? 'SALE' : product?.collection_names[0]}
       </Box>
     )
   }
 }
 
 export function ProductItem(props) {
-  const {product} = props
+  const {product, sx = {}} = props
 
-  const [activeVariant, setActiveVariant] = React.useState(product.variants[0])
+  const [activeVariant, setActiveVariant] = React.useState(
+    product?.variants?.[0] || {},
+  )
   const [isHovered, setIsHovered] = React.useState(false)
   const [imageIsHovered, setImageIsHovered] = React.useState(false)
   const [displayImage, setDisplayImage] = React.useState(false)
@@ -69,16 +71,18 @@ export function ProductItem(props) {
   const theme = useTheme()
 
   const hasLifeStyleImage =
-    product.secondary_image_data?.image_type === LIFE_STYLE
+    product?.secondary_image_data?.image_type === LIFE_STYLE
   const isOnSale =
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
   const isInStock = activeVariant.inventory_quantity > 0
 
   const getProperVariantImage = imageList => {
     // Get images with angle FRONT
-    const frontImages = imageList.filter(image => image.image_angle === 'FRONT')
+    const frontImages = imageList?.filter(
+      image => image.image_angle === 'FRONT',
+    )
     // Get the main image from the front images
-    const mainImage = frontImages.find(image => image.main)
+    const mainImage = frontImages?.find(image => image.main)
     // Check if the main image is a product image
     const isMainImagePI = mainImage?.image_type === PRODUCT_IMAGE
 
@@ -86,13 +90,15 @@ export function ProductItem(props) {
       return mainImage.image
     }
 
-    const piImage = imageList.find(image => image?.image_type === PRODUCT_IMAGE)
+    const piImage = imageList?.find(
+      image => image?.image_type === PRODUCT_IMAGE,
+    )
 
     if (piImage) {
       return piImage?.image || ''
     }
 
-    return frontImages[0]?.image
+    return frontImages?.[0]?.image
   }
 
   /**
@@ -137,7 +143,7 @@ export function ProductItem(props) {
 
   return (
     <Box
-      key={product.id}
+      key={product?.id}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       sx={{
@@ -149,13 +155,14 @@ export function ProductItem(props) {
         justifyContent: 'space-between',
         flexGrow: 1,
         gap: '10px',
+        ...sx,
       }}
     >
       <Box
         className={styles.fadeOut}
         onClick={e => {
           e.preventDefault()
-          router.push(`/products/${product.slug}`)
+          router.push(`/products/${product?.slug}`)
         }}
         onMouseEnter={() => mouseMoveHandler(true)}
         onMouseLeave={() => mouseMoveHandler(false)}
@@ -188,15 +195,15 @@ export function ProductItem(props) {
 
         {/*Secondary image on hover */}
         {displayImage &&
-        product.secondary_image_resized &&
+        product?.secondary_image_resized &&
         hasLifeStyleImage ? (
           <NextImage
-            alt={product.name}
+            alt={product?.name}
             className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
             fill
             loading="eager"
             sizes="(max-width: 900px) 50vw, 20vw"
-            src={product.secondary_image_resized}
+            src={product?.secondary_image_resized}
             style={{
               objectFit: 'cover',
             }}
@@ -216,20 +223,20 @@ export function ProductItem(props) {
             }}
           >
             <NextImage
-              alt={product.name}
+              alt={product?.name}
               fill
               priority
               sizes="(max-width: 900px) 50vw, 20vw"
               src={imageSrcHandler(
                 activeVariant.image_list,
-                product.main_image,
+                product?.main_image,
               )}
               style={{objectFit: 'contain'}}
             />
           </Box>
         )}
 
-        <FavIcon isHovered={isHovered} product={product} slug={product.slug} />
+        <FavIcon isHovered={isHovered} product={product} slug={product?.slug} />
 
         {/* Add to cart button which is hidden by default but shown on hover */}
         {isHovered ? (
@@ -265,10 +272,10 @@ export function ProductItem(props) {
             sx={{display: displayImage ? 'none !important' : 'flex !important'}}
           >
             <StarRating
-              name={product.name}
-              score={product.review_average_score}
+              name={product?.name}
+              score={product?.review_average_score}
             />
-            <Typography color="#333">{product.total_review_count}</Typography>
+            <Typography color="#333">{product?.total_review_count}</Typography>
           </Box>
         )}
       </Box>
@@ -303,18 +310,18 @@ export function ProductItem(props) {
               lineHeight: '1.7rem',
             }}
           >
-            {product.name}
+            {product?.name}
           </Typography>
 
           <Typography fontSize={13} fontWeight={400}>
-            {product.sub_title}
+            {product?.sub_title}
           </Typography>
           <Price variant={activeVariant} />
         </Box>
         <VariantSelector
           selectedVariant={activeVariant}
           setSelectedVariant={setActiveVariant}
-          variants={product.variants}
+          variants={product?.variants}
         />
       </Box>
     </Box>

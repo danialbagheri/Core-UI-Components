@@ -131,7 +131,7 @@ const ContactUsForm = () => {
           fullWidth
           helperText={error[NAME]}
           onChange={e => onChangeHandler(e.target.value, NAME)}
-          placeholder="Jane"
+          placeholder="Full name"
           size="small"
           type="text"
           value={data[NAME]}
@@ -144,7 +144,7 @@ const ContactUsForm = () => {
           fullWidth
           helperText={error[ADDRESS]}
           onChange={e => onChangeHandler(e.target.value, ADDRESS)}
-          placeholder="Manchester, United Kingdom"
+          placeholder="Address"
           size="small"
           type="text"
           value={data[ADDRESS]}
@@ -157,7 +157,7 @@ const ContactUsForm = () => {
           fullWidth
           helperText={error[EMAIL]}
           onChange={e => onChangeHandler(e.target.value, EMAIL)}
-          placeholder="jane@email.com"
+          placeholder="Email address"
           size="small"
           type="email"
           value={data[EMAIL]}

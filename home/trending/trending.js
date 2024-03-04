@@ -9,16 +9,21 @@ import 'slick-carousel/slick/slick-theme.css'
 import 'loaders.css/loaders.min.css'
 
 import {ProductItem} from '../../products/ProductItem'
-import {getTrendingUrls} from 'services'
-import {TrendingItem} from './trendingItem'
 
 const settings = {
-  slidesToShow: 6,
+  slidesToShow: 2,
   arrows: true,
   dots: false,
   slidesToScroll: 1,
   infinite: false,
   responsive: [
+    {
+      breakpoint: 3500,
+      settings: {
+        slidesToShow: 6,
+        slidesToScroll: 1,
+      },
+    },
     {
       breakpoint: 1500,
       settings: {
@@ -27,21 +32,21 @@ const settings = {
       },
     },
     {
-      breakpoint: 1200,
+      breakpoint: 1250,
       settings: {
         slidesToShow: 4,
         slidesToScroll: 1,
       },
     },
     {
-      breakpoint: 900,
+      breakpoint: 1000,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,
       },
     },
     {
-      breakpoint: 700,
+      breakpoint: 800,
       settings: {
         slidesToShow: 2,
         slidesToScroll: 1,
@@ -50,44 +55,24 @@ const settings = {
   ],
 }
 
-export default function Trending() {
-  const [topSeller, setTopSeller] = React.useState([])
-
-  const [loading, setLoading] = React.useState(true)
-
-  const getTrendingHandler = async () => {
-    try {
-      const response = await getTrendingUrls()
-      setTopSeller(response.items)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  React.useEffect(() => {
-    getTrendingHandler()
-  }, [])
+export default function Trending(props) {
+  const {items} = props
 
   return (
-    <Box sx={{px: 4}}>
+    <Box sx={{px: 4, maxWidth: 1600, margin: '0 auto', mt: 5}}>
       <Typography color="earth.main" sx={{mb: 4}} variant="h3">
         Trending
       </Typography>
 
-      {loading ? (
-        <Box className="centralize" sx={{width: {xs: '100%', md: '60%'}}}>
-          <TrendingItem key={'1'} loading />
-          <TrendingItem key={'2'} loading />
-        </Box>
-      ) : (
-        <Slider {...settings}>
-          {topSeller.map(({item}) => (
-            <ProductItem key={item.item.id} product={item.item} />
-          ))}
-        </Slider>
-      )}
+      <Slider {...settings}>
+        {items.map(item => (
+          <ProductItem
+            key={item.item?.id}
+            product={item.item}
+            sx={{m: '0 auto'}}
+          />
+        ))}
+      </Slider>
     </Box>
   )
 }

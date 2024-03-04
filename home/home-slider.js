@@ -89,15 +89,38 @@ const SliderItem = slide => {
   )
 }
 
-export default function HomeSlider({isSecondBanner}) {
+export default function HomeSlider(props) {
+  const {banner} = props
+  const isHomeBanner = Boolean(banner)
   const [slides, setSlides] = useState([])
 
   const [loading, setLoading] = useState(true)
 
+  const renderProperBanner = () => {
+    if (isHomeBanner) {
+      return (
+        <Slider {...settings}>
+          {banner[0]?.slider_slides.map(slide => (
+            <SliderItem key={slide.id} slide={slide} />
+          ))}
+        </Slider>
+      )
+    }
+    if (loading) {
+      return <Skeleton sx={{height}} variant="rectangular" width="100%" />
+    }
+    return (
+      <Slider {...settings}>
+        {slides[0]?.slider_slides.map(slide => (
+          <SliderItem key={slide.id} slide={slide} />
+        ))}
+      </Slider>
+    )
+  }
+
   const getBannerHandler = async () => {
-    const bannerSrc = isSecondBanner ? 'secondary' : 'homepage'
     try {
-      const response = await getCollectionBanner(bannerSrc)
+      const response = await getCollectionBanner('secondary')
       setSlides(response.results)
     } catch (err) {
       console.error(err)
@@ -107,28 +130,22 @@ export default function HomeSlider({isSecondBanner}) {
   }
 
   useEffect(() => {
-    getBannerHandler(isSecondBanner)
+    if (!banner) {
+      getBannerHandler()
+    }
   }, [])
 
   return (
     <Box
       sx={{
         height,
-        mt: isSecondBanner ? '5rem' : 0,
+        mt: isHomeBanner ? 0 : '5rem',
         '& button.slick-arrow': {
           display: 'none !important',
         },
       }}
     >
-      {loading ? (
-        <Skeleton sx={{height}} variant="rectangular" width="100%" />
-      ) : (
-        <Slider {...settings}>
-          {slides[0]?.slider_slides.map(slide => (
-            <SliderItem key={slide.id} slide={slide} />
-          ))}
-        </Slider>
-      )}
+      {renderProperBanner()}
     </Box>
   )
 }
