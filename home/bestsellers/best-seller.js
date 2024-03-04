@@ -2,9 +2,9 @@ import * as React from 'react'
 
 import Link from 'next/link'
 
-import {Box, Skeleton} from '@mui/material'
-
-import BestSellerItems from './BestSellerItems'
+import {Box, Skeleton, Typography} from '@mui/material'
+// import BestSellerItems from './BestSellerItems'
+import {ProductItem} from '../../products/ProductItem'
 import {getBestSellerResults} from 'services'
 
 const LoadingItem = () => {
@@ -38,8 +38,10 @@ export default function BestSeller() {
   }, [])
 
   return (
-    <Box sx={{maxWidth: '1440px', margin: '0 auto', mt: '5rem'}}>
-      <h1 className="textCenter">Top Seller products</h1>
+    <Box sx={{maxWidth: '1600px', margin: '0 auto', mt: 5}}>
+      <Typography color="earth.main" sx={{textAlign: 'center'}} variant="h3">
+        Top Seller products
+      </Typography>
 
       <Box
         sx={{
@@ -111,10 +113,11 @@ export default function BestSeller() {
             width: '100%',
 
             display: 'grid',
+            maxHeight: {md: 'auto', xl: '700px'},
             gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
             gridTemplateRows: 'auto',
-            rowGap: 4,
-            columnGap: 2,
+            rowGap: {xs: 20, md: 20, xl: 30},
+            columnGap: 10,
           }}
         >
           {loading
@@ -124,7 +127,7 @@ export default function BestSeller() {
             : topSeller.items
                 ?.slice(0, 6)
                 .map((item, index) => (
-                  <BestSellerItems item={item} key={index} />
+                  <ProductItem key={index} product={item.item} />
                 ))}
         </Box>
       </Box>

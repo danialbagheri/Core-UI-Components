@@ -1,12 +1,13 @@
 import * as React from 'react'
 
-import {Box, Typography} from '@mui/material'
+import {Box, Container, Typography} from '@mui/material'
 import {getBlogs} from 'services'
 import Slider from 'react-slick'
 import BlogCard from './BlogCard'
 import 'slick-carousel/slick/slick.css'
 
 import 'slick-carousel/slick/slick-theme.css'
+
 function BlogSlider() {
   const BLOG = 'staff-picked'
   const [, setLoading] = React.useState(true)
@@ -61,28 +62,34 @@ function BlogSlider() {
   }, [])
 
   return (
-    <Box mt={{xs: 10, sm: 20, my: 7}}>
-      <Typography textAlign={'center'} variant="h2">
-        Editor&#39;s picks
-      </Typography>
+    <Container>
+      <Box mt={{xs: 10, sm: 20, my: 7}}>
+        <Typography color="earth.main" variant="h3">
+          Editor&#39;s picks
+        </Typography>
 
-      <Box
-        ref={sliderContainer}
-        sx={{width: {xs: '90%', sm: '85%', md: '70%'}, margin: '50px auto'}}
-      >
-        <Slider {...settings}>
-          {blogItems.length
-            ? blogItems.map((blogItem, i) => (
-                <BlogCard
-                  blog={blogItem.item}
-                  index={i}
+        <Box
+          ref={sliderContainer}
+          sx={{
+            margin: '50px auto',
+          }}
+        >
+          {blogItems.length ? (
+            <Slider {...settings}>
+              {blogItems.map((blogItem, i) => (
+                <Box
+                  className="centralize"
                   key={blogItem.item.id}
-                />
-              ))
-            : null}
-        </Slider>
+                  sx={{display: 'flex !important'}}
+                >
+                  <BlogCard blog={blogItem.item} index={i} />
+                </Box>
+              ))}
+            </Slider>
+          ) : null}
+        </Box>
       </Box>
-    </Box>
+    </Container>
   )
 }
 
