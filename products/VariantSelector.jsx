@@ -21,16 +21,24 @@ export function VariantSelector({
 
   const renderStyles = ({isInStock, isSelected}) => {
     if (isSelected) {
+      if (isInStock) {
+        return {
+          color: theme.palette.primary.main,
+          fontWeight: 600,
+          cursor: 'initial',
+          borderBottom: `2px solid ${theme.palette.primary.main}`,
+        }
+      }
       return {
-        color: theme.palette.primary.main,
+        color: '#C6C6C6',
         fontWeight: 600,
         cursor: 'initial',
-        borderBottom: `2px solid ${theme.palette.primary.main}`,
+        borderBottom: '2px solid #C6C6C6',
       }
     } else if (!isInStock) {
       return {
         color: '#C6C6C6',
-        cursor: 'initial',
+        cursor: 'pointer',
         fontWeight: 400,
       }
     }
@@ -110,9 +118,7 @@ export function VariantSelector({
             <Box
               className="centralize"
               onClick={() => {
-                if (isInStock) {
-                  setSelectedVariant(variant)
-                }
+                setSelectedVariant(variant)
               }}
               textAlign={'center'}
             >

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 /* ----------------------------- Next Components ---------------------------- */
-import NextImage from 'next/image'
+import Image from 'next/image'
 import {useRouter} from 'next/navigation'
 /* -------------------------------------------------------------------------- */
 
@@ -74,7 +74,7 @@ export function ProductItem(props) {
     product?.secondary_image_data?.image_type === LIFE_STYLE
   const isOnSale =
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
-  const isInStock = activeVariant.inventory_quantity > 0
+  const isOutOfStock = activeVariant.inventory_quantity < 1
 
   const getProperVariantImage = imageList => {
     // Get images with angle FRONT
@@ -118,7 +118,26 @@ export function ProductItem(props) {
 
     return ''
   }
-  function addToCartHandler(variantId, quantity) {
+
+  const renderButtonBgColor = () => {
+    if (isOnSale) {
+      return '#F00'
+    } else if (isOutOfStock) {
+      return '#C3C0B7'
+    }
+    return theme.palette.primary.main
+  }
+
+  const renderBoxBgColor = () => {
+    if (isHovered && isOutOfStock) {
+      return 'linear-gradient(180deg, #C3C0B7 0%, rgba(255, 255, 255, 0) 100%)'
+    } else if (isHovered && !hasLifeStyleImage) {
+      return 'linear-gradient(180deg, #FFE6C9 0%, rgba(255, 255, 255, 0.00) 100%)'
+    }
+    return 'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)'
+  }
+
+  const addToCartHandler = (variantId, quantity) => {
     const lineItemsToAdd = [
       {
         variantId: variantId,
@@ -130,7 +149,7 @@ export function ProductItem(props) {
     openCart()
   }
 
-  function mouseMoveHandler(state) {
+  const mouseMoveHandler = state => {
     setImageIsHovered(state)
     if (state) {
       setDisplayImage(true)
@@ -143,7 +162,6 @@ export function ProductItem(props) {
 
   return (
     <Box
-      key={product?.id}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       sx={{
@@ -158,6 +176,7 @@ export function ProductItem(props) {
         ...sx,
       }}
     >
+      {/* --------------------- Image and add button container --------------------- */}
       <Box
         className={styles.fadeOut}
         onClick={e => {
@@ -173,10 +192,7 @@ export function ProductItem(props) {
           borderRadius: '10px',
           overflow: 'hidden',
 
-          background:
-            isHovered && !hasLifeStyleImage
-              ? 'linear-gradient(180deg, #FFE6C9 0%, rgba(255, 255, 255, 0.00) 100%)'
-              : 'linear-gradient(180deg, #FAF5EB 0%, rgba(250, 245, 235, 0.00) 100%)',
+          background: renderBoxBgColor(),
 
           position: 'relative',
 
@@ -197,13 +213,13 @@ export function ProductItem(props) {
         {displayImage &&
         product?.secondary_image_resized &&
         hasLifeStyleImage ? (
-          <NextImage
+          <Image
             alt={product?.name}
             className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
             fill
             loading="eager"
             sizes="(max-width: 900px) 50vw, 20vw"
-            src={product?.secondary_image_resized}
+            src={product?.secondary_image_resized || ''}
             style={{
               objectFit: 'cover',
             }}
@@ -222,7 +238,7 @@ export function ProductItem(props) {
               border: 'none',
             }}
           >
-            <NextImage
+            <Image
               alt={product?.name}
               fill
               priority
@@ -244,7 +260,7 @@ export function ProductItem(props) {
             className="centralize"
             onClick={e => {
               e.stopPropagation()
-              if (isInStock) {
+              if (!isOutOfStock) {
                 addToCartHandler(activeVariant.graphql_id, 1)
               }
             }}
@@ -252,7 +268,7 @@ export function ProductItem(props) {
               height: 40,
               width: '100%',
 
-              bgcolor: isOnSale ? '#F00' : theme.palette.primary.main,
+              bgcolor: renderButtonBgColor(),
 
               position: 'absolute',
               bottom: 0,
@@ -262,7 +278,7 @@ export function ProductItem(props) {
             }}
           >
             <Typography color="#FFF" fontSize={18} fontWeight={500}>
-              Add to cart
+              {isOutOfStock ? 'Out of stock!' : 'Add to cart'}
             </Typography>
           </Box>
         ) : (
@@ -279,6 +295,7 @@ export function ProductItem(props) {
           </Box>
         )}
       </Box>
+      {/* -------------------------------------------------------------------------- */}
 
       <Box
         sx={{
