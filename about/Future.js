@@ -31,27 +31,27 @@ export default function Future() {
           <div className="col-6 col-md-6 col-sm-6 col-xs-6">
             <Image
               alt="Calypso 1999 to 2019 products"
-              src="/about-us/Present_and_Future02.jpg"
+              height={300}
               sizes="100vw"
+              src="/about-us/Present_and_Future02.jpg"
               style={{
                 width: '100%',
                 height: 'auto',
               }}
               width={500}
-              height={300}
             />
           </div>
           <div className="col-6 col-md-6 col-sm-6 col-xs-6">
             <Image
               alt="Calypso 1999 to 2019 products"
-              src="/about-us/Present_and_Future01.jpg"
+              height={300}
               sizes="100vw"
+              src="/about-us/Present_and_Future01.jpg"
               style={{
                 width: '100%',
                 height: 'auto',
               }}
               width={500}
-              height={300}
             />
           </div>
         </div>

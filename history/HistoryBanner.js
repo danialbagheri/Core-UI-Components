@@ -7,14 +7,14 @@ export default function HistoryBanner() {
     <Box>
       <Image
         alt="Calypso Brand History product range"
-        src="/history/historybanner.jpg"
+        height={300}
         sizes="100vw"
+        src="/history/historybanner.jpg"
         style={{
           width: '100%',
           height: 'auto',
         }}
         width={500}
-        height={300}
       />
     </Box>
   )

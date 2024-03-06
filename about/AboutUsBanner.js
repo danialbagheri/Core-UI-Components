@@ -5,14 +5,14 @@ export default function AboutUsBanner() {
     <Box>
       <Image
         alt="Frequently Asked Questions"
-        src="/about-us/about-us-banner.jpg"
+        height={300}
         sizes="100vw"
+        src="/about-us/about-us-banner.jpg"
         style={{
           width: '100%',
           height: 'auto',
         }}
         width={500}
-        height={300}
       />
     </Box>
   )
