@@ -259,7 +259,7 @@ export function ProductItem(props) {
           </Box>
         )}
 
-        <FavIcon isHovered={isHovered} product={product} slug={product?.slug} />
+        <FavIcon isHovered={isHovered} variant={activeVariant} />
 
         {/* Add to cart button which is hidden by default but shown on hover */}
         {isHovered ? (

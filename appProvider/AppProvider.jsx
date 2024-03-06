@@ -17,6 +17,7 @@ function AppProvider(props) {
     signUpEmail: '',
     isAuthenticate: undefined,
     favoriteProducts: null,
+    favoriteVariants: null,
     icons,
   }
   const [appState, setAppState] = React.useState(initState)

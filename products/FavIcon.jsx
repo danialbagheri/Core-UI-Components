@@ -6,92 +6,60 @@ import {styled} from '@mui/material/styles'
 import {Box} from '@mui/material'
 import Tooltip, {tooltipClasses} from '@mui/material/Tooltip'
 
-import {parseCookies, setCookie} from 'nookies'
-
 import {AppContext} from '../appProvider/AppProvider'
-import {addProductToFavorite, postRefreshToken} from '../../services'
-import {
-  assetsEndPoints,
-  WISH_LIST_FILL_ICON_ID,
-  WISH_LIST_OUTLINED_ICON_ID,
-} from '../../utils/getAssets'
-import {ApiSvgIcon} from '../shared'
+import {favoriteVariantHandler} from 'services'
+
+import {Heart, HeartOutlined} from 'components/icons'
+import {useAuthFetch} from 'components/customHooks'
 
 export const FavIcon = props => {
-  const {isHovered, slug, product} = props
+  const {isHovered, variant} = props
+
   const [appState, setAppState] = React.useContext(AppContext)
 
-  const isFavorite = appState.favoriteProducts?.find(
-    product => product.slug === slug,
-  )
+  const fetchHandlers = useAuthFetch()
 
-  const userAccountIcons = appState.icons?.[assetsEndPoints.userAccount]?.items
-
-  /* -- Icons which are got from the api and have been set in the AppProvider - */
-  const heartFilledIcon = userAccountIcons?.find(
-    icon => icon.id === WISH_LIST_FILL_ICON_ID,
-  )
-  const heartOutlineIcon = userAccountIcons?.find(
-    icon => icon.id === WISH_LIST_OUTLINED_ICON_ID,
+  const sku = variant?.sku
+  const isFavorite = appState.favoriteVariants?.find(
+    variant => variant.sku === sku,
   )
 
   /* -------------------------------------------------------------------------- */
 
   const addToFavoriteHandler = async e => {
     e.stopPropagation()
-    const {calacc, calref} = parseCookies()
 
-    if (appState.isAuthenticate) {
-      try {
-        let newFavoriteProducts = []
+    if (appState.isAuthenticate && sku) {
+      const onAuthenticatedAction = async token => {
+        const action = isFavorite ? 'remove' : 'add'
+        await favoriteVariantHandler(sku, token, action)
 
         if (isFavorite) {
-          await addProductToFavorite(slug, calacc, 'remove')
-          newFavoriteProducts = appState.favoriteProducts.filter(
-            product => product.slug !== slug,
+          const newFavoriteVariants = appState.favoriteVariants.filter(
+            variant => variant.sku !== sku,
           )
+          setAppState(prevState => ({
+            ...prevState,
+            favoriteVariants: newFavoriteVariants,
+          }))
         } else {
-          await addProductToFavorite(slug, calacc, 'add')
-          const initialFavoriteProducts = appState.favoriteProducts
-          newFavoriteProducts = [...initialFavoriteProducts, product]
-        }
-        setAppState(perv => ({...perv, favoriteProducts: newFavoriteProducts}))
-      } catch (err) {
-        if (err.status === 401) {
-          try {
-            const {access} = await postRefreshToken({
-              refresh: calref || 'no-token',
-            })
-
-            setCookie(null, 'calacc', access, {
-              path: '/',
-            })
-
-            let newFavoriteProducts = []
-            if (isFavorite) {
-              await addProductToFavorite(slug, access, 'remove')
-              newFavoriteProducts = appState.favoriteProducts.filter(
-                product => product.slug !== slug,
-              )
-            } else {
-              await addProductToFavorite(slug, access, 'add')
-              const initialFavoriteProducts = appState.favoriteProducts
-              newFavoriteProducts = [...initialFavoriteProducts, product]
-            }
-            setAppState(perv => ({
-              ...perv,
-              favoriteProducts: newFavoriteProducts,
-            }))
-          } catch (err) {
-            if (err.status === 401) {
-              setAppState(perv => ({...perv, isAuthenticate: false}))
-            }
-            console.error(err)
-          }
-        } else {
-          console.error(err)
+          const newFavoriteVariants = [...appState.favoriteVariants, variant]
+          setAppState(prevState => ({
+            ...prevState,
+            favoriteVariants: newFavoriteVariants,
+          }))
         }
       }
+
+      const onNotAuthenticatedAction = () => {
+        setAppState(prevState => ({
+          ...prevState,
+          favoriteVariants: undefined,
+          isAuthenticate: false,
+        }))
+      }
+
+      fetchHandlers({onAuthenticatedAction, onNotAuthenticatedAction})
     }
   }
 
@@ -133,19 +101,13 @@ export const FavIcon = props => {
           )
         }
       >
-        <ApiSvgIcon
-          htmlContent={heartFilledIcon?.svg_icon_text}
-          id="products_fill_heart_icon"
+        <Heart
           sx={{
-            width: 25,
-            height: 24,
             fill: isFavorite ? '#FF0000' : '#FFF',
             display: {xs: isFavorite ? 'block' : 'none', md: 'block'},
           }}
         />
-        <ApiSvgIcon
-          htmlContent={heartOutlineIcon?.svg_icon_text}
-          id="products_outline_heart_icon"
+        <HeartOutlined
           sx={{
             width: 25,
             height: 24,

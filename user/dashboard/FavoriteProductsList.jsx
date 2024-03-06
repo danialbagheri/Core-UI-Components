@@ -7,7 +7,7 @@ import {Box} from '@mui/material'
 /* ---------------------------- Local Components ---------------------------- */
 import {MobileFavList} from './components'
 import {CustomButton} from '../localShared'
-import {getFavoriteProductsHandler} from 'utils'
+import {getFavoriteVariantsHandler} from 'utils'
 import {AppContext} from 'components/appProvider'
 import {useAuthFetch} from 'components/customHooks'
 import DesktopFavList from './components/DesktopFavList'
@@ -19,10 +19,10 @@ export function FavoriteProductsList() {
 
   const authFetchHandler = useAuthFetch()
 
-  const getFavoriteProducts = async () => {
+  const getFavoriteVariants = async () => {
     setLoading(true)
     try {
-      await getFavoriteProductsHandler({setAppState, authFetchHandler})
+      await getFavoriteVariantsHandler({setAppState, authFetchHandler})
     } catch (err) {
       console.error(err)
     } finally {
@@ -33,7 +33,7 @@ export function FavoriteProductsList() {
   //Get user favorite list if not already fetched
   React.useEffect(() => {
     if (!appState.favoriteProducts) {
-      getFavoriteProducts()
+      getFavoriteVariants()
     } else {
       setLoading(false)
     }
