@@ -31,18 +31,27 @@ export default function Future() {
           <div className="col-6 col-md-6 col-sm-6 col-xs-6">
             <Image
               alt="Calypso 1999 to 2019 products"
-              height={440}
-              src="/about-us/future-1.png"
-              width={388}
-              // objectFit="contain"
+              src="/about-us/Present_and_Future02.jpg"
+              sizes="100vw"
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
+              width={500}
+              height={300}
             />
           </div>
           <div className="col-6 col-md-6 col-sm-6 col-xs-6">
             <Image
               alt="Calypso 1999 to 2019 products"
-              height={440}
-              src="/about-us/future-2.png"
-              width={388}
+              src="/about-us/Present_and_Future01.jpg"
+              sizes="100vw"
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
+              width={500}
+              height={300}
             />
           </div>
         </div>

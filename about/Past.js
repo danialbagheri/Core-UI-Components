@@ -8,9 +8,14 @@ export default function Past() {
         <div className="col-8 col-md-8 col-sm-12 pt-1">
           <Image
             alt="Calypso 1999 to 2019 products"
-            height={713}
             src="/about-us/calypso-history.jpg"
-            width={1400}
+            sizes="100vw"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+            width={500}
+            height={300}
           />
         </div>
         <div className="col-4 col-md-4 text-centre col-sm-12 our-history-row-text">
