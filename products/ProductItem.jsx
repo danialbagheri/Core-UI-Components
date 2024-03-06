@@ -164,9 +164,15 @@ export function ProductItem(props) {
     <Box
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={e => {
+        e.stopPropagation()
+        setIsHovered(!isHovered)
+      }}
       sx={{
         width: {xs: '100%', msm: 240},
         height: '100%',
+
+        maxWidth: 240,
 
         display: 'flex',
         flexDirection: 'column',
@@ -181,10 +187,11 @@ export function ProductItem(props) {
         className={styles.fadeOut}
         onClick={e => {
           e.preventDefault()
-          router.push(`/products/${product?.slug}`)
+          router.push(`/products/${product?.slug}?sku=${activeVariant.sku}`)
         }}
         onMouseEnter={() => mouseMoveHandler(true)}
         onMouseLeave={() => mouseMoveHandler(false)}
+        onTouchStart={() => mouseMoveHandler(!displayImage)}
         sx={{
           height: {xs: 300, msm: 365},
           width: '100%',

@@ -127,7 +127,11 @@ export default function BestSeller() {
             : topSeller.items
                 ?.slice(0, 6)
                 .map((item, index) => (
-                  <ProductItem key={index} product={item.item} />
+                  <ProductItem
+                    key={index}
+                    product={item.item}
+                    sx={{m: '0 auto'}}
+                  />
                 ))}
         </Box>
       </Box>

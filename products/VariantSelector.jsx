@@ -4,15 +4,18 @@ import {useSearchParams} from 'next/navigation'
 
 import Box from '@mui/material/Box'
 import {Typography, useTheme} from '@mui/material'
+import {useRouter} from 'next/router'
 
 export function VariantSelector({
   variants,
   selectedVariant,
   setSelectedVariant,
+  slug,
   ...props
 }) {
   const searchParams = useSearchParams()
   const theme = useTheme()
+  const router = useRouter()
 
   const urlSku = searchParams.get('sku')
   const isAllVarSPF = variants?.every(variant =>
@@ -74,6 +77,15 @@ export function VariantSelector({
     return {variantName: variant?.name, isSpfVariant: false}
   }
 
+  const changeVariantHandler = variant => {
+    setSelectedVariant(variant)
+    router.push(
+      {pathname: `/products/${slug}`, query: {sku: variant.sku}},
+      undefined,
+      {shallow: true},
+    )
+  }
+
   React.useEffect(() => {
     if (urlSku) {
       const variant = variants?.find(variant => variant?.sku === urlSku)
@@ -118,7 +130,7 @@ export function VariantSelector({
             <Box
               className="centralize"
               onClick={() => {
-                setSelectedVariant(variant)
+                changeVariantHandler(variant)
               }}
               textAlign={'center'}
             >

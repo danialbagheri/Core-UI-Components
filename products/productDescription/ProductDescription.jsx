@@ -14,6 +14,9 @@ import {VariantSelector} from '../VariantSelector'
 
 const ProductDescription = props => {
   const {product, selectedVariant, setSelectedVariant} = props
+
+  console.log('🚀 🙂  product:::', product)
+
   return (
     <Stack gap={4}>
       <Typography color="primary.main" variant={'h2'}>
@@ -57,6 +60,7 @@ const ProductDescription = props => {
       <VariantSelector
         selectedVariant={selectedVariant}
         setSelectedVariant={setSelectedVariant}
+        slug={product.slug}
         variants={product.variants}
       />
 
