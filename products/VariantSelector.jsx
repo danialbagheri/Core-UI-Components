@@ -79,11 +79,13 @@ export function VariantSelector({
 
   const changeVariantHandler = variant => {
     setSelectedVariant(variant)
-    router.push(
-      {pathname: `/products/${slug}`, query: {sku: variant.sku}},
-      undefined,
-      {shallow: true},
-    )
+    if (slug) {
+      router.push(
+        {pathname: `/products/${slug}`, query: {sku: variant.sku}},
+        undefined,
+        {shallow: true},
+      )
+    }
   }
 
   React.useEffect(() => {

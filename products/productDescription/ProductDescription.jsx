@@ -15,8 +15,6 @@ import {VariantSelector} from '../VariantSelector'
 const ProductDescription = props => {
   const {product, selectedVariant, setSelectedVariant} = props
 
-  console.log('🚀 🙂  product:::', product)
-
   return (
     <Stack gap={4}>
       <Typography color="primary.main" variant={'h2'}>
