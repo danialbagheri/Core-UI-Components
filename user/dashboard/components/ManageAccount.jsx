@@ -16,7 +16,7 @@ import {destroyCookie} from 'nookies'
 
 /* ---------------------------- Local Components ---------------------------- */
 import {AppContext} from 'components/appProvider'
-import {CustomButton} from 'components/user/localShared'
+import {CustomButton} from 'components/shared'
 /* -------------------------------------------------------------------------- */
 
 const manageAccountList = [

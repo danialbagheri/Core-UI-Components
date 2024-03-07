@@ -1,5 +1,5 @@
 import {Box, Typography} from '@mui/material'
-import {CustomButton} from 'components/user/localShared'
+import {CustomButton} from 'components/shared'
 import Link from 'next/link'
 
 export function EmptyState(props) {

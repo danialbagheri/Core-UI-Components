@@ -6,11 +6,11 @@ import {Box} from '@mui/material'
 
 /* ---------------------------- Local Components ---------------------------- */
 import {MobileFavList} from './components'
-import {CustomButton} from '../localShared'
 import {getFavoriteProductsHandler} from 'utils'
 import {AppContext} from 'components/appProvider'
 import {useAuthFetch} from 'components/customHooks'
 import DesktopFavList from './components/DesktopFavList'
+import {CustomButton} from 'components/shared'
 /* -------------------------------------------------------------------------- */
 
 export function FavoriteProductsList() {

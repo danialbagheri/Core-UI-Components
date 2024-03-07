@@ -1,6 +1,6 @@
 import {Box} from '@mui/material'
-import {CustomOutlinedInput} from '../localShared'
 import {InfoPopover} from './InfoPopover'
+import {CustomOutlinedInput} from 'components/shared'
 
 export function SignUpFields({
   data,

@@ -14,8 +14,8 @@ import {
 /* ---------------------------- Local Components ---------------------------- */
 import {RemoveIcon} from './RemoveIcon'
 import {AppContext} from 'components/appProvider'
-import {CustomButton} from 'components/user/localShared'
 import {EmptyState} from './EmptyState'
+import {CustomButton} from 'components/shared'
 /* -------------------------------------------------------------------------- */
 
 export default function DesktopFavList(props) {

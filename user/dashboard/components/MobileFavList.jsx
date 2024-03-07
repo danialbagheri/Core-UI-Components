@@ -11,8 +11,8 @@ import {Box, CircularProgress, Typography} from '@mui/material'
 /* ---------------------------- Local Components ---------------------------- */
 import {RemoveIcon} from './RemoveIcon'
 import {AppContext} from 'components/appProvider'
-import {CustomButton} from 'components/user/localShared'
 import {EmptyState} from './EmptyState'
+import {CustomButton} from 'components/shared'
 /* -------------------------------------------------------------------------- */
 
 export function MobileFavList(props) {
