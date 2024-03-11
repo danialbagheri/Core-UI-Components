@@ -2,7 +2,6 @@ import * as React from 'react'
 
 import {Box} from '@mui/material'
 
-import {CustomOutlinedInput} from './localShared'
 import {
   EMAIL,
   FIRST_NAME,
@@ -10,6 +9,7 @@ import {
   MOBILE_NUMBER,
 } from '../../pages/user/dashboard'
 import {validateMobileNumber, validateName} from '../../utils'
+import {CustomOutlinedInput} from 'components/shared'
 
 export default function UserDetailsFields(props) {
   const {fieldData, setFieldData, error, isEdit, setError} = props

@@ -1,5 +1,12 @@
 import * as React from 'react'
-import {Box, OutlinedInput, SxProps, Typography, useTheme} from '@mui/material'
+import {
+  Box,
+  OutlinedInput,
+  SxProps,
+  Theme,
+  Typography,
+  useTheme,
+} from '@mui/material'
 
 interface PropsTypes {
   label?: string
@@ -9,11 +16,15 @@ interface PropsTypes {
   value: string | number
   sx?: SxProps
   error?: string[] | string
+  success?: string
   disabled?: boolean
 }
 
-const ErrorMessage = (props: {error: string | string[] | undefined}) => {
-  const {error} = props
+const Message = (props: {
+  error: string | string[] | undefined
+  success: string
+}) => {
+  const {error, success} = props
   if (error) {
     if (Array.isArray(error)) {
       return (
@@ -27,12 +38,47 @@ const ErrorMessage = (props: {error: string | string[] | undefined}) => {
       )
     }
     return <Typography color="#d32f2f">{error}</Typography>
+  } else if (success) {
+    return <Typography color="#4CAF50">{success}</Typography>
   }
 }
 
+const renderProperBorderColor = ({
+  disabled,
+  error,
+  success,
+  theme,
+}: {
+  disabled?: boolean
+  error?: string[] | string
+  success?: string
+  theme: Theme
+}) => {
+  if (disabled) {
+    return '#E0E0E0'
+  } else if (error) {
+    return '#d32f2f'
+  } else if (success) {
+    return '#4CAF50'
+  }
+  return theme.palette.primary.main
+}
+
 export function CustomOutlinedInput(props: PropsTypes) {
-  const {label, placeholder, onChange, sx, type, value, error, disabled} = props
+  const {
+    label,
+    placeholder,
+    onChange = () => {},
+    sx,
+    type,
+    value,
+    error,
+    disabled,
+    success,
+  } = props
+
   const theme = useTheme()
+
   return (
     <Box sx={{...sx}}>
       {label ? (
@@ -63,15 +109,18 @@ export function CustomOutlinedInput(props: PropsTypes) {
           '&>input': {color: '#000'},
 
           '& fieldset': {
-            borderColor: disabled
-              ? '#E0E0E0'
-              : `${error ? '#d32f2f' : theme.palette.primary.main} !important`,
+            borderColor: renderProperBorderColor({
+              disabled,
+              error,
+              success,
+              theme,
+            }),
           },
         }}
         type={type}
         value={value}
       />
-      <ErrorMessage error={error} />
+      <Message error={error} success={success} />
     </Box>
   )
 }

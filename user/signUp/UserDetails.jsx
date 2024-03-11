@@ -1,10 +1,11 @@
 import * as React from 'react'
 import {BASE_URL} from '../../../constants/servicesConstants'
 import {Box} from '@mui/material'
-import {CustomButton, CustomLink, Title} from '../localShared'
+import {CustomLink, Title} from '../localShared'
 import {SignUpFields} from './SignUpFields'
 import {assetsEndPoints} from '../../../utils'
 import {AppContext} from '../../appProvider/AppProvider'
+import {CustomButton} from 'components/shared'
 
 const INITIAL_STATE = {
   email: '',

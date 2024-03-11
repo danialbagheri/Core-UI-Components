@@ -2,11 +2,11 @@ import * as React from 'react'
 
 import {Box, Typography, useTheme} from '@mui/material'
 import Image from 'next/image'
-import {CustomButton, CustomOutlinedInput} from '../localShared'
 
 import {assetsEndPoints, validateEmail} from '../../../utils'
 import {AppContext} from '../../appProvider/AppProvider'
 import {postResendActivation} from '../../../services'
+import {CustomButton, CustomOutlinedInput} from 'components/shared'
 
 export function AccountCreated(props) {
   const {assets} = props

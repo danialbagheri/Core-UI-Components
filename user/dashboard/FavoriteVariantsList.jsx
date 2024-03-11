@@ -11,9 +11,10 @@ import {getFavoriteVariantsHandler} from 'utils'
 import {AppContext} from 'components/appProvider'
 import {useAuthFetch} from 'components/customHooks'
 import DesktopFavList from './components/DesktopFavList'
+
 /* -------------------------------------------------------------------------- */
 
-export function FavoriteProductsList() {
+export function FavoriteVariantsList() {
   const [appState, setAppState] = React.useContext(AppContext)
   const [loading, setLoading] = React.useState(true)
 

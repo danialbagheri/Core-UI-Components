@@ -16,7 +16,7 @@ import {destroyCookie} from 'nookies'
 
 /* ---------------------------- Local Components ---------------------------- */
 import {AppContext} from 'components/appProvider'
-import {CustomButton} from 'components/user/localShared'
+import {CustomButton} from 'components/shared'
 /* -------------------------------------------------------------------------- */
 
 const manageAccountList = [
@@ -31,12 +31,6 @@ const manageAccountList = [
     title: 'Password',
     description: 'To set or change your password',
     route: '/user/dashboard/password',
-  },
-  {
-    id: 'favorite_products',
-    title: 'Favorite products',
-    description: 'List of your favorite products',
-    route: '/user/dashboard/favorite-products',
   },
 ]
 

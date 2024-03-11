@@ -1,6 +1,6 @@
 import {Box, Typography, useTheme} from '@mui/material'
 import {AppContext} from 'components/appProvider'
-import {CustomButton} from 'components/user/localShared'
+import {CustomButton} from 'components/shared'
 import Link from 'next/link'
 import * as React from 'react'
 import {assetsEndPoints, WISH_LIST_FILL_ICON_ID} from 'utils'
@@ -49,7 +49,7 @@ export function DashboardFavLink() {
         }}
         variant="contained"
       >
-        <Link href="/user/dashboard/favorite-products">Go to My Wishlist</Link>
+        <Link href="/user/dashboard/favorite-variants">Go to My Wishlist</Link>
       </CustomButton>
     </Box>
   )

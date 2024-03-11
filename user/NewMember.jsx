@@ -3,8 +3,9 @@ import * as React from 'react'
 import {Box} from '@mui/material'
 import Image from 'next/image'
 import {useRouter} from 'next/router'
-import {CustomButton, Title} from './localShared'
+import {Title} from './localShared'
 import {assetsEndPoints} from '../../utils'
+import {CustomButton} from 'components/shared'
 
 const Benefit = props => {
   const {checkIconSrc, text} = props
