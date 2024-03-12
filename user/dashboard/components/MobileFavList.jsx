@@ -56,7 +56,14 @@ export function MobileFavList(props) {
                   key={variant.id}
                   sx={{py: '24px', width: 317, gap: 5}}
                 >
-                  <Box sx={{width: 79, height: 92, position: 'relative'}}>
+                  <Box
+                    sx={{
+                      width: 79,
+                      minWidth: 79,
+                      height: 92,
+                      position: 'relative',
+                    }}
+                  >
                     <Image
                       alt={variant.name}
                       fill
@@ -81,6 +88,7 @@ export function MobileFavList(props) {
                         justifyContent: 'space-between',
                         alignItems: 'flex-start',
                         width: '100%',
+                        gap: 4,
 
                         '& a': {
                           textDecoration: 'none',
@@ -90,11 +98,19 @@ export function MobileFavList(props) {
                       <Link
                         href={`/products/${variant.product_slug}?sku=${variant.sku}`}
                       >
-                        <Typography sx={{fontSize: 14, fontWeight: 500}}>
-                          {variant.product_name}
-                        </Typography>
-                        <Typography sx={{fontSize: 14, fontWeight: 500}}>
-                          {variant.name}
+                        <Typography
+                          sx={{
+                            fontSize: 14,
+                            fontWeight: 500,
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            WebkitLineClamp: 2,
+                            textOverflow: 'ellipsis',
+                            lineHeight: '1.7rem',
+                          }}
+                        >
+                          {`${variant.product_name} - ${variant.name}`}
                         </Typography>
                       </Link>
 

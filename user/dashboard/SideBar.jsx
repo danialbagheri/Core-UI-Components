@@ -5,9 +5,9 @@ import {useRouter} from 'next/router'
 
 import {Box, Typography} from '@mui/material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import LogoutIcon from '@mui/icons-material/Logout'
 import {destroyCookie} from 'nookies'
 import {AppContext} from '../../appProvider'
+import {CalypsoGirlDashboard, Heart, LogOut} from 'components/icons'
 
 const SIDE_BAR_ITEMS = [
   {id: 'my-dashboard', name: 'My dashboard', url: '/user/dashboard'},
@@ -28,14 +28,34 @@ const SIDE_BAR_BUTTONS = [
       destroyCookie(null, 'calref', {path: '/'})
       router.push('/user/sign-in')
     },
-    icon: <LogoutIcon color="primary" fontSize="small" />,
+    icon: <LogOut color="primary" fontSize="small" />,
+  },
+  {
+    id: 'my_wish_list',
+    name: 'My wish list',
+    onClick: router => {
+      router.push('/user/dashboard/favorite-variants')
+    },
+    icon: <Heart color="primary" fontSize="small" />,
+    route: 'favorite-variants',
   },
 ]
 
 export function SideBar(props) {
   const {route} = props
   const router = useRouter()
+
   const [, setAppState] = React.useContext(AppContext)
+
+  const handleDisplayButton = route => {
+    if (!route) {
+      return 'flex'
+    }
+    if (router.pathname.includes(route)) {
+      return 'none'
+    }
+    return 'flex'
+  }
 
   const routerClickHandler = (id, url) => {
     if (id === route) {
@@ -65,12 +85,7 @@ export function SideBar(props) {
           gap: 4,
         }}
       >
-        {/* <Image
-          alt={girlIcon.name || 'Calypso girl'}
-          height={145}
-          src={girlIcon.svg_icon}
-          width={145}
-        /> */}
+        <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
         <Box
           sx={{
             px: 10,
@@ -133,7 +148,7 @@ export function SideBar(props) {
           sx={{
             p: '12px 55px',
             borderRadius: '10px',
-            display: 'flex',
+            display: handleDisplayButton(button.route),
             gap: 4,
             cursor: 'pointer',
           }}

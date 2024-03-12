@@ -3,6 +3,7 @@ import * as React from 'react'
 import {useRouter} from 'next/router'
 /* ----------------------------- MUI Components ----------------------------- */
 import {
+  Box,
   CircularProgress,
   Table,
   TableBody,
@@ -22,6 +23,8 @@ import {useShopify} from 'redux/ducks/shopify'
 import {useAuthFetch} from 'components/customHooks'
 import Link from 'next/link'
 import {addToCartHandler, removeFromFavoriteHandler} from './localUtils'
+import Image from 'next/image'
+import {getProperVariantImageSrc} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 export default function DesktopFavList(props) {
@@ -73,8 +76,24 @@ export default function DesktopFavList(props) {
                     fontWeight: 500,
                     fontSize: 16,
                     '& a': {textDecoration: 'none'},
+
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    gap: '20px',
+
+                    pr: '16px !important',
                   }}
                 >
+                  <Box sx={{width: 61, height: 70, position: 'relative'}}>
+                    <Image
+                      alt={variant.name}
+                      fill
+                      sizes="10vw"
+                      src={getProperVariantImageSrc(variant.image_list)}
+                      style={{objectFit: 'cover'}}
+                    />
+                  </Box>
                   <Link
                     href={`/products/${variant.product_slug}?sku=${variant.sku}`}
                   >
@@ -86,7 +105,7 @@ export default function DesktopFavList(props) {
                 </TableCell>
                 <TableCell
                   align="right"
-                  sx={{position: 'relative', maxWidth: 74}}
+                  sx={{position: 'relative', minWidth: 115}}
                 >
                   <CustomButton
                     disabled={loadingVariant === variant.id}

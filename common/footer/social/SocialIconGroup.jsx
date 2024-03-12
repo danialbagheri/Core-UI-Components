@@ -20,7 +20,7 @@ export default function SocialIconGroup() {
       >
         Follow us
       </Typography>
-      <Box sx={{mt: 3, display: 'flex', gap: 2}}>
+      <Box sx={{mt: 3, display: 'flex', flexWrap: 'wrap', gap: 2}}>
         {socialIcons?.items?.length
           ? socialIcons.items.map((item, index) => (
               <SocialIcon index={index} item={item} key={index} />
