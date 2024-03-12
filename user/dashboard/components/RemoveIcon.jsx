@@ -10,7 +10,7 @@ import {assetsEndPoints, REMOVE_ICON_ID} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 export const RemoveIcon = props => {
-  const {sx = {}} = props
+  const {sx = {}, onClick = () => {}} = props
   const [appState] = React.useContext(AppContext)
 
   const {userAccount} = assetsEndPoints
@@ -20,6 +20,7 @@ export const RemoveIcon = props => {
 
   return (
     <Box
+      onClick={onClick}
       sx={{
         width: 32,
         height: 32,

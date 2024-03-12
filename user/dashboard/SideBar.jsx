@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Image from 'next/image'
+// import Image from 'next/image'
 import {useRouter} from 'next/router'
 
 import {Box, Typography} from '@mui/material'
@@ -33,7 +33,7 @@ const SIDE_BAR_BUTTONS = [
 ]
 
 export function SideBar(props) {
-  const {girlIcon, route} = props
+  const {route} = props
   const router = useRouter()
   const [, setAppState] = React.useContext(AppContext)
 
@@ -65,12 +65,12 @@ export function SideBar(props) {
           gap: 4,
         }}
       >
-        <Image
+        {/* <Image
           alt={girlIcon.name || 'Calypso girl'}
           height={145}
           src={girlIcon.svg_icon}
           width={145}
-        />
+        /> */}
         <Box
           sx={{
             px: 10,

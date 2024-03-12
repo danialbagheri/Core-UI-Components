@@ -11,8 +11,9 @@ export function useCurrency(variant = {}) {
   const symbol = currency === 'EUR' ? '€' : '£'
   const isGBP = currency === 'GBP'
 
-  const isOnSale =
-    variant[COMPARE_AT_PRICE] || variant[EURO_COMPARE_AT_PRICE] || ''
+  const isOnSale = Boolean(
+    variant[COMPARE_AT_PRICE] || variant[EURO_COMPARE_AT_PRICE] || '',
+  )
   const price = Number(isGBP ? variant[PRICE] : variant[EURO_PRICE])
   const compareAtPrice = Number(
     isGBP ? variant[COMPARE_AT_PRICE] : variant[EURO_COMPARE_AT_PRICE],

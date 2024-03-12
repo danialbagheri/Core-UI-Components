@@ -13,6 +13,7 @@ export function useAuthFetch() {
     onAuthenticatedAction,
     onNotAuthenticatedAction,
     handleError = () => {},
+    onFinally = () => {},
   }) {
     if (setLoading) {
       setLoading(true)
@@ -52,6 +53,7 @@ export function useAuthFetch() {
         handleError(err.res)
       }
     } finally {
+      onFinally()
       if (setLoading) {
         setLoading(false)
       }

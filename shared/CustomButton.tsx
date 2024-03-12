@@ -9,17 +9,38 @@ interface PropsTypes {
   sx?: SxProps
   loading?: boolean
   error?: boolean
+  disabled?: boolean
+  loadingSize?: number
 }
 
 export function CustomButton(props: PropsTypes) {
-  const {onClick, variant, sx, children, loading, error} = props
+  const {
+    onClick,
+    variant,
+    sx,
+    children,
+    loading,
+    error,
+    disabled,
+    loadingSize = 30,
+  } = props
 
   const theme = useTheme()
 
+  const renderBorderColor = () => {
+    if (error) {
+      return '#d32f2f'
+    } else if (disabled || loading) {
+      return '#e0e0e0'
+    }
+    return theme.palette.primary.main
+  }
+
   return (
     <Button
+      disabled={disabled || loading}
       onClick={e => {
-        onClick ? onClick(e) : e.preventDefault()
+        onClick && !disabled ? onClick(e) : e.preventDefault()
       }}
       sx={{
         position: 'relative',
@@ -41,7 +62,7 @@ export function CustomButton(props: PropsTypes) {
 
         whiteSpace: 'nowrap',
 
-        border: `1px solid ${error ? '#d32f2f' : theme.palette.primary.main}`,
+        border: `1px solid ${renderBorderColor()}`,
 
         '&:hover': {
           bgcolor:
@@ -57,7 +78,7 @@ export function CustomButton(props: PropsTypes) {
     >
       {loading ? (
         <CircularProgress
-          size={30}
+          size={loadingSize}
           sx={{
             color:
               variant === 'contained' ? '#FFF' : theme.palette.primary.main,

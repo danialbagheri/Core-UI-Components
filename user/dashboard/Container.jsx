@@ -1,26 +1,21 @@
 import {Box} from '@mui/material'
 import {SideBar} from './SideBar'
-import {assetsEndPoints} from 'utils'
 
 export function Container(props) {
-  const {assets, iconName, route, sx = {}} = props
-  const {userAccountTopIcons} = assetsEndPoints
-
-  const girlIcon = assets[userAccountTopIcons]?.items.find(
-    item => item.name.toLowerCase().trim() === iconName.toLowerCase().trim(),
-  )
+  const {route, sx = {}} = props
 
   return (
     <Box
       sx={{
-        width: {xs: '100%', sm: 480, md: 740},
+        width: '100%',
+        maxWidth: {xs: 480, md: 1178},
         m: '0 auto',
         py: {xs: 6, md: 21},
-        px: {xs: 10, sm: 20, md: 0},
-        gap: 5,
+        px: 10,
+        gap: {xs: 5, md: '157px'},
 
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: {xs: 'center', md: 'flex-start'},
         flexDirection: {xs: 'column-reverse', md: 'row'},
 
@@ -32,7 +27,7 @@ export function Container(props) {
         ...sx,
       }}
     >
-      <SideBar girlIcon={girlIcon} route={route} />
+      <SideBar route={route} />
       {props.children}
     </Box>
   )

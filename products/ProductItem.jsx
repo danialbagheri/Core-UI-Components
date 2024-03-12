@@ -19,10 +19,10 @@ import {FavIcon} from './FavIcon'
 
 /* --------------------------------- Styles --------------------------------- */
 import styles from './styles.module.css'
+import {getProperVariantImageSrc} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 const LIFE_STYLE = 'LS'
-const PRODUCT_IMAGE = 'PI'
 
 const ProductTag = props => {
   const {product, isOnSale} = props
@@ -76,31 +76,6 @@ export function ProductItem(props) {
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
   const isOutOfStock = activeVariant.inventory_quantity < 1
 
-  const getProperVariantImage = imageList => {
-    // Get images with angle FRONT
-    const frontImages = imageList?.filter(
-      image => image.image_angle === 'FRONT',
-    )
-    // Get the main image from the front images
-    const mainImage = frontImages?.find(image => image.main)
-    // Check if the main image is a product image
-    const isMainImagePI = mainImage?.image_type === PRODUCT_IMAGE
-
-    if (mainImage && isMainImagePI) {
-      return mainImage.image
-    }
-
-    const piImage = imageList?.find(
-      image => image?.image_type === PRODUCT_IMAGE,
-    )
-
-    if (piImage) {
-      return piImage?.image || ''
-    }
-
-    return frontImages?.[0]?.image
-  }
-
   /**
    *
    * @param {string} variantImage - The image of the variant
@@ -108,7 +83,7 @@ export function ProductItem(props) {
    * @returns {string} - Proper image source. If variant image is not available, main image is returned
    */
   const imageSrcHandler = (imageList, mainImage) => {
-    const variantImage = getProperVariantImage(imageList)
+    const variantImage = getProperVariantImageSrc(imageList)
 
     if (variantImage) {
       return variantImage
