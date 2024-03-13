@@ -100,7 +100,7 @@ export default function DesktopFavList(props) {
                     {`${variant.product_name} - ${variant.name}`}
                   </Link>
                 </TableCell>
-                <TableCell sx={{maxWidth: 74}}>
+                <TableCell sx={{maxWidth: 74, minWidth: 115}}>
                   <Price variant={variant} />
                 </TableCell>
                 <TableCell
