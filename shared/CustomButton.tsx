@@ -11,6 +11,7 @@ interface PropsTypes {
   error?: boolean
   disabled?: boolean
   loadingSize?: number
+  borderColor?: string
 }
 
 export function CustomButton(props: PropsTypes) {
@@ -23,6 +24,7 @@ export function CustomButton(props: PropsTypes) {
     error,
     disabled,
     loadingSize = 30,
+    borderColor,
   } = props
 
   const theme = useTheme()
@@ -33,6 +35,11 @@ export function CustomButton(props: PropsTypes) {
     } else if (disabled || loading) {
       return '#e0e0e0'
     }
+
+    if (borderColor) {
+      return borderColor
+    }
+
     return theme.palette.primary.main
   }
 

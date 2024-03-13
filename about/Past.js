@@ -22,10 +22,11 @@ export default function Past() {
           <h5 className="text-centre calypso-orange-text">PAST AND PRESENT</h5>
           <hr className="short-line" />
           <p className="text-centre mb-4">
-            Calypso was created in Manchester in 1988 with a small range of
-            seven products. Over the decades, Calypso has expanded and it now
-            has over 60 products, which have received numerous awards, including
-            the Which? Best Buy Award.
+            Created in Manchester in 1988, Calypso set out to provide families
+            with quality sun care products at the right price. We believe
+            everyone should be able to enjoy the benefits of the sun without any
+            risk of sun damage. Over the years, we have expanded and now sell in
+            over thirty countries worldwide.
           </p>
           {/* eslint-disable-next-line */}
           <a

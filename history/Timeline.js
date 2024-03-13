@@ -249,6 +249,25 @@ export default function Timeline() {
           </p>
         </div>
       </div>
+      <div className={`${Styles.timelineContainer} ${Styles.right}`}>
+        <div className={Styles.date}>2020</div>
+        <div className={Styles.content}>
+          <img
+            alt="Calypso Billboard campaign find the feeling"
+            className="mb-2 mt-3"
+            src={findTheFeeling}
+            width="100%"
+          />
+          <p>
+            In the face of 2020&apos;s challenges, Calypso prioritized our
+            community&apos;s well-being. We launched a hand sanitizer range,
+            offering convenient pocket sizes for on-the-go protection, larger
+            sprays for families, and even donated bulk supplies to hospitals and
+            schools. This ensured everyone had access to essential hygiene tools
+            during a critical time.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

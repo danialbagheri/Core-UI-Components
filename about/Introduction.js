@@ -4,7 +4,7 @@ export default function Introduction() {
     <section className="container mb-3">
       <h1 className="text-centre calypso-orange-text">Welcome</h1>
       <h3 className="text-centre">
-        We’re Calypso™, we have been protecting your skin since 1988
+        We&apos;re Calypso, we have been protecting your skin since 1988
       </h3>
       <p className="text-centre introduction">
         Calypso is a British sun care brand which aims to provide customers with

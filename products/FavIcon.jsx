@@ -2,15 +2,14 @@ import * as React from 'react'
 
 import Link from 'next/link'
 
-import {styled} from '@mui/material/styles'
 import {Box} from '@mui/material'
-import Tooltip, {tooltipClasses} from '@mui/material/Tooltip'
 
 import {AppContext} from '../appProvider/AppProvider'
 import {favoriteVariantHandler} from 'services'
 
 import {Heart, HeartOutlined} from 'components/icons'
 import {useAuthFetch} from 'components/customHooks'
+import {CustomTooltip} from './CustomTooltip'
 
 export const FavIcon = props => {
   const {isHovered, variant} = props
@@ -62,22 +61,6 @@ export const FavIcon = props => {
       fetchHandlers({onAuthenticatedAction, onNotAuthenticatedAction})
     }
   }
-
-  const CustomTooltip = styled(({className, ...props}) => (
-    <Tooltip {...props} cc classes={{popper: className}} />
-  ))(() => ({
-    [`& .${tooltipClasses.arrow}`]: {
-      color: '#FFF',
-      '&:before': {
-        border: '1px solid #000',
-      },
-    },
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#FFF',
-      color: '#000',
-      border: '1px solid #000',
-    },
-  }))
 
   return (
     <Box

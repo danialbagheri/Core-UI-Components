@@ -23,9 +23,9 @@ export default function OurValues() {
             </div>
             <h5 className="text-centre calypso-orange-text">QUALITY</h5>
             <p className="text-centre">
-              Our products have achieved a high level of customer satisfaction
-              thanks to our commitment to providing high quality sun protection
-              products.
+              We never compromise on quality. Our products have achieved a high
+              level of customer satisfaction thanks to our commitment to
+              sourcing the highest standard of materials.
             </p>
           </div>
           <div className="col-12 col-md-4 col-xs-12">
@@ -39,9 +39,9 @@ export default function OurValues() {
             </div>
             <h5 className="text-centre calypso-orange-text">ETHICS</h5>
             <p className="text-centre">
-              We have received the Ethical Award from the Ethical Company
-              Organisation every year since 2018, recognising our strong ethical
-              values.
+              Our team is crucial to our success. We value every worker and
+              maintain an environment where people feel appreciated and
+              inspired.
             </p>
           </div>
           <div className="col-12 col-md-4 col-xs-12">

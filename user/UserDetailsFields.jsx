@@ -89,9 +89,9 @@ export default function UserDetailsFields(props) {
           disabled={!isEdit}
           error={error[MOBILE_NUMBER]}
           id={'account_details_mobile_number'}
-          label="Phone name"
+          label="Phone number"
           onChange={e => changeHandler(e.target.value, MOBILE_NUMBER)}
-          placeholder={447987654321}
+          placeholder={'Phone number'}
           sx={{width: '100%'}}
           type="string"
           value={fieldData[MOBILE_NUMBER]}
@@ -103,7 +103,7 @@ export default function UserDetailsFields(props) {
           id={'account_details_email'}
           label="Email address"
           onChange={e => changeHandler(e.target.value, EMAIL)}
-          placeholder="David@gmail.com"
+          placeholder="Email address"
           sx={{width: '100%'}}
           type="email"
           value={fieldData[EMAIL]}
