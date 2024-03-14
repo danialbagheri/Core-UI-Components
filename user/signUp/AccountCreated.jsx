@@ -1,16 +1,14 @@
 import * as React from 'react'
 
 import {Box, Typography, useTheme} from '@mui/material'
-import Image from 'next/image'
 
-import {assetsEndPoints, validateEmail} from '../../../utils'
+import {validateEmail} from '../../../utils'
 import {AppContext} from '../../appProvider/AppProvider'
 import {postResendActivation} from '../../../services'
 import {CustomButton, CustomOutlinedInput} from 'components/shared'
+import {CalypsoGirlDashboard, GreenCheck} from 'components/icons'
 
-export function AccountCreated(props) {
-  const {assets} = props
-
+export function AccountCreated() {
   const [appState] = React.useContext(AppContext)
   const [email, setEmail] = React.useState('')
   const [error, setError] = React.useState({state: false, message: ''})
@@ -18,10 +16,7 @@ export function AccountCreated(props) {
   const [loading, setLoading] = React.useState(false)
   const theme = useTheme()
 
-  const {checkIcon, userAccountTopIcons} = assetsEndPoints
   const signUpEmail = appState.signUpEmail
-  const girlIcon = assets[userAccountTopIcons]?.items[0]
-  const greenCheckIcon = assets[checkIcon]?.items[0]
 
   const handleChange = e => {
     setEmail(e.target.value)
@@ -64,12 +59,8 @@ export function AccountCreated(props) {
 
   return (
     <Box className="centralize" sx={{px: '18px', flexDirection: 'column'}}>
-      <Image
-        alt={girlIcon?.name || ''}
-        height={145}
-        src={girlIcon?.svg_icon || ''}
-        width={145}
-      />
+      <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
+
       <Typography sx={{fontSize: 18, fontWeight: 700, mt: 5}}>
         Please activate your account by clicking the link sent to your email.
       </Typography>
@@ -86,12 +77,7 @@ export function AccountCreated(props) {
           }}
         >
           <Box sx={{border: '2px solid #FFF', borderRadius: '50%'}}>
-            <Image
-              alt={greenCheckIcon?.name || ''}
-              height={30}
-              src={greenCheckIcon?.svg_icon || ''}
-              width={30}
-            />
+            <GreenCheck sx={{width: 30, height: 30}} />
           </Box>
           <Typography color="#FFF" sx={{fontSize: 20, fontWeight: 600}}>
             An Email has been sent to your email address

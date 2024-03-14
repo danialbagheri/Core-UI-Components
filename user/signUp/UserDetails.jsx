@@ -3,7 +3,6 @@ import {BASE_URL} from '../../../constants/servicesConstants'
 import {Box} from '@mui/material'
 import {CustomLink, Title} from '../localShared'
 import {SignUpFields} from './SignUpFields'
-import {assetsEndPoints} from '../../../utils'
 import {AppContext} from '../../appProvider/AppProvider'
 import {CustomButton} from 'components/shared'
 
@@ -15,9 +14,14 @@ const INITIAL_STATE = {
   last_name: '',
 }
 
-export function UserDetails({setSteps, assets}) {
-  const {infoIcon, popUpPassword} = assetsEndPoints
+export const popUpPasswordItems = [
+  {id: 1, text: '8-16 characters'},
+  {id: 2, text: 'lower case characters'},
+  {id: 3, text: 'upper case characters'},
+  {id: 4, text: 'digits(0 - 9)'},
+]
 
+export function UserDetails({setSteps}) {
   const [data, setData] = React.useState({
     ...INITIAL_STATE,
   })
@@ -26,9 +30,6 @@ export function UserDetails({setSteps, assets}) {
   })
   const [loading, setLoading] = React.useState(false)
   const [, setAppState] = React.useContext(AppContext)
-
-  const infoIconDetail = assets[infoIcon]?.items[0]
-  const popUpPasswordItems = assets[popUpPassword]?.items || []
 
   const signUpHandler = async () => {
     const newData = {...data, re_password: data.password}
@@ -64,7 +65,6 @@ export function UserDetails({setSteps, assets}) {
       <SignUpFields
         data={data}
         error={error}
-        infoIcon={infoIconDetail}
         popUpPasswordItems={popUpPasswordItems}
         setData={setData}
       />

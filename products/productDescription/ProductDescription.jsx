@@ -155,6 +155,7 @@ const ProductDescription = props => {
       >
         <CustomTooltip
           arrow
+          enterTouchDelay={0}
           title={
             isLoggedIn ? (
               ''

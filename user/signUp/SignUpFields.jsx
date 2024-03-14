@@ -2,13 +2,7 @@ import {Box} from '@mui/material'
 import {InfoPopover} from './InfoPopover'
 import {CustomOutlinedInput} from 'components/shared'
 
-export function SignUpFields({
-  data,
-  setData,
-  error,
-  infoIcon,
-  popUpPasswordItems,
-}) {
+export function SignUpFields({data, setData, error}) {
   const changeHandler = (value, field) => {
     setData(prev => ({...prev, [field]: value}))
   }
@@ -44,10 +38,7 @@ export function SignUpFields({
           type="password"
           value={data.password}
         />
-        <InfoPopover
-          infoIcon={infoIcon}
-          popUpPasswordItems={popUpPasswordItems}
-        />
+        <InfoPopover />
       </Box>
       <CustomOutlinedInput
         error={error.email}

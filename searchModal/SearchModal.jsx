@@ -51,6 +51,7 @@ function SearchModal({setOpen, open}) {
           router.push({pathname: '/search'}).then(() => {
             closeSearchModal()
           })
+          setSearchValue('')
 
           return searchValue
         })

@@ -28,6 +28,7 @@ const Benefit = props => {
 
 export function NewMember(props) {
   const {assets} = props
+
   const {userAccountTopIcons, checkIcon, creatingAccountBenefits} =
     assetsEndPoints
 

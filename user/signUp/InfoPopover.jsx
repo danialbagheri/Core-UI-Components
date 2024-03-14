@@ -1,14 +1,13 @@
 import * as React from 'react'
 
-import Image from 'next/image'
-
 import Popover from '@mui/material/Popover'
 import {Box} from '@mui/material'
 
 import {Title} from '../localShared'
+import {InfoIcon} from 'components/icons'
+import {popUpPasswordItems} from './UserDetails'
 
-export function InfoPopover(props) {
-  const {popUpPasswordItems, infoIcon} = props
+export function InfoPopover() {
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   const handlePopoverOpen = event => {
@@ -23,16 +22,12 @@ export function InfoPopover(props) {
 
   return (
     <div>
-      <Image
-        alt={infoIcon.name || ''}
+      <InfoIcon
         aria-haspopup="true"
         aria-owns={open ? 'mouse-over-popover' : undefined}
-        height={20}
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
-        src={infoIcon.svg_icon || ''}
-        style={{position: 'absolute', left: 'calc(100% + 7px)', top: '34px'}}
-        width={20}
+        sx={{position: 'absolute', left: 'calc(100% + 7px)', top: '34px'}}
       />
       <Popover
         anchorEl={anchorEl}
