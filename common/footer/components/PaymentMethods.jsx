@@ -3,11 +3,11 @@ import Image from 'next/image'
 import React from 'react'
 
 const iconsSrc = [
+  {id: 'logo', src: '/footer/logo.png'},
+  {id: 'visa', src: '/footer/visa.png'},
+  {id: 'paypal', src: '/footer/paypal.png'},
   {id: 'applePay', src: '/footer/apple-pay.png'},
   {id: 'googlePay', src: '/footer/google-pay.png'},
-  {id: 'logo', src: '/footer/logo.png'},
-  {id: 'paypal', src: '/footer/paypal.png'},
-  {id: 'visa', src: '/footer/visa.png'},
 ]
 export function PaymentMethods() {
   return (
