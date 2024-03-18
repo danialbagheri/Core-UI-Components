@@ -29,13 +29,15 @@ export default function Instagram() {
   }, [])
 
   return (
-    <Box mt={30}>
-      <Typography color="primary.main" textAlign="center" variant="h2">
+    <Box
+    // mt={30}
+    >
+      {/* <Typography color="primary.main" textAlign="center" variant="h2">
         #FindTheFeeling
       </Typography>
       <Typography mt={8} textAlign="center" variant="h3">
         Share your summer moments with us on Instagram.
-      </Typography>
+      </Typography> */}
       <Box sx={{display: 'flex', mt: 5}}>
         {feeds.slice(0, thumbDetail.count).map(feed => (
           <Box

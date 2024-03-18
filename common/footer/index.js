@@ -1,1 +1,1 @@
-export * from './subscribeForm'
+export * from './Footer'

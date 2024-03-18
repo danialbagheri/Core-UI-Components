@@ -5,3 +5,4 @@ import AsSeen from './as-seen'
 import BestSeller from './bestsellers/best-seller'
 
 export {HomeSlider, Trending, StaySafe, AsSeen, BestSeller}
+export * from './TeenageCancer'

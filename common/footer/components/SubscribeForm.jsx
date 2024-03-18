@@ -1,13 +1,12 @@
-import Button from '@mui/material/Button'
-import {Alert, Box, CircularProgress, Snackbar, TextField} from '@mui/material'
+import {Alert, Box, Snackbar, Typography} from '@mui/material'
 import * as React from 'react'
 import {userSubscription} from 'services'
+import {CustomButton, CustomOutlinedInput} from 'components/shared'
+import {Container} from './Container'
 
-function SubscribeForm() {
+export function SubscribeForm({sx = {}}) {
   const [fieldData, setFieldData] = React.useState({
     email: '',
-    firstName: '',
-    lastName: '',
   })
   const [error, setError] = React.useState('')
   const [loading, setLoading] = React.useState(false)
@@ -17,38 +16,8 @@ function SubscribeForm() {
   })
   const [snackBarOpen, setSnackBarOpen] = React.useState(false)
 
-  const fieldStyle = {
-    borderRadius: 1,
-    width: '100%',
-
-    '&>p.Mui-error': {
-      marginTop: '0',
-      marginBottom: '-6px',
-      color: '#333',
-    },
-    '& input': {padding: '5px', backgroundColor: 'white', borderRadius: 1},
-    '&>label': {
-      top: '-11px',
-      color: '#222',
-      textShadow: '1px 1px 4px white, 1px 1px 1em white, -2px -2px 0.2em white',
-    },
-    '&>label.MuiFormLabel-filled': {top: 0},
-    '&>label.Mui-focused': {
-      top: 0,
-      color: '#222',
-      textShadow: '1px 1px 4px white, 1px 1px 1em white, -2px -2px 0.2em white',
-    },
-    '&>.Mui-focused>fieldset': {
-      borderColor: '#333 !important',
-    },
-  }
-
   const emailValidator = value =>
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-
-  const changeHandler = (type, value) => {
-    setFieldData(prev => ({...prev, [type]: value}))
-  }
 
   const handleClose = () => {
     setSnackBarOpen(false)
@@ -92,58 +61,54 @@ function SubscribeForm() {
     }
   }
   return (
-    <>
+    <Container sx={{...sx}}>
+      <Typography
+        color="primary"
+        fontSize={34}
+        fontWeight={700}
+        textAlign="center"
+      >
+        GET 10% off
+      </Typography>
+      <Typography
+        fontSize={16}
+        fontWeight={500}
+        mt="7px"
+        sx={{color: '#7F2E00'}}
+        textAlign="center"
+      >
+        Join our Sun-Safe family
+      </Typography>
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
           flexGrow: 1,
-          maxWidth: '220px',
           alignItems: 'flex-start',
+          justifyContent: 'center',
+          mt: 5,
         }}
       >
-        <TextField
+        <CustomOutlinedInput
           error={error}
-          helperText={error}
           id="outlined-required"
-          label="Email address"
-          onChange={e => changeHandler('email', e.target.value)}
-          required
-          sx={{...fieldStyle}}
+          onChange={e => setFieldData({email: e.target.value})}
+          placeholder="Email address"
+          sx={{
+            width: 181,
+            height: 32,
+            '& input': {bgcolor: '#FFF', py: '5px'},
+          }}
           type="email"
           value={fieldData.email}
         />
-        <Box
-          sx={{
-            textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+        <CustomButton
+          loading={loading}
+          onClick={submitHandler}
+          sx={{width: 112, height: 36, borderRadius: '4px', ml: -2}}
+          variant="contained"
         >
-          <Button
-            color="primary"
-            onClick={e => submitHandler(e)}
-            sx={theme => {
-              return {
-                border: 'none',
-                color: '#FFF',
-                background: `${theme.palette.golden.main}`,
-                p: '4px 20px',
-                fontWeight: '600',
-                borderRadius: 3,
-                '&:hover': {
-                  background: `${theme.palette.golden.main}`,
-                  boxShadow: 'none',
-                },
-              }
-            }}
-            variant="primary"
-          >
-            {loading ? <CircularProgress size={23} /> : 'SUBSCRIBE'}
-          </Button>
-        </Box>
+          Subscribe
+        </CustomButton>
       </Box>
       <Snackbar
         anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
@@ -159,8 +124,6 @@ function SubscribeForm() {
           {apiResponse.message}
         </Alert>
       </Snackbar>
-    </>
+    </Container>
   )
 }
-
-export default SubscribeForm
