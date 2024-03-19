@@ -78,6 +78,7 @@ export function CustomOutlinedInput(props: PropsTypes) {
   } = props
 
   const theme = useTheme()
+  const borderColor = renderProperBorderColor({disabled, error, success, theme})
 
   return (
     <Box sx={{...sx}}>
@@ -109,12 +110,13 @@ export function CustomOutlinedInput(props: PropsTypes) {
           '&>input': {color: '#000'},
 
           '& fieldset': {
-            borderColor: renderProperBorderColor({
-              disabled,
-              error,
-              success,
-              theme,
-            }),
+            borderColor,
+          },
+
+          '&:hover': {
+            '& fieldset': {
+              borderColor: `${borderColor} !important`,
+            },
           },
         }}
         type={type}

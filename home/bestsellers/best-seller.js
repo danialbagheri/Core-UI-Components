@@ -130,7 +130,7 @@ export default function BestSeller() {
                   <ProductItem
                     key={index}
                     product={item.item}
-                    sx={{m: '0 auto'}}
+                    sx={{m: '0 auto', maxWidth: 'min(100% , 240px)'}}
                   />
                 ))}
         </Box>

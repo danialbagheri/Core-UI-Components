@@ -3,8 +3,8 @@ import {SvgIcon, SvgIconProps} from '@mui/material'
 export function GreenCheck(props: SvgIconProps) {
   return (
     <SvgIcon
+      data-name="Layer 1"
       height="18.27"
-      id="green_check_icon"
       viewBox="0 0 18.27 18.27"
       width="18.27"
       xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ export function GreenCheck(props: SvgIconProps) {
               fill: 'none',
               stroke: '#fff',
               strokeLinecap: 'round',
-              strokeWidth: 2,
+              strokeWidth: '2px',
             }}
           />
           <path
@@ -41,7 +41,7 @@ export function GreenCheck(props: SvgIconProps) {
               fill: 'none',
               stroke: '#fff',
               strokeLinecap: 'round',
-              strokeWidth: 2,
+              strokeWidth: '2px',
             }}
           />
         </g>

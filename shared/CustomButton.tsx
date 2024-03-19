@@ -33,7 +33,7 @@ export function CustomButton(props: PropsTypes) {
     if (error) {
       return '#d32f2f'
     } else if (disabled || loading) {
-      return '#e0e0e0'
+      return '#ded5cd'
     }
 
     if (borderColor) {
@@ -51,6 +51,7 @@ export function CustomButton(props: PropsTypes) {
       }}
       sx={{
         position: 'relative',
+        ...(disabled || loading ? {backgroundColor: '#ded5cd !important'} : {}),
 
         textAlign: 'center',
         fontSize: '18px',

@@ -1,114 +1,73 @@
 import * as React from 'react'
-import Image from 'next/image'
-import Styles from './MailChimp.module.css'
-import {
-  Alert,
-  Box,
-  Snackbar,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
 
+import Image from 'next/image'
 import Link from 'next/link'
-import {userSubscription} from 'services'
+
+import {Box, TextField, Typography, useTheme} from '@mui/material'
+
+import {
+  SUBSCRIBED,
+  SUBSCRIPTION_STATE,
+  subscriptionHandler,
+  validateEmail,
+} from 'utils'
+import {CustomButton} from 'components/shared'
+
+import Styles from './MailChimp.module.css'
+import {GreenCheck} from 'components/icons'
+import {AppContext} from 'components/appProvider'
 
 const SUB_PANEL_OPEN = 'sub panel open'
+const fieldStyle = {
+  width: '100%',
+  '&>p': {marginTop: '-2px', marginBottom: '-6px'},
+  '& input': {padding: '5px'},
+  '&>label': {top: '-11px'},
+  '&>label.MuiFormLabel-filled': {top: 0},
+  '&>label.Mui-focused': {
+    top: 0,
+    color: '#fb4c1e',
+  },
+  '&>.Mui-focused>fieldset': {
+    borderColor: '#fb4c1e80 !important',
+  },
+}
 
 export default function MailjetSignUp() {
   const [showPopUp, setShowPopUp] = React.useState(false)
-
-  const [fieldData, setFieldData] = React.useState({
-    email: '',
-    firstName: '',
-    lastName: '',
-  })
+  const [email, setEmail] = React.useState('')
   const [error, setError] = React.useState('')
   const [loading, setLoading] = React.useState(false)
-  const [apiResponse, setApiResponse] = React.useState({
-    success: true,
-    message: '',
-  })
-  const [snackBarOpen, setSnackBarOpen] = React.useState(false)
-
+  const [isSubscribed, setIsSubscribed] = React.useState(false)
+  const [appState, setAppState] = React.useContext(AppContext)
   const theme = useTheme()
-
-  const subPanelOpenState = localStorage.getItem(SUB_PANEL_OPEN)
-
-  const fieldStyle = {
-    width: '100%',
-    '&>p': {marginTop: '-2px', marginBottom: '-6px'},
-    '& input': {padding: '5px'},
-    '&>label': {top: '-11px'},
-    '&>label.MuiFormLabel-filled': {top: 0},
-    '&>label.Mui-focused': {
-      top: 0,
-      color: '#fb4c1e',
-    },
-    '&>.Mui-focused>fieldset': {
-      borderColor: '#fb4c1e80 !important',
-    },
-  }
 
   /* -------------------------------- Function -------------------------------- */
   const setShowPopUpSetting = () => {
     setShowPopUp(!showPopUp)
   }
 
-  const emailValidator = value =>
-    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-
-  const changeHandler = (type, value) => {
-    setFieldData(prev => ({...prev, [type]: value}))
-  }
-
-  const handleClose = () => {
-    setSnackBarOpen(false)
-  }
-
   const submitHandler = async e => {
     e.preventDefault()
 
-    if (!fieldData.email) {
+    if (!email) {
       setError('Email is required.')
       return
-    } else if (!emailValidator(fieldData.email)) {
+    } else if (!validateEmail(email)) {
       setError('Please enter a correct email address.')
       return
     }
-    setLoading(true)
-    setError('')
-    const data = {
-      firstName: fieldData.firstName,
-      lastName: fieldData.lastName,
-      email: fieldData.email,
-    }
 
-    try {
-      await userSubscription(data)
-      setApiResponse({
-        message: <span>Thank you for subscribing &#128522;</span>,
-        success: true,
-      })
-      setSnackBarOpen(true)
-      setTimeout(() => setShowPopUp(false), 2000)
-    } catch (err) {
-      console.error(err)
-      setApiResponse({
-        message: 'Subscription was unsuccessful',
-        success: false,
-      })
-      setSnackBarOpen(true)
-    } finally {
-      setLoading(false)
-    }
+    setError('')
+
+    subscriptionHandler({email, setLoading, setAppState})
   }
 
   const onScroll = () => {
-    const {pageYOffset} = window
-    if (pageYOffset > 1000 && subPanelOpenState !== 'open') {
+    const {scrollY} = window
+
+    const subPanelOpenState = localStorage.getItem(SUB_PANEL_OPEN)
+    if (scrollY > 1000 && subPanelOpenState !== 'open') {
       window.removeEventListener('scroll', onScroll, {passive: true})
       setShowPopUp(true)
       localStorage.setItem(SUB_PANEL_OPEN, 'open')
@@ -117,6 +76,13 @@ export default function MailjetSignUp() {
   /* -------------------------------------------------------------------------- */
 
   React.useEffect(() => {
+    const subPanelOpenState = localStorage.getItem(SUB_PANEL_OPEN)
+    const subscriptionState = localStorage.getItem(SUBSCRIPTION_STATE)
+
+    if (subscriptionState === SUBSCRIBED) {
+      setIsSubscribed(true)
+    }
+
     window.addEventListener('keydown', e => {
       if (e.key === 'Escape' && showPopUp) {
         setShowPopUp(false)
@@ -132,6 +98,10 @@ export default function MailjetSignUp() {
       }
     }
   }, [])
+
+  if (isSubscribed) {
+    return null
+  }
 
   return (
     <>
@@ -205,51 +175,63 @@ export default function MailjetSignUp() {
           <Typography textAlign={'center'} variant="h5">
             Sign up to get 10% off your first order
           </Typography>
-          <Box className={Styles.infoContainer}>
-            <Box mt={'-10px'} sx={{flexGrow: 1}}>
-              <ul>
-                <li>Exclusive offers</li>
-                <li>New product launches</li>
-                <li>Sun advice</li>
-              </ul>
-            </Box>
+          {appState[SUBSCRIPTION_STATE] === SUBSCRIBED ? (
             <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-                flexGrow: 1,
-              }}
+              className="centralize"
+              sx={{flexDirection: 'column-reverse', gap: 2}}
             >
-              <TextField
-                error={error}
-                helperText={error}
-                id="outlined-required"
-                label="Email"
-                onChange={e => changeHandler('email', e.target.value)}
-                required
-                sx={{...fieldStyle}}
-                type="email"
-                value={fieldData.email}
+              <Box className="centralize" gap="9px" width={175}>
+                <GreenCheck sx={{width: 39, height: 39}} />
+                <Typography color="#226F61" fontSize={20} fontWeight={700}>
+                  Thank you for subscribing!
+                </Typography>
+              </Box>
+              <Image
+                alt="subscription-girl"
+                height={121}
+                src="/subscription/subscription-girl.png"
+                width={121}
               />
-              <Button
-                color="primary"
-                onClick={e => submitHandler(e)}
-                sx={{
-                  color: 'white',
-                  boxShadow: 'none',
-                  '&:hover': {backgroundColor: '#FF6B00', boxShadow: 'none'},
-                }}
-                variant="contained"
-              >
-                {loading ? (
-                  <CircularProgress size={23} sx={{'& svg': {color: '#FFF'}}} />
-                ) : (
-                  'SUBSCRIBE'
-                )}
-              </Button>
             </Box>
-          </Box>
+          ) : (
+            <Box className={Styles.infoContainer}>
+              <Box mt={'-10px'} sx={{flexGrow: 1}}>
+                <ul>
+                  <li>Exclusive offers</li>
+                  <li>New product launches</li>
+                  <li>Sun advice</li>
+                </ul>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  flexGrow: 1,
+                }}
+              >
+                <TextField
+                  error={error}
+                  helperText={error}
+                  id="outlined-required"
+                  label="Email"
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  sx={{...fieldStyle}}
+                  type="email"
+                  value={email}
+                />
+                <CustomButton
+                  loading={loading}
+                  onClick={submitHandler}
+                  sx={{borderRadius: 1, height: 32, fontSize: 16}}
+                  variant="contained"
+                >
+                  SUBSCRIBE
+                </CustomButton>
+              </Box>
+            </Box>
+          )}
 
           <p className={Styles.smallText}>
             By entering your email, you are opting in to receiving emails from
@@ -258,20 +240,6 @@ export default function MailjetSignUp() {
           </p>
         </Box>
       </div>
-      <Snackbar
-        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        open={snackBarOpen}
-      >
-        <Alert
-          onClose={handleClose}
-          severity={apiResponse.success ? 'success' : 'error'}
-          sx={{width: '100%'}}
-        >
-          {apiResponse.message}
-        </Alert>
-      </Snackbar>
     </>
   )
 }
