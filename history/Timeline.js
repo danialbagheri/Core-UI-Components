@@ -11,6 +11,9 @@ export default function Timeline() {
   const tvAd = '/history/tvad.png'
   const scalp = '/history/scalp.png'
   const findTheFeeling = '/history/findthefeeling.png'
+  const history2020 = '/history/history-2020.png'
+  const history2023 = '/history/history-2023.png'
+
   return (
     <div className={Styles.timeline}>
       <div className={`${Styles.timelineContainer} ${Styles.left}`}>
@@ -255,7 +258,7 @@ export default function Timeline() {
           <img
             alt="Calypso Billboard campaign find the feeling"
             className="mb-2 mt-3"
-            src={findTheFeeling}
+            src={history2020}
             width="100%"
           />
           <p>
@@ -265,6 +268,23 @@ export default function Timeline() {
             sprays for families, and even donated bulk supplies to hospitals and
             schools. This ensured everyone had access to essential hygiene tools
             during a critical time.
+          </p>
+        </div>
+      </div>
+      <div className={`${Styles.timelineContainer} ${Styles.left}`}>
+        <div className={Styles.date}>2023</div>
+        <div className={Styles.content}>
+          <img
+            alt="Calypso Billboard campaign find the feeling"
+            className="mb-2 mt-3"
+            src={history2023}
+            width="100%"
+          />
+          <p>
+            Calypso unveils an exciting transformation with the introduction of
+            fresh packaging and a new logo across our entire product range.
+            Embracing a contemporary design, our new look perfectly captures the
+            essence of sun adventures and the vibrancy of our brand.
           </p>
         </div>
       </div>
