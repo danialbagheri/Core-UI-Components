@@ -9,7 +9,6 @@ import {
 } from './components'
 
 export function Footer() {
-  // const {showSubscription} = props
   const theme = useTheme()
   return (
     <Box

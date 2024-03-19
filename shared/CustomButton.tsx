@@ -51,7 +51,7 @@ export function CustomButton(props: PropsTypes) {
       }}
       sx={{
         position: 'relative',
-        ...(disabled || loading ? {bgcolor: '#ded5cd'} : {}),
+        ...(disabled || loading ? {backgroundColor: '#ded5cd !important'} : {}),
 
         textAlign: 'center',
         fontSize: '18px',
