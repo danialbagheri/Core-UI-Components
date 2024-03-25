@@ -72,7 +72,7 @@ export default function Trending(props) {
       </Typography>
 
       <Slider {...settings}>
-        {items.map(item => (
+        {items?.map(item => (
           <ProductItem
             key={item.item?.id}
             product={item.item}
