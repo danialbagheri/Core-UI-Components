@@ -62,10 +62,10 @@ export function NewMember(props) {
       />
 
       <Image
-        alt={topIcon.name || ''}
+        alt={topIcon?.name || ''}
         height={114}
         id="user_page_top_icon"
-        src={topIcon.svg_icon || ''}
+        src={topIcon?.svg_icon || ''}
         style={{marginTop: '28px'}}
         width={114}
       />
