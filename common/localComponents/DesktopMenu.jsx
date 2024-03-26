@@ -1,25 +1,19 @@
 import * as React from 'react'
 
-/* ---------------------------- NextJs Components --------------------------- */
-import Image from 'next/image'
-/* -------------------------------------------------------------------------- */
-
 /* ----------------------------- MUI Components ----------------------------- */
-import {Box, Typography} from '@mui/material'
+import {Box, Typography, useTheme} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
 import {NavItem} from './NavItem'
 import {AppBarIcons} from './AppBarIcons'
-/* -------------------------------------------------------------------------- */
-
-/* ------------------------------- Local icons ------------------------------ */
-import search from '../../../public/icons/search.svg'
+import {Search} from 'components/icons'
 /* -------------------------------------------------------------------------- */
 
 export function DesktopMenu(props) {
   const {trigger, setOpenSearchModal, shrinkNavItems, menuItemsEle, navItems} =
     props
+  const theme = useTheme()
 
   const renderNavItems = () => {
     if (shrinkNavItems.length) {
@@ -58,7 +52,9 @@ export function DesktopMenu(props) {
           }}
         >
           <Typography color="primary">Search</Typography>
-          <Image alt="search-icon" height={15} src={search} width={15} />
+          <Search
+            sx={{width: 15, height: 15, color: theme.palette.primary.main}}
+          />
         </Box>
         {/* -------------------------------------------------------------------------- */}
 

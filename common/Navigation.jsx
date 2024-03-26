@@ -9,7 +9,7 @@ import {useRouter} from 'next/router'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import {Link, useScrollTrigger} from '@mui/material'
+import {Link, useScrollTrigger, useTheme} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
@@ -20,9 +20,7 @@ import {hideHeaderLogoOrInfoState} from 'utils'
 
 /* ------------------------------- Local Icons ------------------------------ */
 import logo from '../../public/logo.svg'
-import burger from '../../public/icons/burger.svg'
-import remove from '../../public/icons/remove.svg'
-import search from '../../public/icons/search.svg'
+import {Burger, Remove, Search} from 'components/icons'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
@@ -137,6 +135,7 @@ function Navigation(props) {
   const {navItems = initialNavItems} = props
   const router = useRouter()
   const {hideLogo} = hideHeaderLogoOrInfoState(router)
+  const theme = useTheme()
   /* --------------------------------- States --------------------------------- */
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [openSearchModal, setOpenSearchModal] = React.useState(false)
@@ -306,11 +305,12 @@ function Navigation(props) {
                     display: {md: 'none'},
                   }}
                 >
-                  <Image
-                    alt="burger_icon"
-                    height={40}
-                    src={remove}
-                    width={40}
+                  <Remove
+                    sx={{
+                      height: 40,
+                      width: 40,
+                      color: theme.palette.primary.main,
+                    }}
                   />
                 </Box>
               ) : (
@@ -324,20 +324,26 @@ function Navigation(props) {
                     display: {xs: 'flex', md: 'none !important'},
                   }}
                 >
-                  <Box onClick={handleDrawerToggle}>
-                    <Image
-                      alt="burger_icon"
-                      height={18}
-                      src={burger}
-                      width={18}
+                  <Box className="centralize" onClick={handleDrawerToggle}>
+                    <Burger
+                      sx={{
+                        height: 18,
+                        width: 18,
+                        color: theme.palette.primary.main,
+                        display: 'inline',
+                      }}
                     />
                   </Box>
-                  <Box onClick={() => setOpenSearchModal(true)}>
-                    <Image
-                      alt="burger_icon"
-                      height={18}
-                      src={search}
-                      width={18}
+                  <Box
+                    className="centralize"
+                    onClick={() => setOpenSearchModal(true)}
+                  >
+                    <Search
+                      sx={{
+                        width: 18,
+                        height: 18,
+                        color: theme.palette.primary.main,
+                      }}
                     />
                   </Box>
                 </Box>

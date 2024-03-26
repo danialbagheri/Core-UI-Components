@@ -1,45 +1,37 @@
 import * as React from 'react'
 
 /* ----------------------------- MUI Components ----------------------------- */
-import {Box} from '@mui/material'
+import {Box, useTheme} from '@mui/material'
 /* -------------------------------------------------------------------------- */
 
 /* ---------------------------- Local Components ---------------------------- */
-import {AppContext} from 'components/appProvider'
-import {assetsEndPoints, REMOVE_ICON_ID} from 'utils'
+import {Remove} from 'components/icons'
 /* -------------------------------------------------------------------------- */
 
 export const RemoveIcon = props => {
   const {sx = {}, onClick = () => {}} = props
-  const [appState] = React.useContext(AppContext)
-
-  const {userAccount} = assetsEndPoints
-  const removeIcon = appState?.icons?.[userAccount]?.items?.find(
-    item => item.id === REMOVE_ICON_ID,
-  ).svg_icon_text
+  const theme = useTheme()
 
   return (
     <Box
+      className="centralize"
       onClick={onClick}
       sx={{
         width: 32,
         height: 32,
         borderRadius: '50%',
         backgroundColor: '#FCF5EC',
-
         cursor: 'pointer',
 
         ...sx,
       }}
     >
-      <Box
-        dangerouslySetInnerHTML={{__html: removeIcon}}
+      <Remove
         sx={{
-          '& svg': {
-            width: 32,
-            height: 32,
-            '& circle': {display: 'none'},
-          },
+          width: 32,
+          height: 32,
+          color: theme.palette.primary.main,
+          '& circle': {display: 'none'},
         }}
       />
     </Box>

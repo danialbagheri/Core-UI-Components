@@ -1,27 +1,20 @@
 import * as React from 'react'
 
-import {Box} from '@mui/material'
+import Link from 'next/link'
+
+import {Box, useTheme} from '@mui/material'
 
 import {useShopify} from '../../hooks'
 import {AppContext} from '../../appProvider'
-import Link from 'next/link'
-
-/* ------------------------------- Local Icons ------------------------------ */
-import search from '../../../public/icons/search.svg'
-import userLoggedIn from '../../../public/icons/usr-logged-in.svg'
-import userLoggedOut from '../../../public/icons/user-logged-out.svg'
-import cartEmpty from '../../../public/icons/cart-empty.svg'
-import Image from 'next/image'
-/* -------------------------------------------------------------------------- */
+import {CartEmpty, Search, UserLoggedIn, UserLoggedOut} from 'components/icons'
 
 export function AppBarIcons(props) {
   const {trigger, sx, setOpenSearchModal} = props
-  const {openCart} = useShopify()
   const [appState] = React.useContext(AppContext)
+  const {openCart} = useShopify()
+  const theme = useTheme()
 
   const isLoggedIn = appState.isAuthenticate
-
-  const userSvgSrc = isLoggedIn ? userLoggedIn : userLoggedOut
 
   return (
     <Box
@@ -37,9 +30,12 @@ export function AppBarIcons(props) {
         ...sx,
       }}
     >
-      <Box
+      <Search
         onClick={() => setOpenSearchModal(true)}
         sx={{
+          width: 20,
+          height: 20,
+          fill: theme.palette.primary.main,
           display: {
             xs: 'none',
             md: trigger ? 'block' : 'none',
@@ -47,19 +43,31 @@ export function AppBarIcons(props) {
             cursor: 'pointer',
           },
         }}
-      >
-        <Image alt="search" height={20} src={search} width={20} />
-      </Box>
+      />
 
       <Box>
-        <Link href="/user">
-          <Image alt="user" height={25} src={userSvgSrc} width={25} />
+        <Link className="centralize" href="/user">
+          {isLoggedIn ? (
+            <UserLoggedIn
+              sx={{width: 25, height: 25, color: theme.palette.primary.main}}
+            />
+          ) : (
+            <UserLoggedOut
+              sx={{width: 25, height: 25, color: theme.palette.primary.main}}
+            />
+          )}
         </Link>
       </Box>
 
-      <Box onClick={openCart}>
-        <Image alt="cart" height={25} src={cartEmpty} width={25} />
-      </Box>
+      <CartEmpty
+        onClick={openCart}
+        sx={{
+          width: 25,
+          height: 25,
+          color: theme.palette.primary.main,
+          cursor: 'pointer',
+        }}
+      />
     </Box>
   )
 }

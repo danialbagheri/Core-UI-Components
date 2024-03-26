@@ -15,7 +15,7 @@ export function Footer() {
       component="footer"
       sx={{
         width: '100%',
-        bgcolor: theme.palette.calypsoBeige.main,
+        bgcolor: theme.palette.beige.main,
         py: 19,
       }}
     >
