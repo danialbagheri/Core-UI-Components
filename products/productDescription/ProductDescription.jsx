@@ -105,7 +105,7 @@ const ProductDescription = props => {
           {product.total_review_count >= 1 ? (
             <span>Read {product.total_review_count} reviews</span>
           ) : (
-            <span>Be the first to review to this product</span>
+            <span>Be the first to review this product</span>
           )}
         </a>
       </Box>
