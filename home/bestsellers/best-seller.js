@@ -113,7 +113,6 @@ export default function BestSeller() {
             width: '100%',
 
             display: 'grid',
-            maxHeight: {md: 'auto', xl: '700px'},
             gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
             gridTemplateRows: 'auto',
             rowGap: {xs: 20, md: 20, xl: 30},
