@@ -22,6 +22,8 @@ export default function BestSeller() {
   const [topSeller, setTopSeller] = React.useState({})
   const [loading, setLoading] = React.useState(true)
 
+  const hasBanner = topSeller.slider?.slides?.length > 0
+
   const getTopSellerHandler = async () => {
     try {
       const response = await getBestSellerResults()
@@ -55,9 +57,10 @@ export default function BestSeller() {
           sx={{
             position: 'relative',
             width: '100%',
+            display: hasBanner || loading ? 'block' : 'none',
           }}
         >
-          {topSeller.slider?.slides?.length > 0 && !loading ? (
+          {hasBanner && !loading ? (
             <Box className="banner">
               <Link
                 href={
@@ -104,9 +107,11 @@ export default function BestSeller() {
                 </picture>
               </Link>
             </Box>
-          ) : (
+          ) : null}
+
+          {loading ? (
             <Skeleton height="100%" variant="rectangular" width="100%" />
-          )}
+          ) : null}
         </Box>
         <Box
           sx={{
