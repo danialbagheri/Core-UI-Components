@@ -40,7 +40,14 @@ export default function BestSeller() {
   }, [])
 
   return (
-    <Box sx={{maxWidth: '1600px', margin: '0 auto', mt: 5}}>
+    <Box
+      sx={{
+        maxWidth: '1600px',
+        margin: '0 auto',
+        mt: 5,
+        mb: {xs: 10, sm: 20, my: 7},
+      }}
+    >
       <Typography color="earth.main" sx={{textAlign: 'center'}} variant="h3">
         Top Seller products
       </Typography>
