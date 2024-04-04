@@ -44,11 +44,12 @@ export default function BestSeller() {
       sx={{
         maxWidth: '1600px',
         margin: '0 auto',
-        mt: 5,
+        mt: 10,
         mb: {xs: 10, sm: 20, my: 7},
+        p: 5,
       }}
     >
-      <Typography color="earth.main" sx={{textAlign: 'center'}} variant="h3">
+      <Typography color="earth.main" sx={{textAlign: 'left'}} variant="h3">
         Top Seller products
       </Typography>
 
@@ -57,7 +58,7 @@ export default function BestSeller() {
           display: 'flex',
           gap: 5,
           flexDirection: {xs: 'column', lg: 'row'},
-          padding: 5,
+          mt: 5,
         }}
       >
         <Box
