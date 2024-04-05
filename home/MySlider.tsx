@@ -7,7 +7,6 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import 'loaders.css/loaders.min.css'
-
 import {ProductItem} from 'components/products'
 
 const settings = {
@@ -63,7 +62,11 @@ const settings = {
 }
 
 interface SliderProps {
-  items: {item: {id: string /* Add other properties if necessary */}}[]
+  items: {
+    item: {
+      /* Add other properties if necessary */
+    }
+  }[]
   title: string
 }
 
@@ -75,12 +78,8 @@ const MySlider: React.FC<SliderProps> = ({items, title}) => {
       </Typography>
 
       <Slider {...settings}>
-        {items?.map(item => (
-          <ProductItem
-            key={item.item?.id}
-            product={item.item}
-            sx={{m: '0 auto'}}
-          />
+        {items?.map((item, index) => (
+          <ProductItem key={index} product={item.item} sx={{m: '0 auto'}} />
         ))}
       </Slider>
     </Box>
