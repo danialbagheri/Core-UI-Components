@@ -2,7 +2,7 @@ import {useShopify} from '../hooks'
 
 export default function LineItem() {
   const {checkoutState, updateQuantity, removeLineItem} = useShopify()
-  const checkoutId = checkoutState.id
+  const checkoutId = checkoutState?.id
 
   function decrementQuantity(lineItemId, lineItemQuantity, e) {
     e.preventDefault()
@@ -23,7 +23,7 @@ export default function LineItem() {
 
   return (
     <li className="Line-item">
-      {checkoutState.lineItems?.map((lineItem, i) => {
+      {checkoutState?.lineItems?.map((lineItem, i) => {
         return (
           <div className="lineItemDiv" key={`${lineItem.title}` + i}>
             <div className="Line-item__img">

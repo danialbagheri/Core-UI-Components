@@ -153,7 +153,6 @@ function Navigation(props) {
     text: 'More',
     url: '',
   })
-
   /* -------------------------------------------------------------------------- */
 
   /* ---------------------------------- Refs ---------------------------------- */
@@ -249,7 +248,7 @@ function Navigation(props) {
 
               position: 'relative',
 
-              //Calypso icon styles in different situations
+              // Logo styles in different situations
               '&>#nav_logo_container': {
                 position: {
                   xs: 'absolute',
