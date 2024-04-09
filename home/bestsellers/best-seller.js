@@ -20,6 +20,7 @@ const LoadingItem = () => {
 
 export default function BestSeller() {
   const [topSeller, setTopSeller] = React.useState({})
+
   const [loading, setLoading] = React.useState(true)
 
   const hasBanner = topSeller.slider?.slides?.length > 0
