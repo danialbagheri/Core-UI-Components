@@ -1,11 +1,10 @@
+import {Box} from '@mui/material'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 
 export default function BreadCrumb(props) {
   const {breadcrumbs} = props
-  function handleClick(event) {
-    event.preventDefault()
-  }
+
   const children = breadcrumbs.map((child, index) => {
     return (
       <Link
@@ -15,15 +14,15 @@ export default function BreadCrumb(props) {
         typeof="WebPage"
         underline="hover"
       >
-        <span property="name">{child.name}</span>
+        <span>{child.name}</span>
       </Link>
     )
   })
   return (
-    <div onClick={handleClick} role="presentation" style={{margin: '10px'}}>
+    <Box sx={{m: '10px'}}>
       <Breadcrumbs aria-label="breadcrumb" typeof="BreadcrumbList">
         {children}
       </Breadcrumbs>
-    </div>
+    </Box>
   )
 }
