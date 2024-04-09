@@ -22,6 +22,9 @@ import {VariantSelector} from '../VariantSelector'
 import {useAuthFetch} from 'components/customHooks'
 import {Heart, HeartOutlined} from 'components/icons'
 import ShareButton from 'components/common/shareButton/ShareButton'
+import {WEBSITE_NAME} from 'constants/general'
+
+const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 
 const ProductDescription = props => {
   const {product, selectedVariant, setSelectedVariant} = props
@@ -35,6 +38,7 @@ const ProductDescription = props => {
       variant => variant.sku === selectedVariant.sku,
     ),
   )
+  const isCalypso = WEBSITE === WEBSITE_NAME.toLowerCase()
 
   const favoriteClickHandler = async e => {
     e.stopPropagation()
@@ -166,29 +170,33 @@ const ProductDescription = props => {
             )
           }
         >
-          <Box>
-            <CustomButton
-              borderColor="#DEDEDE"
-              className="centralize"
-              loading={loading}
-              onClick={favoriteClickHandler}
-              sx={{
-                p: 2,
-                borderRadius: '10px',
-                gap: '10px',
-                color: isFavorite ? '#FF0000' : '#000',
-                width: 233,
-                height: 42,
-              }}
-            >
-              {isFavorite ? 'Remove from favorites' : 'Add to your favorite'}
-              {isFavorite ? (
-                <Heart sx={{fill: '#FF0000'}} />
-              ) : (
-                <HeartOutlined sx={{fill: '#000'}} />
-              )}
-            </CustomButton>
-          </Box>
+          {isCalypso ? (
+            <Box>
+              <CustomButton
+                borderColor="#DEDEDE"
+                className="centralize"
+                loading={loading}
+                onClick={favoriteClickHandler}
+                sx={{
+                  p: 2,
+                  borderRadius: '10px',
+                  gap: '10px',
+                  color: isFavorite ? '#FF0000' : '#000',
+                  width: 233,
+                  height: 42,
+                }}
+              >
+                {isFavorite
+                  ? 'Remove from favorites'
+                  : 'Add to your favourites'}
+                {isFavorite ? (
+                  <Heart sx={{fill: '#FF0000'}} />
+                ) : (
+                  <HeartOutlined sx={{fill: '#000'}} />
+                )}
+              </CustomButton>
+            </Box>
+          ) : null}
         </CustomTooltip>
         <ShareButton media={product.main_image} text={product.name} />
       </Box>
