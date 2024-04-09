@@ -241,7 +241,7 @@ export default function MailjetSignUp() {
 
           <p className={Styles.smallText}>
             By entering your email, you are opting in to receiving emails from
-            Calypso. You can opt out anytime.
+            {WEBSITE_NAME}. You can opt out anytime.
             <Link href={'/privacy-policy'}>Privacy policy</Link>
           </p>
         </Box>

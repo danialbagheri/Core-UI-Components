@@ -7,6 +7,7 @@ import {useShopify} from '../../../hooks'
 
 import * as ga from '../../../common/googleAnalytics'
 import ProductQuantity from '../../detail/product-quantity'
+import {WEBSITE_NAME} from 'constants/general'
 
 function AddButton(props) {
   const {selectedVariant, product} = props
@@ -33,7 +34,7 @@ function AddButton(props) {
               id: selectedVariant.sku,
               name: product.name,
               price: selectedVariant.price,
-              brand: 'Calypso',
+              brand: WEBSITE_NAME,
               variant: selectedVariant.name,
             },
           ],

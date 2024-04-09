@@ -15,6 +15,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {postContactUsSubmit} from '../services'
+import {WEBSITE_NAME} from 'constants/general'
 
 const recaptchaRef = React.createRef()
 
@@ -187,7 +188,7 @@ const ContactUsForm = () => {
           helperText={error[MESSAGE]}
           multiline
           onChange={e => onChangeHandler(e.target.value, MESSAGE)}
-          placeholder="Dear Calypso team..."
+          placeholder={`Dear ${WEBSITE_NAME} team...`}
           rows={6}
           size="small"
           type="email"

@@ -1,4 +1,5 @@
 import {Box, Typography, useTheme} from '@mui/material'
+import {WEBSITE_NAME} from 'constants/general'
 import Image from 'next/image'
 import React from 'react'
 
@@ -31,7 +32,7 @@ export function Header(props) {
           Nice to see you{name.trim() ? `, ${name}!` : null}
         </Typography>
         <Typography sx={{fontSize: '15px', fontWeight: 700, mt: 2}}>
-          You’re part of the Calypso family!
+          You’re part of the {WEBSITE_NAME} family!
         </Typography>
       </Box>
     </Box>
