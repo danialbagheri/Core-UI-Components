@@ -16,6 +16,7 @@ import {CustomButton} from 'components/shared'
 import Styles from './MailChimp.module.css'
 import {GreenCheck} from 'components/icons'
 import {AppContext} from 'components/appProvider'
+import {WEBSITE_NAME} from 'constants/general'
 
 const SUB_PANEL_OPEN = 'sub panel open'
 const fieldStyle = {
@@ -33,6 +34,8 @@ const fieldStyle = {
   },
 }
 
+const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
+
 export default function MailjetSignUp() {
   const [showPopUp, setShowPopUp] = React.useState(false)
   const [email, setEmail] = React.useState('')
@@ -41,6 +44,7 @@ export default function MailjetSignUp() {
   const [isSubscribed, setIsSubscribed] = React.useState(false)
   const [appState, setAppState] = React.useContext(AppContext)
   const theme = useTheme()
+  const isCabana = WEBSITE === WEBSITE_NAME.toLowerCase()
 
   /* -------------------------------- Function -------------------------------- */
   const setShowPopUpSetting = () => {
@@ -156,7 +160,7 @@ export default function MailjetSignUp() {
             <Image
               alt={'subscription'}
               fill
-              src={'/home-page/calypso-newsletter-subscription.jpg'}
+              src={'/home-page/newsletter-subscription.jpg'}
               style={{objectFit: 'cover'}}
             />
           </div>
@@ -186,12 +190,14 @@ export default function MailjetSignUp() {
                   Thank you for subscribing!
                 </Typography>
               </Box>
-              <Image
-                alt="subscription-girl"
-                height={121}
-                src="/subscription/subscription-girl.png"
-                width={121}
-              />
+              {!isCabana ? (
+                <Image
+                  alt="subscription-girl"
+                  height={121}
+                  src="/subscription/subscription-girl.png"
+                  width={121}
+                />
+              ) : null}
             </Box>
           ) : (
             <Box className={Styles.infoContainer}>

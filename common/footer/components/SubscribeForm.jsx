@@ -14,12 +14,17 @@ import {Container} from './Container'
 import {GreenCheck} from 'components/icons'
 import {CustomButton, CustomOutlinedInput} from 'components/shared'
 import {AppContext} from 'components/appProvider'
+import {WEBSITE_NAME} from 'constants/general'
+
+const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 
 export function SubscribeForm({sx = {}}) {
   const [email, setEmail] = React.useState('')
   const [error, setError] = React.useState('')
   const [loading, setLoading] = React.useState(false)
   const [appState, setAppState] = React.useContext(AppContext)
+
+  const isCabana = WEBSITE === WEBSITE_NAME.toLowerCase()
 
   const submitHandler = async e => {
     e.preventDefault()
@@ -50,18 +55,20 @@ export function SubscribeForm({sx = {}}) {
     <Container sx={{...sx}}>
       {appState[SUBSCRIPTION_STATE] === SUBSCRIBED ? (
         <Box className="centralize">
-          <Box className="centralize" gap="9px" width={175}>
+          <Box className="centralize" gap="9px" width={182}>
             <GreenCheck sx={{width: 39, height: 39}} />
             <Typography color="#226F61" fontSize={20} fontWeight={700}>
               Thank you for subscribing!
             </Typography>
           </Box>
-          <Image
-            alt="subscription-girl"
-            height={121}
-            src="/subscription/subscription-girl.png"
-            width={121}
-          />
+          {!isCabana ? (
+            <Image
+              alt="subscription-girl"
+              height={121}
+              src="/subscription/subscription-girl.png"
+              width={121}
+            />
+          ) : null}
         </Box>
       ) : (
         <>
