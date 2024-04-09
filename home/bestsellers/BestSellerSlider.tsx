@@ -22,7 +22,7 @@ export default function BestSellerSlider() {
   React.useEffect(() => {
     getTopSellerHandler()
   }, [])
-  console.log(topSeller)
+
   return (
     <Box sx={{mb: 15}}>
       {!loading && <MySlider items={topSeller.items} title={'Best seller'} />}
