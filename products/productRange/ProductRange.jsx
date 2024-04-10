@@ -20,7 +20,6 @@ const COLUMN_GAP = 12
 
 export default function ProductRange(props) {
   const {banner, videoBanner} = props
-
   const [bannerSpecs, setBannerSpecs] = React.useState({
     columnsCount: 2,
     gridRow: 4,
@@ -32,6 +31,8 @@ export default function ProductRange(props) {
 
   const category = props.category
   const videoCode = videoBanner?.[0]?.slides?.[0]?.slide?.custom_code
+  const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
+  const isCalypsoWebsite = WEBSITE === 'calypso'
 
   //This is to calculate the count of product columns and rows in order to set the banner's width.
   //and row
@@ -153,7 +154,7 @@ export default function ProductRange(props) {
       ) : (
         <>
           {products
-            .sort(function (a) {
+            .toSorted(function (a) {
               if (a.collection_names[0] === 'New') {
                 return -1
               }
@@ -165,22 +166,28 @@ export default function ProductRange(props) {
         </>
       )}
       {/* -------------------------- Product finder Banner ------------------------- */}
-      <Box
-        sx={{
-          position: 'relative',
-          height: {xs: 150, msm: bannerSpecs.bannerHeight},
-          gridColumn: `1 / span ${bannerSpecs.columnsCount}`, // Ensure the image spans across all columns
-          gridRow: bannerSpecs.gridRow,
-          cursor: 'pointer',
-          '& img': {
-            objectFit: {xs: 'contain', msm: 'cover'},
-          },
-        }}
-      >
-        <Link href="/product-finder">
-          <Image alt="Product finder" fill src={bannerSpecs?.bannerSrc || ''} />
-        </Link>
-      </Box>
+      {isCalypsoWebsite ? (
+        <Box
+          sx={{
+            position: 'relative',
+            height: {xs: 150, msm: bannerSpecs.bannerHeight},
+            gridColumn: `1 / span ${bannerSpecs.columnsCount}`, // Ensure the image spans across all columns
+            gridRow: bannerSpecs.gridRow,
+            cursor: 'pointer',
+            '& img': {
+              objectFit: {xs: 'contain', msm: 'cover'},
+            },
+          }}
+        >
+          <Link href="/product-finder">
+            <Image
+              alt="Product finder"
+              fill
+              src={bannerSpecs?.bannerSrc || ''}
+            />
+          </Link>
+        </Box>
+      ) : null}
       {/* -------------------------------------------------------------------------- */}
     </Box>
   )

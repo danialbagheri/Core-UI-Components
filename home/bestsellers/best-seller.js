@@ -20,7 +20,10 @@ const LoadingItem = () => {
 
 export default function BestSeller() {
   const [topSeller, setTopSeller] = React.useState({})
+
   const [loading, setLoading] = React.useState(true)
+
+  const hasBanner = topSeller.slider?.slides?.length > 0
 
   const getTopSellerHandler = async () => {
     try {
@@ -38,8 +41,16 @@ export default function BestSeller() {
   }, [])
 
   return (
-    <Box sx={{maxWidth: '1600px', margin: '0 auto', mt: 5}}>
-      <Typography color="earth.main" sx={{textAlign: 'center'}} variant="h3">
+    <Box
+      sx={{
+        maxWidth: '1600px',
+        margin: '0 auto',
+        mt: 10,
+        mb: {xs: 10, sm: 20, my: 7},
+        p: 5,
+      }}
+    >
+      <Typography color="earth.main" sx={{textAlign: 'left'}} variant="h3">
         Top Seller products
       </Typography>
 
@@ -48,16 +59,17 @@ export default function BestSeller() {
           display: 'flex',
           gap: 5,
           flexDirection: {xs: 'column', lg: 'row'},
-          padding: 5,
+          mt: 5,
         }}
       >
         <Box
           sx={{
             position: 'relative',
             width: '100%',
+            display: hasBanner || loading ? 'block' : 'none',
           }}
         >
-          {topSeller.slider?.slides?.length > 0 && !loading ? (
+          {hasBanner && !loading ? (
             <Box className="banner">
               <Link
                 href={
@@ -104,16 +116,17 @@ export default function BestSeller() {
                 </picture>
               </Link>
             </Box>
-          ) : (
+          ) : null}
+
+          {loading ? (
             <Skeleton height="100%" variant="rectangular" width="100%" />
-          )}
+          ) : null}
         </Box>
         <Box
           sx={{
             width: '100%',
 
             display: 'grid',
-            maxHeight: {md: 'auto', xl: '700px'},
             gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
             gridTemplateRows: 'auto',
             rowGap: {xs: 20, md: 20, xl: 30},

@@ -4,11 +4,12 @@ import {Box} from '@mui/material'
 import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {Title} from './localShared'
-import {assetsEndPoints} from '../../utils'
 import {CustomButton} from 'components/shared'
+import {createAccountBenefits} from 'constants'
+import {GreenCheck} from 'components/icons'
 
 const Benefit = props => {
-  const {checkIconSrc, text} = props
+  const {text} = props
   return (
     <Box
       sx={{
@@ -18,7 +19,7 @@ const Benefit = props => {
         gap: '10px',
       }}
     >
-      <Image alt="Check" height={18} src={checkIconSrc} width={18} />
+      <GreenCheck alt="Check" height={18} width={18} />
       <Title subTitle sx={{whiteSpace: 'nowrap'}}>
         {text}
       </Title>
@@ -26,15 +27,8 @@ const Benefit = props => {
   )
 }
 
-export function NewMember(props) {
-  const {assets} = props
-
-  const {userAccountTopIcons, checkIcon, creatingAccountBenefits} =
-    assetsEndPoints
-
+export function NewMember() {
   const router = useRouter()
-
-  const topIcon = assets[userAccountTopIcons]?.items[0]
 
   return (
     <Box
@@ -62,10 +56,10 @@ export function NewMember(props) {
       />
 
       <Image
-        alt={topIcon?.name || ''}
+        alt={'calypso-girl-password'}
         height={114}
         id="user_page_top_icon"
-        src={topIcon?.svg_icon || ''}
+        src="/calypso-girl/password.svg"
         style={{marginTop: '28px'}}
         width={114}
       />
@@ -76,12 +70,8 @@ export function NewMember(props) {
       </Title>
 
       <Box mt={{xs: '28px', md: '38px'}}>
-        {assets[creatingAccountBenefits]?.items.map(benefit => (
-          <Benefit
-            checkIconSrc={assets[checkIcon]?.items[0]?.svg_icon}
-            key={benefit.id}
-            text={benefit.text}
-          />
+        {createAccountBenefits.map(benefit => (
+          <Benefit key={benefit.id} text={benefit.text} />
         ))}
       </Box>
 

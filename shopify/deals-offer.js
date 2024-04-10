@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import DealItem from './deal-item'
 import LinearProgress from '@mui/material/LinearProgress'
+import {Typography} from '@mui/material'
 
 export default function DealOffer(props) {
   const [offerDeal, setOfferDeal] = useState(false)
@@ -60,8 +61,10 @@ export default function DealOffer(props) {
             value={100 - remainingAmount * 4}
             variant="determinate"
           />
-          Spend £{remainingAmount} more to be eligible for{' '}
-          <strong>FREE shipping</strong>
+          <Typography color="primary">
+            Spend £{remainingAmount} more to be eligible for{' '}
+            <strong>FREE shipping</strong>
+          </Typography>
         </div>
       ) : (
         <div className="Cart-info clearfix calypso-orange">
@@ -71,16 +74,22 @@ export default function DealOffer(props) {
             value={100}
             variant="determinate"
           />
-          You have got free shipping! 🧡 🎉
+          <Typography color="primary">
+            You have got free shipping! 🧡 🎉
+          </Typography>
         </div>
       )}
       <div className="deal-container">
         {offerDeal || offerLipBalm ? (
           <div className="Cart-info clearfix">
             <div>
-              <strong>DEALS</strong>
+              <Typography color="primary">
+                <strong>DEALS</strong>
+              </Typography>
               <div>
-                <small>You are eligible for the following deals</small>
+                <Typography color="primary">
+                  <small>You are eligible for the following deals</small>
+                </Typography>
               </div>
               {offerDeal && <DealItem />}
               {/* {offerLipBalm && <LipBalmDeal />} */}

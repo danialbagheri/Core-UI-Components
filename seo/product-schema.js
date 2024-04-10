@@ -1,3 +1,9 @@
+import {
+  WEBSITE_ADDRESS,
+  WEBSITE_NAME,
+  WEBSITE_NAME_FULL_NAME,
+} from 'constants/general'
+
 export default function ProductSchema(props) {
   const product = props.product
   const today = new Date()
@@ -24,7 +30,7 @@ export default function ProductSchema(props) {
         {review.date_created}
         <div property="reviewBody">{review.comment}</div>
         <span property="publisher" typeof="Organization">
-          <meta content="Calypso Sun" property="name" />
+          <meta content={WEBSITE_NAME_FULL_NAME} property="name" />
         </span>
       </div>
     )
@@ -34,7 +40,7 @@ export default function ProductSchema(props) {
     <div className="d-none" typeof="Product" vocab="https://schema.org/">
       <div rel="schema:brand">
         <div typeof="schema:Brand">
-          <div content="Calypso" property="schema:name" />
+          <div content={WEBSITE_NAME} property="schema:name" />
         </div>
       </div>
       <div content={product.description} property="schema:description" />
@@ -76,7 +82,7 @@ export default function ProductSchema(props) {
           ></div>
           <div
             rel="schema:url"
-            resource={`https://calypsosun.com/poroducts/${product.slug}`}
+            resource={`${WEBSITE_ADDRESS}/products/${product.slug}`}
           ></div>
           <div
             content="https://schema.org/NewCondition"

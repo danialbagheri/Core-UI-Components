@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons'
 import * as ga from '../common/googleAnalytics'
 import {Backdrop} from '@mui/material'
+import {CustomButton} from 'components/shared'
 
 export default function Cart() {
   const [discountItem, setDiscountItem] = React.useState({
@@ -158,12 +159,13 @@ export default function Cart() {
               </span>
             </div>
           </div>
-          <button
-            className="Cart__checkout button"
+          <CustomButton
             onClick={e => openCheckout(e)}
+            sx={{width: '100%', mt: 5, borderRadius: 1}}
+            variant="contained"
           >
             Checkout
-          </button>
+          </CustomButton>
         </footer>
       </div>
     </div>

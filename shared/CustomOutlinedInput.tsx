@@ -106,6 +106,7 @@ export function CustomOutlinedInput(props: PropsTypes) {
           fontSize: '18px',
           fontStyle: 'normal',
           fontWeight: 500,
+          overflow: 'hidden',
 
           '&>input': {color: '#000'},
 

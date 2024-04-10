@@ -14,15 +14,8 @@ import {Box, Typography, useTheme} from '@mui/material'
 
 /* ---------------------------- Local Components ---------------------------- */
 import TopBar from './topbar'
-import {getInfoBarStatus} from '../../services'
-import {hideHeaderLogoOrInfoState} from 'utils'
+import {assetsEndPoints, hideHeaderLogoOrInfoState} from 'utils'
 import {AppContext} from '../appProvider'
-import {
-  assetsEndPoints,
-  FREE_DELIVERY_ICON_ID,
-  MADE_IN_UK_ICON_ID,
-  STAR_RATE_ICON_ID,
-} from 'utils'
 import {ApiSvgIcon} from '../shared'
 /* -------------------------------------------------------------------------- */
 
@@ -31,68 +24,45 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 /* -------------------------------------------------------------------------- */
 
+const settings = {
+  infinite: false,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  arrows: false,
+  dots: false,
+  autoplay: false,
+  vertical: false,
+  verticalSwiping: false,
+  responsive: [
+    {
+      breakpoint: 1400,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 900,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 1500,
+      },
+    },
+  ],
+}
+
 export default function InfoBar() {
-  const [items, setItems] = React.useState(null)
   const [appState] = React.useContext(AppContext)
-
-  const apiIcons = appState.icons?.[assetsEndPoints.infoBar]?.items
-  const madeInUkIcon = apiIcons?.find(
-    icon => icon.id === MADE_IN_UK_ICON_ID,
-  )?.svg_icon_text
-  const freeDeliveryIcon = apiIcons?.find(
-    icon => icon.id === FREE_DELIVERY_ICON_ID,
-  )?.svg_icon_text
-  const starRateIcon = apiIcons?.find(
-    icon => icon.id === STAR_RATE_ICON_ID,
-  )?.svg_icon_text
-
-  const iconsHtml = [madeInUkIcon, freeDeliveryIcon, starRateIcon]
-
   const theme = useTheme()
   const router = useRouter()
 
+  const appBarItems = appState.icons?.[assetsEndPoints.infoBar]?.items
   const {hideInfoBar} = hideHeaderLogoOrInfoState(router)
 
-  const settings = {
-    infinite: false,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: false,
-    dots: false,
-    autoplay: false,
-    vertical: false,
-    verticalSwiping: false,
-    responsive: [
-      {
-        breakpoint: 1400,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          infinite: true,
-          autoplay: true,
-          autoplaySpeed: 1500,
-        },
-      },
-    ],
-  }
-
-  //@Danial::: It gets 404 in Cabana on this API call
-  React.useEffect(() => {
-    getInfoBarStatus()
-      .then(res => {
-        setItems(res.items)
-      })
-      .catch(err => console.error(err))
-  }, [])
-
-  const infoBarItems = items?.map((item, i) => {
+  const infoBarItems = appBarItems?.map(item => {
     return (
       <Box
         className="info-bar-item"
@@ -104,10 +74,10 @@ export default function InfoBar() {
       >
         <ApiSvgIcon
           className="centralize"
-          htmlContent={iconsHtml[i]}
-          sx={{fill: theme.palette.primary.main, width: 23, height: 23}}
+          htmlContent={item.svg_icon_text}
+          sx={{width: 18, height: 18, fill: theme.palette.primary.main}}
         />
-        <Typography className="text-centre">{item.text}</Typography>
+        <Typography className="text-centre">{item.name}</Typography>
       </Box>
     )
   })

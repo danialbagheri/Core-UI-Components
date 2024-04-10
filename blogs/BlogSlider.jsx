@@ -4,8 +4,8 @@ import {Box, Container, Typography} from '@mui/material'
 import {getBlogs} from 'services'
 import Slider from 'react-slick'
 import BlogCard from './BlogCard'
-import 'slick-carousel/slick/slick.css'
 
+import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
 function BlogSlider() {
@@ -63,7 +63,7 @@ function BlogSlider() {
 
   return (
     <Container>
-      <Box mt={{xs: 10, sm: 20, my: 7}}>
+      <Box>
         <Typography color="earth.main" variant="h3">
           Editor&#39;s picks
         </Typography>
