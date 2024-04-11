@@ -1,11 +1,11 @@
-import {CollectionType} from 'types/collection'
+// import {CollectionType} from 'types/collection'
 import {Box} from '@mui/material'
 import {getBestSellerResults} from 'services'
 import React from 'react'
 import MySlider from '../MySlider'
 
 export default function BestSellerSlider() {
-  const [topSeller, setTopSeller] = React.useState<CollectionType>()
+  const [topSeller, setTopSeller] = React.useState<any>()
   const [loading, setLoading] = React.useState(true)
 
   const getTopSellerHandler = async () => {
