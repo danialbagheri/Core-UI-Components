@@ -41,7 +41,7 @@ export function SpotlightBody(props: SpotlightBodyType) {
 
   const onResize = React.useCallback(() => {
     const containerWidth = containerRef.current.clientWidth
-    if (containerWidth < 1138) {
+    if (containerWidth < 900) {
       setView('mobile')
     } else {
       setView('desktop')
@@ -61,9 +61,9 @@ export function SpotlightBody(props: SpotlightBodyType) {
       sx={{
         display: 'flex',
         justifyContent: 'flex-start',
-        alignItems: {xs: 'center', lg: 'flex-start'},
+        alignItems: {xs: 'center', md: 'flex-start'},
         flexDirection: 'column',
-        pt: {xs: 0, lg: '112px'},
+        pt: {xs: 0, md: '112px'},
         pb: '141px',
       }}
     >
@@ -72,17 +72,17 @@ export function SpotlightBody(props: SpotlightBodyType) {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          flexDirection: {xs: 'column', lg: 'row'},
-          gap: '43px',
-          maxWidth: 560,
-          mt: {xs: -8, lg: 0},
+          flexDirection: {xs: 'column', md: 'row'},
+          gap: {xs: '28px', md: '43px'},
+          maxWidth: 450,
+          mt: {xs: -8, md: 0},
         }}
       >
         <Box
           sx={{
-            width: {xs: 128, lg: 200},
-            height: {xs: 128, lg: 200},
-            minWidth: {xs: 128, lg: 200},
+            width: 124,
+            height: 124,
+            minWidth: 124,
             position: 'relative',
             borderRadius: '50%',
             overflow: 'hidden',
@@ -92,14 +92,14 @@ export function SpotlightBody(props: SpotlightBodyType) {
         </Box>
         <Box>
           <Typography
-            fontSize={{xs: 24, lg: 36}}
+            fontSize={{xs: 24, md: 28}}
             fontWeight={700}
             lineHeight="33px"
           >
             {personData.name}
           </Typography>
           <Typography
-            fontSize={{xs: 20, lg: 26}}
+            fontSize={{xs: 20, md: 22}}
             fontWeight={400}
             lineHeight="36px"
           >
@@ -107,9 +107,9 @@ export function SpotlightBody(props: SpotlightBodyType) {
           </Typography>
           <Typography
             color="primary"
-            fontSize={{xs: 17, lg: 24}}
+            fontSize={{xs: 17, md: 18}}
             fontWeight={700}
-            mt="15px"
+            mt={{xs: '8px', md: '15px'}}
           >
             {personData.profession}
           </Typography>

@@ -1,8 +1,9 @@
 import React from 'react'
 import {DataType} from '../SpotlightBody'
 import {Box, useTheme} from '@mui/material'
-import {Column} from 'constants/spotlight'
+
 import {renderProperComponent} from '../utils'
+import {Column} from 'constants/spotlight'
 
 interface PropsType {
   data: DataType[]

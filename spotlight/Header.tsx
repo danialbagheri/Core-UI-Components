@@ -24,10 +24,23 @@ export function Header(props: PropsType) {
       />
       <Box
         sx={{
+          width: {xs: '100%', md: '45%'},
+          height: {xs: 283, md: 570},
+          bottom: 0,
+          left: 0,
           position: 'absolute',
-          top: {xs: '42px', lg: '118px'},
-          left: {xs: '50%', lg: '20%'},
-          transform: {xs: 'translateX(-50%)', lg: 'translateX(0)'},
+          background: {
+            xs: 'linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%)',
+            md: 'linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%)',
+          },
+        }}
+      />
+      <Box
+        sx={{
+          position: 'absolute',
+          top: {xs: '42px', md: '118px'},
+          left: {xs: '50%', md: '20%'},
+          transform: {xs: 'translateX(-50%)', md: 'translateX(0)'},
           textAlign: 'center',
         }}
       >
@@ -66,16 +79,16 @@ export function Header(props: PropsType) {
         className="centralize"
         sx={{
           position: 'absolute',
-          left: {xs: '50%', lg: '20%'},
-          transform: {xs: 'translateX(-50%)', lg: 'translateX(0)'},
-          top: {xs: 426, lg: 285},
+          left: {xs: '50%', md: '20%'},
+          transform: {xs: 'translateX(-50%)', md: 'translateX(0)'},
+          top: {xs: 426, md: 285},
 
           maxWidth: 409,
           '& q': {
             color: '#FFF',
-            fontSize: {xs: 26, lg: 48},
+            fontSize: {xs: 26, md: 48},
             fontWeight: 700,
-            lineHeight: {xs: '31px', lg: '58px'},
+            lineHeight: {xs: '31px', md: '58px'},
             position: 'relative',
           },
         }}

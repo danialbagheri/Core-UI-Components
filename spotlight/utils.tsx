@@ -32,16 +32,16 @@ export const renderProperComponent = (props: PropsType) => {
             justifyContent: 'flex-start',
             alignItems: 'center',
             flexDirection: 'column',
-            gap: '28px',
-            px: {xs: '30px', lg: 0},
+            gap: {xs: '18px', md: '28px'},
+            px: {xs: '30px', md: 0},
           }}
         >
           {data.content.map(content => (
             <Typography
-              fontSize={{xs: 18, lg: 28}}
+              fontSize={{xs: 18, md: 28}}
               fontWeight={400}
               key={content.id}
-              lineHeight={{xs: '25px', lg: '39px'}}
+              lineHeight={{xs: '25px', md: '39px'}}
             >
               {content.data}
             </Typography>
@@ -50,32 +50,32 @@ export const renderProperComponent = (props: PropsType) => {
       )
     case QUOTE:
       return (
-        <Box sx={{px: {xs: '30px', lg: 0}}}>
+        <Box sx={{px: {xs: '30px', md: 0}}}>
           {data.content.map(content => (
             <Box key={content.id}>
               <QuoteStart
                 sx={{
                   fill: primaryColor,
-                  width: {xs: 45, lg: 64},
-                  height: {xs: 39, lg: 56},
-                  mb: {xs: '24px', lg: '28px'},
+                  width: {xs: 28, md: 41},
+                  height: {xs: 22, md: 36},
+                  mb: {xs: '18px', md: '22px'},
                 }}
               />
               <Typography
                 color="#80A8C7"
-                fontSize={{xs: 32, lg: 50}}
+                fontSize={{xs: 24, md: 32}}
                 fontWeight={800}
-                lineHeight={{xs: '39px', lg: '60.45px'}}
+                lineHeight={{xs: '28px', md: '38px'}}
               >
                 {content.data}
               </Typography>
               <QuoteEnd
                 sx={{
                   fill: primaryColor,
-                  width: {xs: 45, lg: 64},
-                  height: {xs: 39, lg: 56},
+                  width: {xs: 28, md: 41},
+                  height: {xs: 22, md: 36},
                   mx: 'calc(100% - 56px)',
-                  mt: {xs: '18px', lg: '22px'},
+                  mt: {xs: '14px', md: '18px'},
                 }}
               />
             </Box>
@@ -96,12 +96,12 @@ export const renderProperComponent = (props: PropsType) => {
                 <Box
                   key={content.id}
                   sx={{
-                    width: {xs: isProductImage ? 291 : '100%', lg: '100%'},
-                    height: {xs: isProductImage ? 291 : 364, lg: 536},
+                    width: {xs: isProductImage ? 291 : '100%', md: '100%'},
+                    height: {xs: isProductImage ? 291 : 364, md: 350},
                     position: 'relative',
                     borderRadius: {
                       xs: isProductImage ? 10 : 0,
-                      lg: 10,
+                      md: 10,
                     },
                     overflow: 'hidden',
                   }}
@@ -117,7 +117,7 @@ export const renderProperComponent = (props: PropsType) => {
             } else if (content.type === TITLE) {
               return (
                 <Typography
-                  fontSize={{xs: 24, lg: 32}}
+                  fontSize={{xs: 24, md: 32}}
                   fontWeight={700}
                   key={content.id}
                   lineHeight="45px"

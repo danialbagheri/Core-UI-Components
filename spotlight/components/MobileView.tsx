@@ -21,7 +21,7 @@ export function MobileView(props: PropsType) {
         flexDirection: 'column',
 
         maxWidth: 500,
-        gap: '25px',
+        gap: '40px',
         pt: '60px',
       }}
     >
