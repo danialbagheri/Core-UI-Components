@@ -37,11 +37,11 @@ export interface SpotlightBodyType {
 export function SpotlightBody(props: SpotlightBodyType) {
   const {data, personData} = props
   const [view, setView] = React.useState<'mobile' | 'desktop'>('mobile')
-  const containerRef = React.useRef<HTMLDivElement>(null)
 
   const onResize = React.useCallback(() => {
-    const containerWidth = containerRef.current.clientWidth
-    if (containerWidth < 900) {
+    const windowWidth = window.innerWidth
+
+    if (windowWidth < 900) {
       setView('mobile')
     } else {
       setView('desktop')
@@ -49,15 +49,14 @@ export function SpotlightBody(props: SpotlightBodyType) {
   }, [])
 
   React.useEffect(() => {
-    onResize()
     if (typeof window !== 'undefined') {
+      onResize()
       window.addEventListener('resize', onResize)
     }
   }, [])
 
   return (
     <Box
-      ref={containerRef}
       sx={{
         display: 'flex',
         justifyContent: 'flex-start',
@@ -73,7 +72,7 @@ export function SpotlightBody(props: SpotlightBodyType) {
           justifyContent: 'flex-start',
           alignItems: 'center',
           flexDirection: {xs: 'column', md: 'row'},
-          gap: {xs: '28px', md: '43px'},
+          gap: '43px',
           maxWidth: 450,
           mt: {xs: -8, md: 0},
         }}
@@ -109,7 +108,7 @@ export function SpotlightBody(props: SpotlightBodyType) {
             color="primary"
             fontSize={{xs: 17, md: 18}}
             fontWeight={700}
-            mt={{xs: '8px', md: '15px'}}
+            mt="15px"
           >
             {personData.profession}
           </Typography>

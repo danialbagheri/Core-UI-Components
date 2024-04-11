@@ -38,10 +38,10 @@ export const renderProperComponent = (props: PropsType) => {
         >
           {data.content.map(content => (
             <Typography
-              fontSize={{xs: 18, md: 28}}
+              fontSize={{xs: 16, md: 18}}
               fontWeight={400}
               key={content.id}
-              lineHeight={{xs: '25px', md: '39px'}}
+              lineHeight="25px"
             >
               {content.data}
             </Typography>
@@ -96,7 +96,7 @@ export const renderProperComponent = (props: PropsType) => {
                 <Box
                   key={content.id}
                   sx={{
-                    width: {xs: isProductImage ? 291 : '100%', md: '100%'},
+                    width: {xs: isProductImage ? 291 : '100%', md: 350},
                     height: {xs: isProductImage ? 291 : 364, md: 350},
                     position: 'relative',
                     borderRadius: {

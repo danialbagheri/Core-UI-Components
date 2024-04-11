@@ -35,7 +35,7 @@ export function DesktopView(props: PropsType) {
               width: '50%',
               display: 'flex',
               justifyContent: 'flex-start',
-              gap: '56px',
+              gap: '64px',
               flexDirection: 'column',
             }}
           >
