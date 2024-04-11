@@ -154,7 +154,7 @@ export default function ProductRange(props) {
       ) : (
         <>
           {products
-            .toSorted(function (a) {
+            .sort(function (a) {
               if (a.collection_names[0] === 'New') {
                 return -1
               }
