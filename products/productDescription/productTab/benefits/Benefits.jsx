@@ -28,13 +28,15 @@ export default function Benefits(props) {
             width: '100%',
           }}
         >
-          <Image
-            alt={tag.name}
-            height="60"
-            loading="lazy"
-            src={tag.svg_icon || tag.icon || ''}
-            width="60"
-          />
+          {tag.svg_icon || tag.icon ? (
+            <Image
+              alt={tag.name}
+              height="60"
+              loading="lazy"
+              src={tag.svg_icon || tag.icon || ''}
+              width="60"
+            />
+          ) : null}
           <Typography sx={{maxWidth: '100px', width: '100%'}}>
             {tag.name}
           </Typography>
