@@ -5,8 +5,9 @@ import Image from 'next/image'
 import {useRouter} from 'next/router'
 import {Title} from './localShared'
 import {CustomButton} from 'components/shared'
-import {createAccountBenefits} from 'constants'
+
 import {GreenCheck} from 'components/icons'
+import {createAccountBenefits} from 'constants/user'
 
 const Benefit = props => {
   const {text} = props
