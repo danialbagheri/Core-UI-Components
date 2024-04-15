@@ -86,9 +86,9 @@ export function Header(props: PropsType) {
           maxWidth: 409,
           '& q': {
             color: '#FFF',
-            fontSize: {xs: 26, md: 48},
+            fontSize: {xs: 26, md: 40},
             fontWeight: 700,
-            lineHeight: {xs: '31px', md: '58px'},
+            lineHeight: {xs: '31px', md: '56px'},
             position: 'relative',
           },
         }}

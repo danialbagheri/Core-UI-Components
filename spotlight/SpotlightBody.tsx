@@ -3,6 +3,7 @@ import React from 'react'
 import {DesktopView, MobileView} from './components'
 import {Column} from 'constants/spotlight'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export interface ContentType {
   data: string
@@ -97,18 +98,24 @@ export function SpotlightBody(props: SpotlightBodyType) {
           >
             {personData.name}
           </Typography>
-          <Typography
-            fontSize={{xs: 20, md: 22}}
-            fontWeight={400}
-            lineHeight="36px"
+          <Link
+            href={`http://instagram.com/_u/${personData.social_id}`}
+            style={{textDecoration: 'none'}}
+            target="_blank"
           >
-            {personData.social_id}
-          </Typography>
+            <Typography
+              fontSize={{xs: 20, md: 22}}
+              fontWeight={400}
+              lineHeight="36px"
+            >
+              @{personData.social_id}
+            </Typography>
+          </Link>
           <Typography
             color="primary"
             fontSize={{xs: 17, md: 18}}
             fontWeight={700}
-            mt="15px"
+            mt="4px"
           >
             {personData.profession}
           </Typography>

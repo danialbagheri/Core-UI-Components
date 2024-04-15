@@ -14,6 +14,7 @@ import {
 } from 'constants/spotlight'
 import {QuoteEnd, QuoteStart} from 'components/icons'
 import {CustomButton} from 'components/shared'
+import Link from 'next/link'
 
 interface PropsType {
   data: DataType
@@ -117,7 +118,7 @@ export const renderProperComponent = (props: PropsType) => {
             } else if (content.type === TITLE) {
               return (
                 <Typography
-                  fontSize={{xs: 24, md: 32}}
+                  fontSize={{xs: 18, md: 22}}
                   fontWeight={700}
                   key={content.id}
                   lineHeight="45px"
@@ -130,10 +131,22 @@ export const renderProperComponent = (props: PropsType) => {
                 <CustomButton
                   key={content.id}
                   onClick={() => {}}
-                  sx={{borderRadius: 1}}
+                  sx={{
+                    borderRadius: 1,
+                    '&>a': {
+                      textDecoration: 'none',
+                      width: '100%',
+                      height: '100%',
+                    },
+                    p: 0,
+                    width: 200,
+                    height: 40,
+                  }}
                   variant="contained"
                 >
-                  {content.data}
+                  <Link className="centralize" href={content.url}>
+                    {content.data}
+                  </Link>
                 </CustomButton>
               )
             }
