@@ -81,7 +81,7 @@ export function Header(props: PropsType) {
           position: 'absolute',
           left: {xs: '50%', md: '20%'},
           transform: {xs: 'translateX(-50%)', md: 'translateX(0)'},
-          top: {xs: 426, md: 285},
+          top: {xs: 426, md: 260},
 
           maxWidth: 409,
           '& q': {
