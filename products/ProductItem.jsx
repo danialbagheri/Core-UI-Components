@@ -26,6 +26,9 @@ const LIFE_STYLE = 'LS'
 
 const ProductTag = props => {
   const {product, isOnSale} = props
+  const properTagName = product?.collection_names?.includes('New')
+    ? 'New'
+    : product?.collection_names?.[0]
 
   if (isOnSale || product?.collection_names?.length > 0) {
     return (
@@ -50,7 +53,7 @@ const ProductTag = props => {
           padding: '3px 13px',
         }}
       >
-        {isOnSale ? 'SALE' : product?.collection_names[0]}
+        {isOnSale ? 'SALE' : properTagName}
       </Box>
     )
   }
