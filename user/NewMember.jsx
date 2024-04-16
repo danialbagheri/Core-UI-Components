@@ -7,6 +7,7 @@ import {Title} from './localShared'
 import {CustomButton} from 'components/shared'
 import {createAccountBenefits} from 'constants/user'
 import {CalypsoGirlDashboard, GreenCheck} from 'components/icons'
+import {IS_CALYPSO_WEBSITE} from 'constants/general'
 
 const Benefit = props => {
   const {text} = props
@@ -55,7 +56,9 @@ export function NewMember() {
         width={161}
       />
 
-      <CalypsoGirlDashboard sx={{width: 114, height: 114, mt: 7}} />
+      {IS_CALYPSO_WEBSITE ? (
+        <CalypsoGirlDashboard sx={{width: 114, height: 114, mt: 7}} />
+      ) : null}
 
       <Title sx={{display: {xs: 'none', md: 'block'}}}>New member?</Title>
       <Title sx={{display: {xs: 'block', md: 'none'}, mt: 1}}>

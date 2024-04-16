@@ -14,6 +14,7 @@ import {
   LogOut,
 } from 'components/icons'
 import {routes} from 'constants/user'
+import {IS_CALYPSO_WEBSITE} from 'constants/general'
 
 const SIDE_BAR_ITEMS = [
   {id: 'my-dashboard', name: 'My dashboard', url: `/user/${routes.DASHBOARD}`},
@@ -70,6 +71,16 @@ export function SideBar(props) {
     router.push(url)
   }
 
+  const renderProperIcon = () => {
+    if (IS_CALYPSO_WEBSITE) {
+      if (route === routes.PASSWORD) {
+        return <CalypsoGirlPassword sx={{width: 145, height: 145}} />
+      }
+      return <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
+    }
+    return null
+  }
+
   return (
     <Box
       sx={{
@@ -91,11 +102,7 @@ export function SideBar(props) {
           gap: 4,
         }}
       >
-        {route === routes.PASSWORD ? (
-          <CalypsoGirlPassword sx={{width: 145, height: 145}} />
-        ) : (
-          <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
-        )}
+        {renderProperIcon()}
 
         <Box
           sx={{

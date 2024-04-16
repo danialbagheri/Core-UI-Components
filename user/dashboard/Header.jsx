@@ -1,6 +1,6 @@
 import {Box, Typography, useTheme} from '@mui/material'
 
-import {WEBSITE_NAME} from 'constants/general'
+import {IS_CALYPSO_WEBSITE, WEBSITE_NAME} from 'constants/general'
 
 import Image from 'next/image'
 
@@ -18,12 +18,14 @@ export function Header(props) {
         '&>img': {width: {xs: 215, md: 246}, height: {xs: 245, md: 280}},
       }}
     >
-      <Image
-        alt="Welcome to Calypso"
-        height={280}
-        src="/calypso-girl/dashboard-welcome.png"
-        width={246}
-      />
+      {IS_CALYPSO_WEBSITE ? (
+        <Image
+          alt="Welcome to Calypso"
+          height={280}
+          src="/calypso-girl/dashboard-welcome.png"
+          width={246}
+        />
+      ) : null}
 
       <Box
         backgroundColor="primary.light"

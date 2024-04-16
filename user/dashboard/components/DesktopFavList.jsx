@@ -1,6 +1,8 @@
 import * as React from 'react'
 
 import {useRouter} from 'next/router'
+import Image from 'next/image'
+import Link from 'next/link'
 /* ----------------------------- MUI Components ----------------------------- */
 import {
   Box,
@@ -21,9 +23,7 @@ import {CustomButton} from 'components/shared'
 import {Price} from './Price'
 import {useShopify} from 'redux/ducks/shopify'
 import {useAuthFetch} from 'components/customHooks'
-import Link from 'next/link'
 import {addToCartHandler, removeFromFavoriteHandler} from './localUtils'
-import Image from 'next/image'
 import {getProperVariantImageSrc} from 'utils'
 /* -------------------------------------------------------------------------- */
 

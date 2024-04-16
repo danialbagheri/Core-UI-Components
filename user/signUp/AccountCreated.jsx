@@ -7,6 +7,7 @@ import {AppContext} from '../../appProvider/AppProvider'
 import {postResendActivation} from '../../../services'
 import {CustomButton, CustomOutlinedInput} from 'components/shared'
 import {CalypsoGirlDashboard, GreenCheck} from 'components/icons'
+import {IS_CALYPSO_WEBSITE} from 'constants/general'
 
 export function AccountCreated() {
   const [appState] = React.useContext(AppContext)
@@ -59,7 +60,9 @@ export function AccountCreated() {
 
   return (
     <Box className="centralize" sx={{px: '18px', flexDirection: 'column'}}>
-      <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
+      {IS_CALYPSO_WEBSITE ? (
+        <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
+      ) : null}
 
       <Typography sx={{fontSize: 18, fontWeight: 700, mt: 5}}>
         Please activate your account by clicking the link sent to your email.
@@ -76,7 +79,13 @@ export function AccountCreated() {
             mt: 8,
           }}
         >
-          <Box sx={{border: '2px solid #FFF', borderRadius: '50%'}}>
+          <Box
+            className="centralize"
+            sx={{
+              border: '2px solid #FFF',
+              borderRadius: '50%',
+            }}
+          >
             <GreenCheck sx={{width: 30, height: 30}} />
           </Box>
           <Typography color="#FFF" sx={{fontSize: 20, fontWeight: 600}}>

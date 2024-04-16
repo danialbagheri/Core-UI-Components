@@ -14,7 +14,7 @@ import {
   useTheme,
 } from '@mui/material'
 import {Banner, CustomTextField, Title} from './localShared'
-import {postUserSignIn} from '../../services'
+import {postUserSignIn} from 'services'
 import {CustomButton} from 'components/shared'
 
 /**
