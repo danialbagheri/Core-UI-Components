@@ -24,7 +24,7 @@ export default function ProductRange(props) {
     columnsCount: 2,
     gridRow: 4,
     bannerHeight: 212,
-    bannerSrc: banner.mobile,
+    bannerSrc: banner?.mobile,
   })
   const [initialized, setInitialized] = React.useState(false)
   const productsContainer = React.useRef(null)
@@ -69,11 +69,11 @@ export default function ProductRange(props) {
       const bannerHeight = columnsCount > 2 ? 113 : 212
 
       //Set proper source of banner based on the columns counts
-      let bannerSrc = banner.mobile
+      let bannerSrc = banner?.mobile
       if (columnsCount > 3) {
-        bannerSrc = banner.lg
+        bannerSrc = banner?.lg
       } else if (columnsCount === 3) {
-        bannerSrc = banner.md
+        bannerSrc = banner?.md
       }
 
       setBannerSpecs({columnsCount, bannerHeight, bannerSrc, gridRow})
