@@ -19,7 +19,7 @@ const Benefit = props => {
         gap: '10px',
       }}
     >
-      <GreenCheck alt="Check" height={18} width={18} />
+      <GreenCheck alt="Check" sx={{width: 18, height: 18}} />
       <Title subTitle sx={{whiteSpace: 'nowrap'}}>
         {text}
       </Title>

@@ -280,7 +280,7 @@ function Navigation(props) {
               },
             }}
           >
-            {/* ------------------------------ Calypso Logo ------------------------------ */}
+            {/* ------------------------------ Website Logo ------------------------------ */}
             <Link href="/" id="nav_logo_container">
               <Image
                 alt={WEBSITE}

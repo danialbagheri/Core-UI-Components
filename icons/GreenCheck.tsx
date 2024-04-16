@@ -5,6 +5,7 @@ export function GreenCheck(props: SvgIconProps) {
     <SvgIcon
       data-name="Layer 1"
       height="18.27"
+      id="Layer_1"
       viewBox="0 0 18.27 18.27"
       width="18.27"
       xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +21,7 @@ export function GreenCheck(props: SvgIconProps) {
           />
         </clipPath>
       </defs>
-      <g style={{clipPath: 'url(#clippath)'}}>
+      <g>
         <g>
           <path
             d="m9.14,18.27c5.05,0,9.14-4.09,9.14-9.14S14.18,0,9.14,0,0,4.09,0,9.14s4.09,9.14,9.14,9.14Z"

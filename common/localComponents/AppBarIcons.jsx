@@ -8,8 +8,6 @@ import {useShopify} from '../../hooks'
 import {AppContext} from '../../appProvider'
 import {CartEmpty, Search, UserLoggedIn, UserLoggedOut} from 'components/icons'
 
-const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
-
 export function AppBarIcons(props) {
   const {trigger, sx, setOpenSearchModal} = props
   const [appState] = React.useContext(AppContext)
@@ -17,7 +15,6 @@ export function AppBarIcons(props) {
   const theme = useTheme()
 
   const isLoggedIn = appState.isAuthenticate
-  const isCabanaWebsite = WEBSITE === 'cabana'
 
   return (
     <Box
@@ -48,21 +45,19 @@ export function AppBarIcons(props) {
         }}
       />
 
-      {!isCabanaWebsite ? (
-        <Box>
-          <Link className="centralize" href="/user">
-            {isLoggedIn ? (
-              <UserLoggedIn
-                sx={{width: 25, height: 25, color: theme.palette.primary.main}}
-              />
-            ) : (
-              <UserLoggedOut
-                sx={{width: 25, height: 25, color: theme.palette.primary.main}}
-              />
-            )}
-          </Link>
-        </Box>
-      ) : null}
+      <Box>
+        <Link className="centralize" href="/user">
+          {isLoggedIn ? (
+            <UserLoggedIn
+              sx={{width: 25, height: 25, color: theme.palette.primary.main}}
+            />
+          ) : (
+            <UserLoggedOut
+              sx={{width: 25, height: 25, color: theme.palette.primary.main}}
+            />
+          )}
+        </Link>
+      </Box>
 
       <CartEmpty
         onClick={openCart}
