@@ -7,16 +7,22 @@ import {Box, Typography} from '@mui/material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import {destroyCookie} from 'nookies'
 import {AppContext} from '../../appProvider'
-import {CalypsoGirlDashboard, Heart, LogOut} from 'components/icons'
+import {
+  CalypsoGirlDashboard,
+  CalypsoGirlPassword,
+  Heart,
+  LogOut,
+} from 'components/icons'
+import {routes} from 'constants/user'
 
 const SIDE_BAR_ITEMS = [
-  {id: 'my-dashboard', name: 'My dashboard', url: '/user/dashboard'},
+  {id: 'my-dashboard', name: 'My dashboard', url: `/user/${routes.DASHBOARD}`},
   {
     id: 'account-details',
     name: 'Account details',
-    url: '/user/dashboard/account-details',
+    url: `/user/${routes.DASHBOARD}/${routes.ACCOUNT_DETAILS}`,
   },
-  {id: 'password', name: 'Password', url: '/user/dashboard/password'},
+  {id: 'password', name: 'Password', url: `/user/dashboard/${routes.PASSWORD}`},
 ]
 
 const SIDE_BAR_BUTTONS = [
@@ -34,10 +40,10 @@ const SIDE_BAR_BUTTONS = [
     id: 'my_wish_list',
     name: 'My wish list',
     onClick: router => {
-      router.push('/user/dashboard/favorite-variants')
+      router.push(`/user/${routes.DASHBOARD}/${routes.FAVORITE_VARIANTS}`)
     },
     icon: <Heart color="primary" fontSize="small" />,
-    route: 'favorite-variants',
+    route: `${routes.FAVORITE_VARIANTS}`,
   },
 ]
 
@@ -85,7 +91,12 @@ export function SideBar(props) {
           gap: 4,
         }}
       >
-        <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
+        {route === routes.PASSWORD ? (
+          <CalypsoGirlPassword sx={{width: 145, height: 145}} />
+        ) : (
+          <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
+        )}
+
         <Box
           sx={{
             px: 10,

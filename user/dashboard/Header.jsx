@@ -1,10 +1,11 @@
 import {Box, Typography, useTheme} from '@mui/material'
+
 import {WEBSITE_NAME} from 'constants/general'
+
 import Image from 'next/image'
-import React from 'react'
 
 export function Header(props) {
-  const {image, name} = props
+  const {name} = props
 
   const theme = useTheme()
   return (
@@ -18,11 +19,12 @@ export function Header(props) {
       }}
     >
       <Image
-        alt={image?.name || ''}
+        alt="Welcome to Calypso"
         height={280}
-        src={image?.svg_icon || ''}
+        src="/calypso-girl/dashboard-welcome.png"
         width={246}
       />
+
       <Box
         backgroundColor="primary.light"
         sx={{width: '100%', py: {xs: 5, md: 9}, borderRadius: {xs: 0, md: 5}}}
@@ -32,7 +34,7 @@ export function Header(props) {
           Nice to see you{name.trim() ? `, ${name}!` : null}
         </Typography>
         <Typography sx={{fontSize: '15px', fontWeight: 700, mt: 2}}>
-          You’re part of the {WEBSITE_NAME} family!
+          You&apos;re part of the {WEBSITE_NAME} family!
         </Typography>
       </Box>
     </Box>

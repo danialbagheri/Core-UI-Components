@@ -6,7 +6,7 @@ import {useRouter} from 'next/router'
 import {Title} from './localShared'
 import {CustomButton} from 'components/shared'
 import {createAccountBenefits} from 'constants/user'
-import {GreenCheck} from 'components/icons'
+import {CalypsoGirlDashboard, GreenCheck} from 'components/icons'
 
 const Benefit = props => {
   const {text} = props
@@ -55,14 +55,7 @@ export function NewMember() {
         width={161}
       />
 
-      <Image
-        alt={'calypso-girl-password'}
-        height={114}
-        id="user_page_top_icon"
-        src="/calypso-girl/password.svg"
-        style={{marginTop: '28px'}}
-        width={114}
-      />
+      <CalypsoGirlDashboard sx={{width: 114, height: 114, mt: 7}} />
 
       <Title sx={{display: {xs: 'none', md: 'block'}}}>New member?</Title>
       <Title sx={{display: {xs: 'block', md: 'none'}, mt: 1}}>

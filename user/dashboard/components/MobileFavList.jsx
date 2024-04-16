@@ -50,7 +50,7 @@ export function MobileFavList(props) {
         <>
           {appState?.favoriteVariants?.length ? (
             appState?.favoriteVariants.map(variant => (
-              <>
+              <React.Fragment key={variant.id}>
                 <Box
                   className="centralize"
                   key={variant.id}
@@ -176,7 +176,7 @@ export function MobileFavList(props) {
                     bgcolor: '#E4E4E4',
                   }}
                 />
-              </>
+              </React.Fragment>
             ))
           ) : (
             <EmptyState sx={{mt: '35px'}} />
