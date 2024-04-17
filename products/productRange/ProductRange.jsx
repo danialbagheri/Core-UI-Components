@@ -13,23 +13,25 @@ import {Box, CircularProgress} from '@mui/material'
 
 /* ---------------------------- Local Components ---------------------------- */
 import {ProductItem} from '../ProductItem'
+import {productFinderBannerSrcHandler} from 'utils'
+
 /* -------------------------------------------------------------------------- */
 
 const COLUMN_MAX_WIDTH = 240
 const COLUMN_GAP = 12
 
 export default function ProductRange(props) {
-  const {banner, videoBanner} = props
+  const {banner, videoBanner, category} = props
+  const productFinderBanner = productFinderBannerSrcHandler(banner)
   const [bannerSpecs, setBannerSpecs] = React.useState({
     columnsCount: 2,
     gridRow: 4,
     bannerHeight: 212,
-    bannerSrc: banner?.mobile,
+    bannerSrc: productFinderBanner?.mobile,
   })
   const [initialized, setInitialized] = React.useState(false)
   const productsContainer = React.useRef(null)
 
-  const category = props.category
   const videoCode = videoBanner?.[0]?.slides?.[0]?.slide?.custom_code
   const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
   const isCalypsoWebsite = WEBSITE === 'calypso'
@@ -69,11 +71,11 @@ export default function ProductRange(props) {
       const bannerHeight = columnsCount > 2 ? 113 : 212
 
       //Set proper source of banner based on the columns counts
-      let bannerSrc = banner?.mobile
+      let bannerSrc = productFinderBanner?.mobile
       if (columnsCount > 3) {
-        bannerSrc = banner?.lg
+        bannerSrc = productFinderBanner?.lg
       } else if (columnsCount === 3) {
-        bannerSrc = banner?.md
+        bannerSrc = productFinderBanner?.md
       }
 
       setBannerSpecs({columnsCount, bannerHeight, bannerSrc, gridRow})
