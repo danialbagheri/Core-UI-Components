@@ -91,16 +91,16 @@ const SliderItem = slide => {
 
 export default function HomeSlider(props) {
   const {banner} = props
+
   const isHomeBanner = Boolean(banner)
   const [slides, setSlides] = useState([])
-
   const [loading, setLoading] = useState(true)
 
   const renderProperBanner = () => {
     if (isHomeBanner) {
       return (
         <Slider {...settings}>
-          {banner[0]?.slider_slides.map(slide => (
+          {banner?.map(slide => (
             <SliderItem key={slide.id} slide={slide} />
           ))}
         </Slider>
@@ -111,7 +111,7 @@ export default function HomeSlider(props) {
     }
     return (
       <Slider {...settings}>
-        {slides[0]?.slider_slides.map(slide => (
+        {slides.map(slide => (
           <SliderItem key={slide.id} slide={slide} />
         ))}
       </Slider>
@@ -121,7 +121,8 @@ export default function HomeSlider(props) {
   const getBannerHandler = async () => {
     try {
       const response = await getCollectionBanner('secondary')
-      setSlides(response.results)
+
+      setSlides(response.results[0]?.slides)
     } catch (err) {
       console.error(err)
     } finally {
