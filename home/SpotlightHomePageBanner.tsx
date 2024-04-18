@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {Container} from '@mui/material'
 import {spotlight, SpotlightNames} from 'constants/spotlight'
-import {Header} from './Header'
+import {Header} from 'components/spotlight'
 
 interface DataType {
   info: {id: string; imageSrc: string; alt: string; title: string}

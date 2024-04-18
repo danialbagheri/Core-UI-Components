@@ -72,7 +72,7 @@ export function Header(props: PropsType) {
       <Box
         sx={{
           position: 'absolute',
-          top: isSpotlightPage ? {xs: '42px', md: '118px'} : '24px',
+          top: isSpotlightPage ? {xs: '42px', md: '118px'} : '71px',
           left: isSpotlightPage
             ? {xs: '50%', md: '20%'}
             : {xs: '7%', md: '10%'},
@@ -127,12 +127,12 @@ export function Header(props: PropsType) {
           transform: isSpotlightPage
             ? {xs: 'translateX(-50%)', md: 'translateX(0)'}
             : 'unset',
-          top: isSpotlightPage ? {xs: 426, md: 260} : {xs: 130, md: 116},
+          top: isSpotlightPage ? {xs: 426, md: 260} : '155px',
           width: '100%',
           maxWidth: {xs: '80%', md: 409},
           '& q': {
             color: '#FFF',
-            fontSize: isSpotlightPage ? {xs: 26, md: 40} : {xs: 24, md: 32},
+            fontSize: isSpotlightPage ? {xs: 26, md: 40} : 32,
             fontWeight: 700,
             lineHeight: isSpotlightPage ? {xs: '31px', md: '56px'} : '38px',
             position: 'relative',

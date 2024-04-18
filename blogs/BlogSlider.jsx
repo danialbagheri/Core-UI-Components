@@ -72,6 +72,7 @@ function BlogSlider() {
           ref={sliderContainer}
           sx={{
             margin: '50px auto',
+            mb: '100px',
           }}
         >
           {blogItems.length ? (

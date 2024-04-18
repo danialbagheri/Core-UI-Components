@@ -5,3 +5,5 @@ import BestSeller from './bestsellers/best-seller'
 import BestSellerSlider from './bestsellers/BestSellerSlider'
 export {HomeSlider, Trending, AsSeen, BestSeller, BestSellerSlider}
 export * from './TeenageCancer'
+export * from './ProductFinderBanner'
+export * from './SpotlightHomePageBanner'
