@@ -17,6 +17,7 @@ interface PropsType {
 export function Header(props: PropsType) {
   const {data, page = 'spotlightPage', person} = props
   const theme = useTheme()
+  //This component is used in both spotlight page and home page
   const isSpotlightPage = page === 'spotlightPage'
 
   return (
@@ -134,7 +135,9 @@ export function Header(props: PropsType) {
             color: '#FFF',
             fontSize: isSpotlightPage ? {xs: 26, md: 40} : {xs: 22, md: 30},
             fontWeight: 700,
-            lineHeight: isSpotlightPage ? {xs: '31px', md: '56px'} : '38px',
+            lineHeight: isSpotlightPage
+              ? {xs: '31px', md: '56px'}
+              : {xs: '28;x', md: '38px'},
             position: 'relative',
           },
         }}
