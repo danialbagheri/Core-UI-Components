@@ -87,12 +87,14 @@ const ProductTab = props => {
       <TabPanel index={2} value={value}>
         {selectedVariant.ingredients.join(', ')}
 
-        <Typography sx={{mt: 8}} variant="body1">
-          The ingredients listed correspond to the current state of production.
-          Since we regularly adjust our formulations to incorporate new
-          scientific findings, the declaration of ingredients specified on the
-          package applies in each case.
-        </Typography>
+        {selectedVariant?.ingredients?.length ? (
+          <Typography sx={{mt: 8}} variant="body1">
+            The ingredients listed correspond to the current state of
+            production. Since we regularly adjust our formulations to
+            incorporate new scientific findings, the declaration of ingredients
+            specified on the package applies in each case.
+          </Typography>
+        ) : null}
       </TabPanel>
     </Box>
   )

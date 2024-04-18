@@ -37,7 +37,7 @@ export default function Benefits(props) {
               width="60"
             />
           ) : null}
-          <Typography sx={{maxWidth: '100px', width: '100%'}}>
+          <Typography sx={{width: '100%', wordWrap: 'break-word'}}>
             {tag.name}
           </Typography>
         </Stack>
