@@ -32,10 +32,10 @@ export function Header(props: PropsType) {
         '& a': {
           position: 'absolute',
           left: {xs: '7%', md: '10%'},
+          top: 271,
           color: '#FFF',
           fontSize: 16,
           fontWeight: 600,
-          bottom: '8%',
           textUnderlineOffset: '6px',
         },
       }}
@@ -129,10 +129,10 @@ export function Header(props: PropsType) {
             : 'unset',
           top: isSpotlightPage ? {xs: 426, md: 260} : '155px',
           width: '100%',
-          maxWidth: {xs: '80%', md: 409},
+          maxWidth: 'min(409px , calc(100% - 40px))',
           '& q': {
             color: '#FFF',
-            fontSize: isSpotlightPage ? {xs: 26, md: 40} : 32,
+            fontSize: isSpotlightPage ? {xs: 26, md: 40} : {xs: 22, md: 30},
             fontWeight: 700,
             lineHeight: isSpotlightPage ? {xs: '31px', md: '56px'} : '38px',
             position: 'relative',
