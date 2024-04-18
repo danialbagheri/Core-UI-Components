@@ -4,7 +4,7 @@ import React from 'react'
 
 export function TeenageCancer() {
   return (
-    <Container sx={{mb: 15}}>
+    <Container sx={{mb: '80px'}}>
       <Box
         className="centralize"
         sx={{

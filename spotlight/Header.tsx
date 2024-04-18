@@ -1,7 +1,5 @@
 import {Box, Typography, useTheme} from '@mui/material'
-import type {SpotlightNames} from 'constants/spotlight'
 import Image from 'next/image'
-import Link from 'next/link'
 
 interface PropsType {
   data: {
@@ -11,11 +9,10 @@ interface PropsType {
     title: string
   }
   page?: 'homePage' | 'spotlightPage'
-  person?: SpotlightNames
 }
 
 export function Header(props: PropsType) {
-  const {data, page = 'spotlightPage', person} = props
+  const {data, page = 'spotlightPage'} = props
   const theme = useTheme()
   //This component is used in both spotlight page and home page
   const isSpotlightPage = page === 'spotlightPage'
@@ -28,21 +25,6 @@ export function Header(props: PropsType) {
         borderRadius: isSpotlightPage ? 0 : '10px',
         overflow: 'hidden',
         mb: isSpotlightPage ? 0 : '60px',
-
-        //Read more link styles:
-        '& a': {
-          position: 'absolute',
-          left: {xs: '7%', md: '10%'},
-          top: 271,
-          color: '#FFF',
-          fontSize: 16,
-          fontWeight: 600,
-          textUnderlineOffset: '6px',
-          '&:hover': {
-            color: '#FFF',
-            textDecoration: 'underline',
-          },
-        },
       }}
     >
       {/* ---------------------------- Background image ---------------------------- */}
@@ -152,9 +134,21 @@ export function Header(props: PropsType) {
 
       {/* -------- Read more button which is available only on the home page ------- */}
       {isSpotlightPage ? null : (
-        <Link href={`/spotlight/${person}`} target="_blank">
+        <Typography
+          sx={{
+            position: 'absolute',
+            left: {xs: '7%', md: '10%'},
+            top: 271,
+
+            color: '#FFF',
+            fontSize: 16,
+            fontWeight: 600,
+            textUnderlineOffset: '6px',
+            textDecoration: 'underline',
+          }}
+        >
           Read more
-        </Link>
+        </Typography>
       )}
       {/* -------------------------------------------------------------------------- */}
     </Box>

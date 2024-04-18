@@ -39,7 +39,7 @@ export function ProductFinderBanner(props: PropsType) {
   }, [])
 
   return (
-    <Container ref={containerRef} sx={{mb: {xs: '50px', md: '23px'}}}>
+    <Container ref={containerRef} sx={{mb: '40px'}}>
       <Box
         sx={{
           position: 'relative',
