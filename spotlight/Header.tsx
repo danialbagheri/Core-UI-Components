@@ -38,6 +38,10 @@ export function Header(props: PropsType) {
           fontSize: 16,
           fontWeight: 600,
           textUnderlineOffset: '6px',
+          '&:hover': {
+            color: '#FFF',
+            textDecoration: 'underline',
+          },
         },
       }}
     >

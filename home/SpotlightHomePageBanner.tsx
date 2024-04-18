@@ -2,6 +2,7 @@ import * as React from 'react'
 import {Container} from '@mui/material'
 import {spotlight, SpotlightNames} from 'constants/spotlight'
 import {Header} from 'components/spotlight'
+import Link from 'next/link'
 
 interface DataType {
   info: {id: string; imageSrc: string; alt: string; title: string}
@@ -26,7 +27,9 @@ export function SpotlightHomePageBanner() {
 
   return (
     <Container>
-      <Header data={data.info} page="homePage" person={data.person} />
+      <Link href={`/spotlight/${data.person}`} target="_blank">
+        <Header data={data.info} page="homePage" person={data.person} />
+      </Link>
     </Container>
   )
 }
