@@ -1,5 +1,7 @@
 import {Box, Typography, useTheme} from '@mui/material'
+import type {SpotlightNames} from 'constants/spotlight'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface PropsType {
   data: {
@@ -8,24 +10,53 @@ interface PropsType {
     alt: string
     title: string
   }
+  page?: 'homePage' | 'spotlightPage'
+  person: SpotlightNames
 }
 
 export function Header(props: PropsType) {
-  const {data} = props
+  const {data, page = 'spotlightPage', person} = props
   const theme = useTheme()
+  const isSpotlightPage = page === 'spotlightPage'
 
   return (
-    <Box sx={{height: 570, position: 'relative'}}>
+    <Box
+      sx={{
+        height: isSpotlightPage ? 570 : 365,
+        position: 'relative',
+        borderRadius: isSpotlightPage ? 0 : '10px',
+        overflow: 'hidden',
+        mb: isSpotlightPage ? 0 : '60px',
+
+        //Read more link styles:
+        '& a': {
+          position: 'absolute',
+          left: {xs: '7%', md: '10%'},
+          color: '#FFF',
+          fontSize: 16,
+          fontWeight: 600,
+          bottom: '8%',
+          textUnderlineOffset: '6px',
+        },
+      }}
+    >
+      {/* ---------------------------- Background image ---------------------------- */}
       <Image
         alt={data.alt}
         fill
         src={data.imageSrc}
         style={{objectFit: 'cover'}}
       />
+      {/* -------------------------------------------------------------------------- */}
+
+      {/* ------------------------------ Dark overlay ------------------------------ */}
       <Box
         sx={{
           width: {xs: '100%', md: '45%'},
-          height: {xs: 283, md: 570},
+          height: {
+            xs: isSpotlightPage ? 283 : 180,
+            md: isSpotlightPage ? 570 : 365,
+          },
           bottom: 0,
           left: 0,
           position: 'absolute',
@@ -35,13 +66,21 @@ export function Header(props: PropsType) {
           },
         }}
       />
+      {/* -------------------------------------------------------------------------- */}
+
+      {/* ------------------------- Spotlight header icon -------------------------- */}
       <Box
         sx={{
           position: 'absolute',
-          top: {xs: '42px', md: '118px'},
-          left: {xs: '50%', md: '20%'},
-          transform: {xs: 'translateX(-50%)', md: 'translateX(0)'},
+          top: isSpotlightPage ? {xs: '42px', md: '118px'} : '24px',
+          left: isSpotlightPage
+            ? {xs: '50%', md: '20%'}
+            : {xs: '7%', md: '10%'},
+          transform: isSpotlightPage
+            ? {xs: 'translateX(-50%)', md: 'translateX(0)'}
+            : 'unset',
           textAlign: 'center',
+          scale: isSpotlightPage ? '1' : '0.85',
         }}
       >
         <Typography
@@ -75,26 +114,42 @@ export function Header(props: PropsType) {
           }}
         />
       </Box>
+      {/* -------------------------------------------------------------------------- */}
+
+      {/* ----------------------------- Spotlight text ----------------------------- */}
       <Box
         className="centralize"
         sx={{
           position: 'absolute',
-          left: {xs: '50%', md: '20%'},
-          transform: {xs: 'translateX(-50%)', md: 'translateX(0)'},
-          top: {xs: 426, md: 260},
-
-          maxWidth: 409,
+          left: isSpotlightPage
+            ? {xs: '50%', md: '20%'}
+            : {xs: '7%', md: '10%'},
+          transform: isSpotlightPage
+            ? {xs: 'translateX(-50%)', md: 'translateX(0)'}
+            : 'unset',
+          top: isSpotlightPage ? {xs: 426, md: 260} : {xs: 130, md: 116},
+          width: '100%',
+          maxWidth: {xs: '80%', md: 409},
           '& q': {
             color: '#FFF',
-            fontSize: {xs: 26, md: 40},
+            fontSize: isSpotlightPage ? {xs: 26, md: 40} : {xs: 24, md: 32},
             fontWeight: 700,
-            lineHeight: {xs: '31px', md: '56px'},
+            lineHeight: isSpotlightPage ? {xs: '31px', md: '56px'} : '38px',
             position: 'relative',
           },
         }}
       >
         <q>{data.title}</q>
       </Box>
+      {/* -------------------------------------------------------------------------- */}
+
+      {/* -------- Read more button which is available only on the home page ------- */}
+      {isSpotlightPage ? null : (
+        <Link href={`/spotlight/${person}`} target="_blank">
+          Read more
+        </Link>
+      )}
+      {/* -------------------------------------------------------------------------- */}
     </Box>
   )
 }
