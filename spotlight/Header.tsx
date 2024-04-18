@@ -11,7 +11,7 @@ interface PropsType {
     title: string
   }
   page?: 'homePage' | 'spotlightPage'
-  person: SpotlightNames
+  person?: SpotlightNames
 }
 
 export function Header(props: PropsType) {
