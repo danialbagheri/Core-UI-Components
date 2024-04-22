@@ -72,24 +72,19 @@ const SubscriptionField = props => {
 
 export function SubscribeElement(props) {
   const {email, error, setEmail, loading, submitHandler} = props
+  const [isSubscribed, setIsSubscribed] = React.useState(false)
   const [appState] = React.useContext(AppContext)
   const theme = useTheme()
 
-  const notRegisteredNotSubscribed =
-    !appState.userData && appState[SUBSCRIPTION_STATE] !== SUBSCRIBED
-  const notRegisteredSubscribed =
-    !appState.userData && appState[SUBSCRIPTION_STATE] === SUBSCRIBED
-  const registeredNotSubscribed =
-    appState.userData && appState[SUBSCRIPTION_STATE] !== SUBSCRIBED
-  const registeredSubscribed =
-    appState.userData && appState[SUBSCRIPTION_STATE] === SUBSCRIBED
+  const notRegisteredNotSubscribed = !appState.userData && !isSubscribed
+  const notRegisteredSubscribed = !appState.userData && isSubscribed
+  const registeredNotSubscribed = appState.userData && !isSubscribed
+  const registeredSubscribed = appState.userData && isSubscribed
 
-  console.log(
-    'appstat.subscription_state',
-    appState[SUBSCRIPTION_STATE],
-    'appstate.userData',
-    appState.userData,
-  )
+  React.useEffect(() => {
+    const subscriptionState = localStorage.getItem(SUBSCRIPTION_STATE)
+    setIsSubscribed(subscriptionState === SUBSCRIBED)
+  }, [])
 
   switch (true) {
     case notRegisteredNotSubscribed:

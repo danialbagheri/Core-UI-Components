@@ -74,11 +74,13 @@ export function AlreadyMember({sx = {}}) {
 
       setCookie(null, 'calacc', access, {
         path: '/',
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       })
 
       if (keepSignedIn) {
         setCookie(null, 'calref', refresh, {
           path: '/',
+          maxAge: 30 * 24 * 60 * 60 * 1000,
         })
       }
 
