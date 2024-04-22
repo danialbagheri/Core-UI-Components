@@ -123,7 +123,7 @@ export function Header(props: PropsType) {
             fontWeight: 700,
             lineHeight: isSpotlightPage
               ? {xs: '31px', md: '56px'}
-              : {xs: '28;x', md: '38px'},
+              : {xs: '28px', md: '38px'},
             position: 'relative',
           },
         }}
