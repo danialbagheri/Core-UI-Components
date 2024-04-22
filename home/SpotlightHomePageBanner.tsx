@@ -27,7 +27,7 @@ export function SpotlightHomePageBanner() {
 
   return (
     <Container>
-      <Link href={`/spotlight/${data.person}`} target="_blank">
+      <Link href={`/spotlight/${data.person}`}>
         <Header data={data.info} page="homePage" />
       </Link>
     </Container>
