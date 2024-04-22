@@ -1,17 +1,10 @@
-import {Box, Typography} from '@mui/material'
+import {Box, Container, Typography} from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
 export function TeenageCancer() {
   return (
-    <Box sx={{width: '100%', maxWidth: 1200, m: '0 auto', mt: '120px', px: 10}}>
-      <Box
-        sx={{
-          height: 6,
-          borderRadius: 3,
-          bgcolor: '#FBF3EA',
-        }}
-      />
+    <Container sx={{mb: '80px'}}>
       <Box
         className="centralize"
         sx={{
@@ -19,7 +12,6 @@ export function TeenageCancer() {
           gap: '42px',
           alignItems: {xs: 'center', md: 'flex-end !important'},
           m: '0 auto',
-          py: 15,
           flexDirection: {xs: 'column', md: 'row'},
         }}
       >
@@ -38,6 +30,6 @@ export function TeenageCancer() {
           challenging time.
         </Typography>
       </Box>
-    </Box>
+    </Container>
   )
 }

@@ -8,43 +8,43 @@ import BlogCard from './BlogCard'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
+const settings = {
+  className: 'center',
+  arrows: false,
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToScroll: 1,
+  slidesToShow: 3,
+  centerMode: false,
+  swipeToSlide: true,
+  centerPadding: 20,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 2,
+        centerMode: false,
+        centerPadding: 0,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 1,
+        centerMode: false,
+        centerPadding: 0,
+      },
+    },
+  ],
+}
+
 function BlogSlider() {
   const BLOG = 'staff-picked'
   const [, setLoading] = React.useState(true)
   const [blogItems, setBlogItems] = React.useState([])
   const [, setError] = React.useState('')
   const sliderContainer = React.useRef()
-
-  const settings = {
-    className: 'center',
-    arrows: false,
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToScroll: 1,
-    slidesToShow: 3,
-    centerMode: false,
-    swipeToSlide: true,
-    centerPadding: 20,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          centerMode: false,
-          centerPadding: 0,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          centerMode: false,
-          centerPadding: 0,
-        },
-      },
-    ],
-  }
 
   React.useEffect(() => {
     getBlogs(BLOG)
@@ -72,6 +72,7 @@ function BlogSlider() {
           ref={sliderContainer}
           sx={{
             margin: '50px auto',
+            mb: '60px',
           }}
         >
           {blogItems.length ? (

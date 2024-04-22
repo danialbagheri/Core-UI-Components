@@ -70,15 +70,24 @@ export const renderProperComponent = (props: PropsType) => {
               >
                 {content.data}
               </Typography>
-              <QuoteEnd
+              <Box
                 sx={{
-                  fill: primaryColor,
-                  width: {xs: 28, md: 41},
-                  height: {xs: 22, md: 36},
-                  mx: 'calc(100% - 56px)',
-                  mt: {xs: '14px', md: '18px'},
+                  mt: {
+                    xs: '14px',
+                    md: '18px',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                  },
                 }}
-              />
+              >
+                <QuoteEnd
+                  sx={{
+                    fill: primaryColor,
+                    width: {xs: 28, md: 41},
+                    height: {xs: 22, md: 36},
+                  }}
+                />
+              </Box>
             </Box>
           ))}
         </Box>
