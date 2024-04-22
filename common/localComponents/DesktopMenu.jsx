@@ -17,9 +17,9 @@ export function DesktopMenu(props) {
 
   const renderNavItems = () => {
     if (shrinkNavItems.length) {
-      return shrinkNavItems.map(item => <NavItem data={item} key={item.key} />)
+      return shrinkNavItems.map((item, i) => <NavItem data={item} key={i} />)
     }
-    return navItems.map(item => <NavItem data={item} key={item.key} />)
+    return navItems.map((item, i) => <NavItem data={item} key={i} />)
   }
 
   return (

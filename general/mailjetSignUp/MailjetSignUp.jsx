@@ -44,7 +44,7 @@ export default function MailjetSignUp() {
   const [isSubscribed, setIsSubscribed] = React.useState(false)
   const [appState, setAppState] = React.useContext(AppContext)
   const theme = useTheme()
-  const isCabana = WEBSITE === WEBSITE_NAME.toLowerCase()
+  const isCabana = WEBSITE === 'cabana'
 
   /* -------------------------------- Function -------------------------------- */
   const setShowPopUpSetting = () => {

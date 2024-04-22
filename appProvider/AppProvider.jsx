@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {MUIThemeProvider} from 'theme'
+import {SUBSCRIPTION_STATE} from 'utils'
 
 const AppContext = React.createContext(undefined)
 
@@ -18,6 +19,9 @@ function AppProvider(props) {
     isAuthenticate: undefined,
     favoriteProducts: null,
     favoriteVariants: null,
+    userData: null,
+    userHasCreateAccount: true,
+    [SUBSCRIPTION_STATE]: null,
     icons,
   }
   const [appState, setAppState] = React.useState(initState)

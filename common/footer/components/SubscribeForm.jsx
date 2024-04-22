@@ -1,22 +1,17 @@
 import * as React from 'react'
 
-import Image from 'next/image'
-
-import {Box, Typography} from '@mui/material'
-
 import {
+  NOT_SUBSCRIBED,
   SUBSCRIBED,
   SUBSCRIPTION_STATE,
   subscriptionHandler,
   validateEmail,
 } from 'utils'
 import {Container} from './Container'
-import {GreenCheck} from 'components/icons'
-import {CustomButton, CustomOutlinedInput} from 'components/shared'
 import {AppContext} from 'components/appProvider'
-import {WEBSITE_NAME} from 'constants/general'
-
-const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
+import {useAuthFetch} from 'components/customHooks'
+import {getUserInfo, postUserSubscriptionInfo} from 'services'
+import {SubscribeElement} from './SubscribeElement'
 
 export function SubscribeForm({sx = {}}) {
   const [email, setEmail] = React.useState('')
@@ -24,7 +19,7 @@ export function SubscribeForm({sx = {}}) {
   const [loading, setLoading] = React.useState(false)
   const [appState, setAppState] = React.useContext(AppContext)
 
-  const isCabana = WEBSITE === WEBSITE_NAME.toLowerCase()
+  const authFunctions = useAuthFetch()
 
   const submitHandler = async e => {
     e.preventDefault()
@@ -43,85 +38,82 @@ export function SubscribeForm({sx = {}}) {
     subscriptionHandler({email, setLoading, setAppState})
   }
 
+  const userDataHandler = async subscriptionState => {
+    if (subscriptionState) {
+      //Check if user is registered and we had not fetched the user data
+      if (appState.userData === null && appState.userHasCreateAccount) {
+        const onAuthenticatedAction = async token => {
+          const data = await getUserInfo(token)
+          setAppState(prevState => ({
+            ...prevState,
+            userData: {...data},
+            [SUBSCRIPTION_STATE]: SUBSCRIBED,
+          }))
+        }
+        const onNotAuthenticatedAction = async () => {
+          setAppState(prevState => ({
+            ...prevState,
+            [SUBSCRIPTION_STATE]: SUBSCRIBED,
+            userHasCreateAccount: false,
+            userData: null,
+          }))
+        }
+
+        await authFunctions({
+          onAuthenticatedAction,
+          onNotAuthenticatedAction,
+        })
+      }
+    } else if (appState[SUBSCRIPTION_STATE] === null) {
+      const onAuthenticatedAction = async token => {
+        const data = await getUserInfo(token)
+        const email = data.email
+        const subscriptionData = await postUserSubscriptionInfo({
+          token,
+          data: {email},
+        })
+        const subscriptionState = subscriptionData.is_subscribed
+          ? SUBSCRIBED
+          : NOT_SUBSCRIBED
+        localStorage.setItem(SUBSCRIPTION_STATE, subscriptionState)
+        setAppState(prevState => ({
+          ...prevState,
+          userData: {...data},
+          [SUBSCRIPTION_STATE]: false,
+        }))
+      }
+
+      const onNotAuthenticatedAction = () => {
+        setAppState(prevState => ({
+          ...prevState,
+          [SUBSCRIPTION_STATE]: null,
+          userData: null,
+        }))
+      }
+
+      await authFunctions({
+        onAuthenticatedAction,
+        onNotAuthenticatedAction,
+      })
+    }
+  }
+
   React.useEffect(() => {
     const subscriptionState = localStorage.getItem(SUBSCRIPTION_STATE)
+    const isSubscribed = subscriptionState === SUBSCRIBED
 
-    if (subscriptionState === SUBSCRIBED) {
-      setAppState(prev => ({...prev, [SUBSCRIPTION_STATE]: SUBSCRIBED}))
-    }
+    userDataHandler(isSubscribed)
   }, [])
 
   return (
     <Container sx={{...sx}}>
-      {appState[SUBSCRIPTION_STATE] === SUBSCRIBED ? (
-        <Box className="centralize">
-          <Box className="centralize" gap="9px" width={182}>
-            <GreenCheck sx={{width: 39, height: 39}} />
-            <Typography color="#226F61" fontSize={20} fontWeight={700}>
-              Thank you for subscribing!
-            </Typography>
-          </Box>
-          {!isCabana ? (
-            <Image
-              alt="subscription-girl"
-              height={121}
-              src="/subscription/subscription-girl.png"
-              width={121}
-            />
-          ) : null}
-        </Box>
-      ) : (
-        <>
-          <Typography
-            color="primary"
-            fontSize={34}
-            fontWeight={700}
-            textAlign="center"
-          >
-            GET 10% off
-          </Typography>
-          <Typography
-            fontSize={16}
-            fontWeight={500}
-            mt="7px"
-            sx={{color: '#7F2E00'}}
-            textAlign="center"
-          >
-            Join our Sun-Safe family
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexGrow: 1,
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              mt: 5,
-            }}
-          >
-            <CustomOutlinedInput
-              error={error}
-              id="outlined-required"
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Email address"
-              sx={{
-                width: 181,
-                height: 32,
-                '& input': {bgcolor: '#FFF', py: '5px'},
-              }}
-              type="email"
-              value={email}
-            />
-            <CustomButton
-              loading={loading}
-              onClick={submitHandler}
-              sx={{width: 112, height: 36, borderRadius: '4px', ml: -2}}
-              variant="contained"
-            >
-              Subscribe
-            </CustomButton>
-          </Box>
-        </>
-      )}
+      <SubscribeElement
+        email={email}
+        error={error}
+        loading={loading}
+        setEmail={setEmail}
+        submitHandler={submitHandler}
+      />
     </Container>
   )
 }

@@ -55,7 +55,7 @@ export function ManageAccount() {
       </Typography>
 
       {manageAccountList.map(item => (
-        <>
+        <React.Fragment key={item.id}>
           <Box
             key={item.id}
             sx={{
@@ -87,7 +87,7 @@ export function ManageAccount() {
             <ArrowForwardIosIcon color="primary" fontSize="small" />
           </Box>
           <Divider sx={{borderColor: '#F2F2F2', my: 3}} />
-        </>
+        </React.Fragment>
       ))}
       <CustomButton
         loading={loading}

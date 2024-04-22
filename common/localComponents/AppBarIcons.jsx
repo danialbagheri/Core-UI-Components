@@ -11,6 +11,7 @@ import {CartEmpty, Search, UserLoggedIn, UserLoggedOut} from 'components/icons'
 export function AppBarIcons(props) {
   const {trigger, sx, setOpenSearchModal} = props
   const [appState] = React.useContext(AppContext)
+
   const {openCart} = useShopify()
   const theme = useTheme()
 
