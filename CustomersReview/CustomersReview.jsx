@@ -13,14 +13,13 @@ import Grid from '@mui/material/Grid'
 function CustomersReview(props) {
   const [, setAppState] = React.useContext(AppContext)
 
-  if (!props.reviewData) {
-    return null
-  }
-
-  //eslint-disable-next-line
   React.useEffect(() => {
     setAppState(prev => ({...prev, productQuestions: props.product.questions}))
   }, [])
+
+  if (!props.reviewData) {
+    return null
+  }
 
   return (
     <ScopedCssBaseline>

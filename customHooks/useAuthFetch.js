@@ -31,7 +31,7 @@ export function useAuthFetch() {
 
           setAppState(perv => ({...perv, isAuthenticate: true}))
           setCookie(null, 'calacc', access, {
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: 30 * 24 * 60 * 60 * 1000 * 1000,
             path: '/',
           })
 

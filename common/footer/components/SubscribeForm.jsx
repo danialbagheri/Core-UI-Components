@@ -35,7 +35,15 @@ export function SubscribeForm({sx = {}}) {
     setLoading(true)
     setError('')
 
-    subscriptionHandler({email, setLoading, setAppState})
+    const subscribeState = await subscriptionHandler({
+      email,
+      setLoading,
+      setAppState,
+    })
+
+    if (subscribeState) {
+      userDataHandler(true)
+    }
   }
 
   const userDataHandler = async subscriptionState => {
@@ -72,6 +80,7 @@ export function SubscribeForm({sx = {}}) {
           token,
           data: {email},
         })
+        console.log('subscriptionData::::', subscriptionData)
         const subscriptionState = subscriptionData.is_subscribed
           ? SUBSCRIBED
           : NOT_SUBSCRIBED

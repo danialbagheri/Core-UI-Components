@@ -28,6 +28,7 @@ function ReviewPagination() {
         color={'primary'}
         count={Math.ceil(+reviewState.reviewData.count / 10)}
         onChange={paginationHandler}
+        onLoad={'mama'}
         sx={{
           '&': {
             ul: {justifyContent: 'center'},

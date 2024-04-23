@@ -159,7 +159,9 @@ export default function DesktopFavList(props) {
           </TableBody>
         </Table>
       ) : (
-        <EmptyState />
+        <EmptyState
+          sx={{display: {xs: 'none !important', md: 'flex !important'}}}
+        />
       )}
     </>
   )

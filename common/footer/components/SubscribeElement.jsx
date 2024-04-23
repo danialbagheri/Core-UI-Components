@@ -84,7 +84,7 @@ export function SubscribeElement(props) {
   React.useEffect(() => {
     const subscriptionState = localStorage.getItem(SUBSCRIPTION_STATE)
     setIsSubscribed(subscriptionState === SUBSCRIBED)
-  }, [])
+  }, [appState[SUBSCRIPTION_STATE]])
 
   switch (true) {
     case notRegisteredNotSubscribed:

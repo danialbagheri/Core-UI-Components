@@ -13,33 +13,55 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown'
 import {singleReviewPatch} from 'services'
 import {BouncyLoading} from 'sharedComponents'
 
+const LIKE = 'like'
+const DISLIKE = 'dislike'
+const REVIEW_ACTION_IDS = 'reviewActionIds'
+
 function ReviewDetail(props) {
   const theme = useTheme()
 
-  const [rateState, setRateState] = React.useState({
-    like: {amount: props.like, loading: false},
-    dislike: {amount: props.dislike, loading: false},
-  })
+  const [like, setLike] = React.useState(props.like)
+  const [dislike, setDislike] = React.useState(props.dislike)
+  const [loading, setLoading] = React.useState({like: false, dislike: false})
+  const [disabled, setDisabled] = React.useState(false)
 
-  const reviewRateHandler = (id, rate_type) => {
-    setRateState(prev => ({
-      ...prev,
-      [rate_type]: {...prev[rate_type], loading: true},
-    }))
-    singleReviewPatch(id, {rate_type})
-      .then(res => {
-        setRateState(prev => ({
-          ...prev,
-          [rate_type]: {amount: res[rate_type], loading: false},
-        }))
-      })
-      .catch(() =>
-        setRateState(prev => ({
-          ...prev,
-          [rate_type]: {...prev[rate_type], loading: false},
-        })),
-      )
+  const localStorageHandler = async id => {
+    const reviewActionIds =
+      (await JSON.parse(localStorage.getItem(REVIEW_ACTION_IDS))) || []
+    reviewActionIds.push(id)
+    localStorage.setItem(REVIEW_ACTION_IDS, JSON.stringify(reviewActionIds))
   }
+
+  const reviewRateHandler = async (id, rate_type) => {
+    setLoading(prev => ({...prev, [rate_type]: true}))
+
+    try {
+      await singleReviewPatch(id, {rate_type})
+      await localStorageHandler(id)
+
+      if (rate_type === LIKE) {
+        setLike(like + 1)
+      } else if (rate_type === DISLIKE) {
+        setDislike(dislike + 1)
+      }
+      setDisabled(true)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setLoading(prev => ({...prev, [rate_type]: false}))
+    }
+  }
+
+  React.useEffect(() => {
+    const reviewActionIds =
+      JSON.parse(localStorage.getItem(REVIEW_ACTION_IDS)) || []
+    const hasActed = reviewActionIds.find(
+      id => id.toString() === props.id.toString(),
+    )
+    if (hasActed) {
+      setDisabled(true)
+    }
+  }, [like, dislike])
 
   return (
     <Box mb={6}>
@@ -82,38 +104,42 @@ function ReviewDetail(props) {
         justifyContent={'flex-end'}
       >
         <Typography color={'primary'} variant={'body2'}>
-          Did you find it useful?
+          {disabled
+            ? "You've already shared your feedback on this review."
+            : 'Did you find it useful?'}
         </Typography>
         <Stack alignItems={'center'} direction={'row'} ml={6}>
-          {rateState.like.loading ? (
+          {loading.like ? (
             <BouncyLoading sx={{mt: '-36px', ml: 7}} />
           ) : (
             <>
               <IconButton
                 color="primary"
-                onClick={() => reviewRateHandler(props.id, 'like')}
+                disabled={disabled}
+                onClick={() => reviewRateHandler(props.id, LIKE)}
               >
                 <ThumbUpIcon />
               </IconButton>
               <Typography color={'primary'} variant={'h5'}>
-                {rateState.like.amount}
+                {like}
               </Typography>
             </>
           )}
         </Stack>
         <Stack alignItems={'center'} direction={'row'} ml={6}>
-          {rateState.dislike.loading ? (
+          {loading.dislike ? (
             <BouncyLoading sx={{mt: '-36px', ml: 7}} />
           ) : (
             <>
               <IconButton
                 color="primary"
-                onClick={() => reviewRateHandler(props.id, 'dislike')}
+                disabled={disabled}
+                onClick={() => reviewRateHandler(props.id, DISLIKE)}
               >
                 <ThumbDownIcon />
               </IconButton>
               <Typography color={'primary'} variant={'h5'}>
-                {rateState.dislike.amount}
+                {dislike}
               </Typography>
             </>
           )}
