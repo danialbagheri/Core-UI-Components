@@ -75,7 +75,6 @@ export function MenuDrawer(props) {
   const {setMobileOpen, mobileOpen, navItems, window} = props
   const [expanded, setExpanded] = React.useState(null)
   const [showMegaMenu, setShowMegaMenu] = React.useState(false)
-  const [megaMenuDisplay, setMegaMenuDisplay] = React.useState(false)
   const theme = useTheme()
   const router = useRouter()
   const megaMenu = initialNavItems.find(item => item.is_mega_menu)
