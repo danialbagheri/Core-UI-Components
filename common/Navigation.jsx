@@ -109,6 +109,7 @@ const initialNavItems = [
         linkPosition: 1,
         photoPosition: 3,
         imageSrc: '/menu/discover/be-sun-ready.jpg',
+        mobileImageSrc: '/menu/discover/be-sun-ready-mobile.jpg',
       },
       {
         id: 'sun_journals',
@@ -117,13 +118,14 @@ const initialNavItems = [
         linkPosition: 2,
         photoPosition: 2,
         imageSrc: '/menu/discover/journal.jpg',
+        mobileImageSrc: '/menu/discover/journal-mobile.jpg',
       },
       {
         id: 'sunshine_spotlight',
         name: 'Sunshine Spotlight',
         url: `/spotlight/${SpotlightNames.AALIYAH}`,
         imageSrc: '/menu/discover/spotlight.jpg',
-        mobileImageSrc: 'menu/discover/spotlight-mobile.jpg',
+        mobileImageSrc: '/menu/discover/spotlight-mobile.jpg',
         linkPosition: 3,
         photoPosition: 1,
       },

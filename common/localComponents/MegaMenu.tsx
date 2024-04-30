@@ -54,7 +54,11 @@ export default function MegaMenu(props: PropsType) {
         >
           {megaMenuItems.map(item => (
             <Link href={item.url} key={item.id} onClick={closePopover}>
-              <Typography fontSize={16} fontWeight={700}>
+              <Typography
+                fontSize={16}
+                fontWeight={400}
+                sx={{'&:hover': {fontWeight: 700}}}
+              >
                 {item.name}
               </Typography>
             </Link>
@@ -69,14 +73,25 @@ export default function MegaMenu(props: PropsType) {
             >
               <Box
                 className="centralize"
-                sx={{flexDirection: 'column', gap: '14px'}}
+                sx={{
+                  flexDirection: 'column',
+                  gap: '14px',
+                  '&:hover': {
+                    '& img': {
+                      transform: 'scale(1.05)',
+                      transition: 'ease-in-out 0.3s',
+                    },
+                    '& p': {
+                      fontWeight: 700,
+                    },
+                  },
+                }}
               >
                 <Box
                   sx={{
                     width: 158,
                     height: 166,
                     borderRadius: '10px',
-                    bgcolor: 'red',
                     position: 'relative',
                     overflow: 'hidden',
                   }}
@@ -89,7 +104,7 @@ export default function MegaMenu(props: PropsType) {
                   />
                 </Box>
                 <Typography
-                  sx={{textAlign: 'center', fontSize: 16, fontWeight: 700}}
+                  sx={{textAlign: 'center', fontSize: 16, fontWeight: 400}}
                 >
                   {item.name}
                 </Typography>
