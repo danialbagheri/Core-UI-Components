@@ -25,7 +25,7 @@ import {SpotlightNames} from 'constants/spotlight'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
-const initialNavItems = [
+export const initialNavItems = [
   {
     id: 2,
     slug: 'sun-protection',

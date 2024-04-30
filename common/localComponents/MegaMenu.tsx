@@ -19,7 +19,6 @@ interface PropsType {
 
 export default function MegaMenu(props: PropsType) {
   const {anchorEl, open, megaMenuItems, closePopover} = props
-
   const desktopPhotoItems = megaMenuItems.filter(item => item.photoPosition < 5)
 
   return (

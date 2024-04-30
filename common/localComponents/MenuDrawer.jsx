@@ -18,6 +18,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import {useRouter} from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
+import {initialNavItems} from '../Navigation'
 
 const drawerWidth = '100%'
 
@@ -73,11 +74,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
 export function MenuDrawer(props) {
   const {setMobileOpen, mobileOpen, navItems, window} = props
   const [expanded, setExpanded] = React.useState(null)
-  const [megaMenu, setMegaMenu] = React.useState(null)
   const [showMegaMenu, setShowMegaMenu] = React.useState(false)
-
+  const [megaMenuDisplay, setMegaMenuDisplay] = React.useState(false)
   const theme = useTheme()
   const router = useRouter()
+  const megaMenu = initialNavItems.find(item => item.is_mega_menu)
 
   const container =
     window !== undefined ? () => window().document.body : undefined
@@ -85,7 +86,6 @@ export function MenuDrawer(props) {
   const handleDrawerToggle = e => {
     e?.stopPropagation()
     setMobileOpen(prevState => !prevState)
-    setMegaMenu(null)
     setShowMegaMenu(false)
   }
 
@@ -94,14 +94,8 @@ export function MenuDrawer(props) {
     setExpanded(newExpanded ? panel : false)
   }
 
-  const accordionSummaryClickHandler = ({
-    isSubMenu,
-    isMegaMenu,
-    url,
-    megaMenu,
-  }) => {
+  const accordionSummaryClickHandler = ({isSubMenu, isMegaMenu, url}) => {
     if (isMegaMenu) {
-      setMegaMenu(megaMenu)
       setShowMegaMenu(true)
     } else if (!isSubMenu) {
       router.push(url)
@@ -117,7 +111,6 @@ export function MenuDrawer(props) {
   const backHandler = e => {
     e.stopPropagation()
     setShowMegaMenu(false)
-    setTimeout(() => setMegaMenu(null), 225)
   }
 
   const drawer = (
@@ -127,12 +120,14 @@ export function MenuDrawer(props) {
         sx={{
           flexDirection: 'column',
           gap: '8px',
-          pb: megaMenu ? '95px' : 0,
+          maxHeight: showMegaMenu ? '100%' : '0',
+          pb: showMegaMenu ? '95px' : 0,
           transform: `translateX(${showMegaMenu ? '0' : '-100%'})`,
-          transition: 'transform 225ms cubic-bezier(0, 0, 0.58, 1) 0ms',
+          transition:
+            'transform 225ms cubic-bezier(0, 0, 0.58, 1) 0ms, height 0ms cubic-bezier(0, 0, 0.58, 1) 225ms',
         }}
       >
-        {megaMenu?.map(item => (
+        {megaMenu?.mega_menu_items?.map(item => (
           <Link
             href={item.url}
             key={item.id}
@@ -170,7 +165,7 @@ export function MenuDrawer(props) {
         ))}
       </Box>
 
-      <List sx={{py: 0, ...(megaMenu ? {display: 'none'} : {})}}>
+      <List sx={{py: 0, ...(showMegaMenu ? {display: 'none'} : {})}}>
         {navItems.map(item => (
           <ListItem disablePadding key={item.id}>
             <Accordion
@@ -190,7 +185,6 @@ export function MenuDrawer(props) {
                     isSubMenu: item.sub_menus.length,
                     isMegaMenu: item.is_mega_menu,
                     url: item.url,
-                    megaMenu: item.mega_menu_items,
                   })
                 }
               >
@@ -279,7 +273,7 @@ export function MenuDrawer(props) {
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
-            height: 'fit-content',
+            // height: 'fit-content',
           },
 
           '& .MuiBackdrop-root': {
@@ -300,7 +294,7 @@ export function MenuDrawer(props) {
           }}
         >
           <Box onClick={backHandler}>
-            {megaMenu ? <KeyboardBackspaceIcon color="primary" /> : null}
+            {showMegaMenu ? <KeyboardBackspaceIcon color="primary" /> : null}
           </Box>
           <Box>
             <CloseIcon color="primary" />
