@@ -7,6 +7,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
 import {useRouter} from 'next/router'
 import Link from 'next/link'
+import MegaMenu from './MegaMenu'
 
 const Accordion = styled(props => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -42,34 +43,43 @@ export const NavItem = props => {
   const router = useRouter()
   const [expanded, setExpanded] = React.useState(null)
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [subMenuAnchorEl, setSubMenuAnchorEl] = React.useState(null)
 
+  const slug = router.query.slug
   const open = Boolean(anchorEl)
+  const openSubMegaMenu = Boolean(subMenuAnchorEl)
   const id = open ? data.id : undefined
+  const isMegaMenu = data.is_mega_menu
+  const isHoveredOnMegaMenu =
+    (open && isMegaMenu) || (openSubMegaMenu && isMegaMenu)
 
-  const openPopover = event => {
-    setAnchorEl(event.currentTarget)
+  const openPopover = (e, isSubmenu = false) => {
+    if (e.currentTarget) {
+      if (isSubmenu) {
+        setSubMenuAnchorEl(e.currentTarget)
+      } else {
+        setAnchorEl(e.currentTarget)
+      }
+    }
   }
 
-  const closePopover = e => {
-    e.preventDefault()
-    setAnchorEl(null)
+  const closePopover = (e, isSubmenu = false) => {
+    if (isSubmenu) {
+      setSubMenuAnchorEl(null)
+    } else {
+      setAnchorEl(null)
+      setSubMenuAnchorEl(null)
+    }
   }
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false)
   }
 
-  const accordionSummaryOnClick = (subMenuLength, url) => {
-    if (!subMenuLength) {
-      router.push(url)
-    }
-  }
-
   return (
-    <Box onMouseLeave={closePopover}>
+    <Box onMouseLeave={() => closePopover(false)}>
       <Button
         key={data.id}
-        // onClick={() => handleClick(data.url)}
         onMouseEnter={openPopover}
         sx={{
           color: '#333',
@@ -81,35 +91,49 @@ export const NavItem = props => {
           maxWidth: 'fit-content',
           '& a': {
             textDecoration: 'none',
+            fontWeight:
+              slug === data.slug || isHoveredOnMegaMenu ? 'bold' : 'regular',
           },
-          '&::before': {
-            content: "''",
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            width: 0,
-            height: '2px',
-            backgroundColor: theme.palette.primary.main,
-            transition: 'width 0.4s ease',
+          '&::before': !isMegaMenu
+            ? {
+                content: "''",
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                width: 0,
+                height: '2px',
+                backgroundColor: theme.palette.primary.main,
+                transition: 'width 0.4s ease',
+              }
+            : {},
+          background: isHoveredOnMegaMenu ? theme.palette.beige.main : 'none',
+          '&:hover': {
+            background: isHoveredOnMegaMenu ? theme.palette.beige.main : 'none',
           },
-          '&:hover': {background: 'none'},
           '&:hover::before': {
             width: '100%',
+          },
+          '&:active': {
+            bgcolor: theme.palette.beige.main,
           },
         }}
       >
         <Link href={data.url}>{data.name}</Link>
       </Button>
+      {data.is_mega_menu ? (
+        <MegaMenu
+          anchorEl={anchorEl}
+          closePopover={closePopover}
+          megaMenuItems={data.mega_menu_items}
+          open={open}
+        />
+      ) : null}
       {data.sub_menus.length ? (
         <Popper
           anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
           id={id}
-          onClose={closePopover}
           open={open}
+          placement="bottom"
           sx={{
             zIndex: 2000,
             boxShadow: '0 1px 7px 0 rgba(0, 0, 0, 0.15)',
@@ -119,7 +143,7 @@ export const NavItem = props => {
         >
           <Box
             sx={{
-              '&>.MuiPaper-root:not(:first-child)': {
+              '&>.MuiPaper-root:not(:first-of-type)': {
                 borderTop: '1px solid ',
                 borderColor: 'rgba(255, 107, 0, 0.10)',
               },
@@ -130,6 +154,16 @@ export const NavItem = props => {
                 expanded={expanded === item.id}
                 key={item.id}
                 onChange={handleChange(item.id)}
+                onMouseEnter={() => {
+                  if (item.is_mega_menu) {
+                    openPopover(true)
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (item.is_mega_menu) {
+                    closePopover(true)
+                  }
+                }}
                 sx={{
                   mx: 3,
                 }}
@@ -138,26 +172,34 @@ export const NavItem = props => {
                   aria-controls="panel1d-content"
                   hasAnchor={item.sub_menus.length}
                   id="panel1d-header"
-                  onClick={() =>
-                    accordionSummaryOnClick(item.sub_menus.length, item.url)
-                  }
+                  sx={{'& a': {textDecoration: 'none'}}}
                 >
-                  <Typography
-                    sx={{
-                      color: '#333',
-                      fontSize: '16px',
-                      fontWeight: 'regular',
-                      textTransform: 'capitalize',
-                      textWrap: 'nowrap',
-                      whiteSpace: 'nowrap',
-                      minWidth: 'fit-content',
-                      maxWidth: 'fit-content',
-                      position: 'relative',
-                    }}
-                  >
-                    {item.name}
-                  </Typography>
+                  <Link href={item.url}>
+                    <Typography
+                      sx={{
+                        color: '#333',
+                        fontSize: '16px',
+                        fontWeight: 'regular',
+                        textTransform: 'capitalize',
+                        textWrap: 'nowrap',
+                        whiteSpace: 'nowrap',
+                        minWidth: 'fit-content',
+                        maxWidth: 'fit-content',
+                        position: 'relative',
+                      }}
+                    >
+                      {item.name}
+                    </Typography>
+                  </Link>
                 </AccordionSummary>
+                {item.is_mega_menu ? (
+                  <MegaMenu
+                    anchorEl={subMenuAnchorEl}
+                    closePopover={closePopover}
+                    megaMenuItems={item.mega_menu_items}
+                    open={openSubMegaMenu}
+                  />
+                ) : null}
                 {item.sub_menus.length ? (
                   <AccordionDetails sx={{pl: 5, bgcolor: '#FFF', py: 0}}>
                     <Box>

@@ -80,7 +80,6 @@ export function SubscribeForm({sx = {}}) {
           token,
           data: {email},
         })
-        console.log('subscriptionData::::', subscriptionData)
         const subscriptionState = subscriptionData.is_subscribed
           ? SUBSCRIBED
           : NOT_SUBSCRIBED

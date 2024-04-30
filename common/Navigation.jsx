@@ -21,6 +21,7 @@ import {hideHeaderLogoOrInfoState} from 'utils'
 /* ------------------------------- Local Icons ------------------------------ */
 import logo from '../../public/logo.svg'
 import {Burger, Remove, Search} from 'components/icons'
+import {SpotlightNames} from 'constants/spotlight'
 /* -------------------------------------------------------------------------- */
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
@@ -92,47 +93,114 @@ const initialNavItems = [
   },
   {
     id: 12,
-    slug: 'be-sun-ready',
-    name: 'Be Sun Ready',
+    slug: '',
+    name: 'Discover',
     text: '',
-    url: '/be-sun-ready',
+    url: '#',
     image: null,
     svg_image: null,
     is_mega_menu: true,
     is_active: true,
+    mega_menu_items: [
+      {
+        id: 'be_sun_ready',
+        name: 'Be Sun Ready',
+        url: '/be-sun-ready',
+        linkPosition: 1,
+        photoPosition: 3,
+        imageSrc: '/menu/discover/be-sun-ready.jpg',
+      },
+      {
+        id: 'sun_journals',
+        name: 'Sun Journals',
+        url: '/advice',
+        linkPosition: 2,
+        photoPosition: 2,
+        imageSrc: '/menu/discover/journal.jpg',
+      },
+      {
+        id: 'sunshine_spotlight',
+        name: 'Sunshine Spotlight',
+        url: `/spotlight/${SpotlightNames.AALIYAH}`,
+        imageSrc: '/menu/discover/spotlight.jpg',
+        mobileImageSrc: 'menu/discover/spotlight-mobile.jpg',
+        linkPosition: 3,
+        photoPosition: 1,
+      },
+      {
+        id: 'product_finder',
+        name: 'Product Finder',
+        url: '/product-finder',
+        linkPosition: 4,
+        photoPosition: 6,
+        imageSrc: '/menu/discover/product-finder-mobile.jpg',
+        mobileImageSrc: '/menu/discover/product-finder-mobile.jpg',
+      },
+      {
+        id: 'about_us',
+        name: 'About Us',
+        url: '/about',
+        linkPosition: 5,
+        photoPosition: 4,
+        imageSrc: '/menu/discover/about-us.jpg',
+        mobileImageSrc: '/menu/discover/about-us-mobile.jpg',
+      },
+      {
+        id: 'our_history',
+        name: 'Our History',
+        url: '/about/history',
+        linkPosition: 6,
+        photoPosition: 5,
+        imageSrc: '/menu/discover/our-history-mobile.jpg',
+        mobileImageSrc: '/menu/discover/our-history-mobile.jpg',
+      },
+    ],
     sub_menus: [],
     position: 5,
   },
-  {
-    id: 13,
-    slug: 'advice',
-    name: 'Advice',
-    text: '',
-    url: '/advice',
-    image: null,
-    svg_image: null,
-    is_mega_menu: false,
-    is_active: true,
-    sub_menus: [],
-    position: 6,
-  },
-  {
-    id: 14,
-    slug: 'about-us',
-    name: 'About Us',
-    text: '',
-    url: '/about',
-    image: null,
-    svg_image: null,
-    is_mega_menu: false,
-    is_active: true,
-    sub_menus: [],
-    position: 7,
-  },
+  // {
+  //   id: 12,
+  //   slug: 'be-sun-ready',
+  //   name: 'Be Sun Ready',
+  //   text: '',
+  //   url: '/be-sun-ready',
+  //   image: null,
+  //   svg_image: null,
+  //   is_mega_menu: true,
+  //   is_active: true,
+  //   sub_menus: [],
+  //   position: 5,
+  // },
+  // {
+  //   id: 13,
+  //   slug: 'advice',
+  //   name: 'Advice',
+  //   text: '',
+  //   url: '/advice',
+  //   image: null,
+  //   svg_image: null,
+  //   is_mega_menu: false,
+  //   is_active: true,
+  //   sub_menus: [],
+  //   position: 6,
+  // },
+  // {
+  //   id: 14,
+  //   slug: 'about-us',
+  //   name: 'About Us',
+  //   text: '',
+  //   url: '/about',
+  //   image: null,
+  //   svg_image: null,
+  //   is_mega_menu: false,
+  //   is_active: true,
+  //   sub_menus: [],
+  //   position: 7,
+  // },
 ]
 
-function Navigation(props) {
-  const {navItems = initialNavItems} = props
+function Navigation() {
+  const navItems = initialNavItems
   const router = useRouter()
   const {hideLogo} = hideHeaderLogoOrInfoState(router)
   const theme = useTheme()
@@ -151,7 +219,7 @@ function Navigation(props) {
     sub_menus: [],
     svg_image: null,
     text: 'More',
-    url: '',
+    url: '#',
   })
   /* -------------------------------------------------------------------------- */
 
@@ -172,20 +240,24 @@ function Navigation(props) {
 
   const setNavItemsHandler = () => {
     const containerWidth =
-      menuItemsEle.current?.getBoundingClientRect().width - 100 //50 is for padding of the element
+      menuItemsEle.current?.getBoundingClientRect().width - 100 //100 is for padding of the element
 
     if (navItemsDetail.current.state === 'done' && containerWidth > 0) {
-      let widthSum = 50
+      let totalWidth = 50 //Initial padding
       let lastItemIndex = -1
+
+      //Here we calculate the total width of all items and find the last item
+      //ItemsWidth is calculated in the "useEffect" hook
       navItemsDetail.current.itemsWidth.forEach((width, i) => {
-        if (widthSum < containerWidth) {
-          widthSum += width
+        if (totalWidth < containerWidth) {
+          totalWidth += width
           lastItemIndex = i
         }
       })
 
       if (lastItemIndex > 0) {
-        if (widthSum > containerWidth) {
+        if (totalWidth > containerWidth) {
+          //Here we shrink the nav items and put the overflowed items into "more" button
           const newNavItemsArr = navItems.slice(0, lastItemIndex)
           const newMoreBtnArr = moreButton
           newMoreBtnArr.sub_menus = navItems.slice(lastItemIndex)
