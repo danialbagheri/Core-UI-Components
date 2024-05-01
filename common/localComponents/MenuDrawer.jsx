@@ -20,7 +20,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {initialNavItems} from '../Navigation'
 
-const drawerWidth = '100%'
+const drawerWidth = '90%'
 
 const hoverStyle = bgcolor => {
   return {
@@ -75,6 +75,7 @@ export function MenuDrawer(props) {
   const {setMobileOpen, mobileOpen, navItems, window} = props
   const [expanded, setExpanded] = React.useState(null)
   const [showMegaMenu, setShowMegaMenu] = React.useState(false)
+  const [displayMegaMenu, setDisplayMegaMenu] = React.useState(false)
   const theme = useTheme()
   const router = useRouter()
   const megaMenu = initialNavItems.find(item => item.is_mega_menu)
@@ -86,6 +87,7 @@ export function MenuDrawer(props) {
     e?.stopPropagation()
     setMobileOpen(prevState => !prevState)
     setShowMegaMenu(false)
+    setDisplayMegaMenu(false)
   }
 
   const handleChange = panel => (event, newExpanded) => {
@@ -96,6 +98,7 @@ export function MenuDrawer(props) {
   const accordionSummaryClickHandler = ({isSubMenu, isMegaMenu, url}) => {
     if (isMegaMenu) {
       setShowMegaMenu(true)
+      setDisplayMegaMenu(true)
     } else if (!isSubMenu) {
       router.push(url)
       handleDrawerToggle()
@@ -110,6 +113,9 @@ export function MenuDrawer(props) {
   const backHandler = e => {
     e.stopPropagation()
     setShowMegaMenu(false)
+    setTimeout(() => {
+      setDisplayMegaMenu(false)
+    }, 225)
   }
 
   const drawer = (
@@ -119,11 +125,10 @@ export function MenuDrawer(props) {
         sx={{
           flexDirection: 'column',
           gap: '8px',
-          maxHeight: showMegaMenu ? '100%' : '0',
+          display: displayMegaMenu ? 'flex !important' : 'none !important',
           pb: showMegaMenu ? '95px' : 0,
           transform: `translateX(${showMegaMenu ? '0' : '-100%'})`,
-          transition:
-            'transform 225ms cubic-bezier(0, 0, 0.58, 1) 0ms, height 0ms cubic-bezier(0, 0, 0.58, 1) 225ms',
+          transition: 'transform 225ms cubic-bezier(0, 0, 0.58, 1) 0ms',
         }}
       >
         {megaMenu?.mega_menu_items?.map(item => (
