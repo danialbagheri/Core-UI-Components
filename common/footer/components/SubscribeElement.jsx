@@ -46,6 +46,7 @@ const SubscriptionField = props => {
       }}
     >
       <CustomOutlinedInput
+        cypress="newsletter-footer-email"
         error={error}
         id="outlined-required"
         onChange={e => setEmail(e.target.value)}
@@ -59,6 +60,7 @@ const SubscriptionField = props => {
         value={email}
       />
       <CustomButton
+        cypress="newsletter-footer-button"
         loading={loading}
         onClick={submitHandler}
         sx={{width: 112, height: 36, borderRadius: '4px', ml: -2}}
@@ -109,7 +111,7 @@ export function SubscribeElement(props) {
     case notRegisteredSubscribed:
       return (
         <Box className="centralize">
-          <Box className="centralize" gap="9px" width={182}>
+          <Box className="centralize" gap="9px" width={182} data-cy="newsletter-footer-success">
             <GreenCheck sx={{width: 39, height: 39}} />
             <Typography color="#226F61" fontSize={20} fontWeight={700}>
               Thank you for subscribing!

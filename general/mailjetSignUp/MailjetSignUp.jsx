@@ -123,6 +123,7 @@ export default function MailjetSignUp() {
     <>
       <Box
         onClick={() => setShowPopUp(false)}
+        data-cy="newsletter-hidepopup"
         sx={{
           display: showPopUp ? 'block' : 'none',
           position: 'fixed',
@@ -149,6 +150,7 @@ export default function MailjetSignUp() {
             e.stopPropagation()
             setShowPopUpSetting()
           }}
+          data-cy="newsletter-showpopup"
           sx={{
             top: 0,
             left: 0,
@@ -197,7 +199,7 @@ export default function MailjetSignUp() {
               className="centralize"
               sx={{flexDirection: 'column-reverse', gap: 2}}
             >
-              <Box className="centralize" gap="9px" width={175}>
+              <Box className="centralize" gap="9px" width={175} data-cy="newsletter-popup-success">
                 <GreenCheck sx={{width: 39, height: 39}} />
                 <Typography color="#226F61" fontSize={20} fontWeight={700}>
                   Thank you for subscribing!
@@ -228,6 +230,7 @@ export default function MailjetSignUp() {
                   gap: '10px',
                   flexGrow: 1,
                 }}
+              
               >
                 <TextField
                   error={error}
@@ -239,12 +242,14 @@ export default function MailjetSignUp() {
                   sx={{...fieldStyle}}
                   type="email"
                   value={email}
+                  data-cy="newsletter-popup-email"
                 />
                 <CustomButton
                   loading={loading}
                   onClick={submitHandler}
                   sx={{borderRadius: 1, height: 32, fontSize: 16}}
                   variant="contained"
+                  cypress="newsletter-popup-container"
                 >
                   SUBSCRIBE
                 </CustomButton>

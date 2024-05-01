@@ -12,6 +12,7 @@ interface PropsTypes {
   disabled?: boolean
   loadingSize?: number
   borderColor?: string
+  cypress?: string
 }
 
 export function CustomButton(props: PropsTypes) {
@@ -25,6 +26,7 @@ export function CustomButton(props: PropsTypes) {
     disabled,
     loadingSize = 30,
     borderColor,
+    cypress
   } = props
 
   const theme = useTheme()
@@ -83,6 +85,7 @@ export function CustomButton(props: PropsTypes) {
         ...sx,
       }}
       variant={variant}
+      data-cy={cypress}
     >
       {loading ? (
         <CircularProgress
