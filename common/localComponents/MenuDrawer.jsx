@@ -20,7 +20,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {initialNavItems} from '../Navigation'
 
-const drawerWidth = '90%'
+const drawerWidth = '80%'
 
 const hoverStyle = bgcolor => {
   return {
@@ -127,6 +127,7 @@ export function MenuDrawer(props) {
           gap: '8px',
           display: displayMegaMenu ? 'flex !important' : 'none !important',
           pb: showMegaMenu ? '95px' : 0,
+          px: 4,
           transform: `translateX(${showMegaMenu ? '0' : '-100%'})`,
           transition: 'transform 225ms cubic-bezier(0, 0, 0.58, 1) 0ms',
         }}
@@ -135,11 +136,17 @@ export function MenuDrawer(props) {
           <Link
             href={item.url}
             key={item.id}
-            style={{textDecoration: 'none', order: item.photoPosition}}
+            style={{
+              textDecoration: 'none',
+              order: item.photoPosition,
+              width: '100%',
+              maxWidth: 353,
+            }}
           >
             <Box
               sx={{
-                width: 353,
+                maxWidth: 353,
+                width: '100%',
                 height: 103,
                 position: 'relative',
                 overflow: 'hidden',
