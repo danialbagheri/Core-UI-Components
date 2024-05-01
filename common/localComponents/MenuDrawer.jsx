@@ -125,7 +125,7 @@ export function MenuDrawer(props) {
         sx={{
           flexDirection: 'column',
           gap: '8px',
-          display: displayMegaMenu ? 'flex !important' : 'none !important',
+          maxHeight: displayMegaMenu ? 'unset' : '0',
           pb: showMegaMenu ? '95px' : 0,
           px: 4,
           transform: `translateX(${showMegaMenu ? '0' : '-100%'})`,
