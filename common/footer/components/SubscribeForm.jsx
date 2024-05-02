@@ -28,7 +28,7 @@ export function SubscribeForm({sx = {}}) {
       setError('Email is required.')
       return
     } else if (!validateEmail(email)) {
-      setError('Please enter a correct email address.')
+      setError('The email address is not valid.')
       return
     }
 
@@ -41,8 +41,13 @@ export function SubscribeForm({sx = {}}) {
       setAppState,
     })
 
-    if (subscribeState) {
+    if (subscribeState.state) {
       userDataHandler(true)
+    } else {
+      const message =
+        subscribeState.message ||
+        'Something went wrong. Please try again later.'
+      setError(message)
     }
   }
 

@@ -102,6 +102,7 @@ export function SubscribeElement(props) {
             setEmail={setEmail}
             submitHandler={submitHandler}
             sx={{mt: 5}}
+            type="email"
           />
         </React.Fragment>
       )

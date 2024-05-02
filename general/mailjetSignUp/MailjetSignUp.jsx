@@ -58,13 +58,27 @@ export default function MailjetSignUp() {
       setError('Email is required.')
       return
     } else if (!validateEmail(email)) {
-      setError('Please enter a correct email address.')
+      setError('The email address is not valid.')
       return
     }
 
     setError('')
+    setLoading(true)
 
-    subscriptionHandler({email, setLoading, setAppState})
+    const subscribeState = await subscriptionHandler({
+      email,
+      setLoading,
+      setAppState,
+    })
+
+    console.log('🚀 🙂  subscribeState:::', subscribeState)
+
+    if (!subscribeState.state) {
+      const message =
+        subscribeState.message ||
+        'Something went wrong. Please try again later.'
+      setError(message)
+    }
   }
 
   const onScroll = () => {
