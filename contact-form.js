@@ -128,6 +128,7 @@ const ContactUsForm = () => {
       <Box>
         <Typography fontWeight="700">Full name</Typography>
         <TextField
+          data-cy="contact-us-full-name"
           error={error[NAME]}
           fullWidth
           helperText={error[NAME]}
@@ -141,6 +142,7 @@ const ContactUsForm = () => {
       <Box>
         <Typography fontWeight="700">Address (city,country)</Typography>
         <TextField
+          data-cy="contact-us-address"
           error={error[ADDRESS]}
           fullWidth
           helperText={error[ADDRESS]}
@@ -154,6 +156,7 @@ const ContactUsForm = () => {
       <Box>
         <Typography fontWeight="700">Email Address</Typography>
         <TextField
+          data-cy="contact-us-email"
           error={error[EMAIL]}
           fullWidth
           helperText={error[EMAIL]}
@@ -167,6 +170,7 @@ const ContactUsForm = () => {
       <Box>
         <Typography fontWeight="700">Reason for contact</Typography>
         <Select
+          data-cy="contact-us-select"
           fullWidth
           id="contact-us-reason"
           onChange={e => onChangeHandler(e.target.value, REASON)}
@@ -229,6 +233,7 @@ const ContactUsForm = () => {
         ) : null}
 
         <Button
+          data-cy="contact-us-submit"
           disabled={loading}
           onClick={submitHandler}
           sx={{

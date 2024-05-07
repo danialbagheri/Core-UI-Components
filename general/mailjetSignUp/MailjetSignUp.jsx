@@ -71,8 +71,6 @@ export default function MailjetSignUp() {
       setAppState,
     })
 
-    console.log('🚀 🙂  subscribeState:::', subscribeState)
-
     if (!subscribeState.state) {
       const message =
         subscribeState.message ||
@@ -164,7 +162,10 @@ export default function MailjetSignUp() {
           }}
         >
           <i className={Styles.ToggleIcon} />
-          <div className={Styles.Offer}>
+          <div
+            className={Styles.Offer}
+            data-cy={showPopUp ? 'subscribe-pop-up' : ''}
+          >
             <span>GET 10% OFF</span>
           </div>
         </Box>
