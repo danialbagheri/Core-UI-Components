@@ -1,3 +1,4 @@
+import {FAVORITE_VARIANTS, USER_DATA} from 'constants/general'
 import * as React from 'react'
 import {MUIThemeProvider} from 'theme'
 import {SUBSCRIPTION_STATE} from 'utils'
@@ -30,13 +31,37 @@ function AppProvider(props) {
     return [appState, setAppState]
   }, [appState, setAppState])
 
-  React.useEffect(() => {
+  const getInitialStates = async () => {
+    let favoriteVariants = null
+    let userData = null
+    const localStorageFavoriteVariants = localStorage.getItem(FAVORITE_VARIANTS)
+    const localStorageUserData = localStorage.getItem(USER_DATA)
+
+    if (localStorageFavoriteVariants) {
+      favoriteVariants = await JSON.parse(
+        localStorage.getItem(FAVORITE_VARIANTS) || '',
+      )
+    }
+
+    if (localStorageUserData) {
+      userData = await JSON.parse(localStorage.getItem(USER_DATA) || 'lll')
+    }
+
+    const isAuthenticate = !!userData
+
     setAppState(prevState => {
       return {
         ...prevState,
+        isAuthenticate,
+        favoriteVariants,
+        userData,
         icons,
       }
     })
+  }
+
+  React.useEffect(() => {
+    getInitialStates()
   }, [icons])
 
   return (

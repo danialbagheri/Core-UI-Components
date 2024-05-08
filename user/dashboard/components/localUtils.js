@@ -1,3 +1,4 @@
+import {FAVORITE_VARIANTS} from 'constants/general'
 import {favoriteVariantHandler} from 'services'
 
 export const addToCartHandler = async ({
@@ -38,9 +39,10 @@ export const removeFromFavoriteHandler = async ({
   const onAuthenticatedAction = async token => {
     const sku = variant.sku
     await favoriteVariantHandler(sku, token, 'remove')
-    const newFavoriteVariants = appState.favoriteVariants.filter(
+    const newFavoriteVariants = appState.favoriteVariants?.filter(
       variant => variant.sku !== sku,
     )
+    localStorage.setItem(FAVORITE_VARIANTS, JSON.stringify(newFavoriteVariants))
     setAppState(prevState => ({
       ...prevState,
       favoriteVariants: newFavoriteVariants,

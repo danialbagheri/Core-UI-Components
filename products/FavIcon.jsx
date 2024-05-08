@@ -10,6 +10,7 @@ import {favoriteVariantHandler} from 'services'
 import {Heart, HeartOutlined} from 'components/icons'
 import {useAuthFetch} from 'components/customHooks'
 import {CustomTooltip} from './CustomTooltip'
+import {FAVORITE_VARIANTS} from 'constants/general'
 
 export const FavIcon = props => {
   const {isHovered, variant} = props
@@ -37,12 +38,20 @@ export const FavIcon = props => {
           const newFavoriteVariants = appState.favoriteVariants.filter(
             variant => variant.sku !== sku,
           )
+          localStorage.setItem(
+            FAVORITE_VARIANTS,
+            JSON.stringify(newFavoriteVariants),
+          )
           setAppState(prevState => ({
             ...prevState,
             favoriteVariants: newFavoriteVariants,
           }))
         } else {
           const newFavoriteVariants = [...appState.favoriteVariants, variant]
+          localStorage.setItem(
+            FAVORITE_VARIANTS,
+            JSON.stringify(newFavoriteVariants),
+          )
           setAppState(prevState => ({
             ...prevState,
             favoriteVariants: newFavoriteVariants,

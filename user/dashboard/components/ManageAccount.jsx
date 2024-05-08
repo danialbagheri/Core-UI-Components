@@ -17,6 +17,7 @@ import {destroyCookie} from 'nookies'
 /* ---------------------------- Local Components ---------------------------- */
 import {AppContext} from 'components/appProvider'
 import {CustomButton} from 'components/shared'
+import {FAVORITE_VARIANTS, USER_DATA} from 'constants/general'
 /* -------------------------------------------------------------------------- */
 
 const manageAccountList = [
@@ -43,6 +44,8 @@ export function ManageAccount() {
     setLoading(true)
     destroyCookie(null, 'calacc', {path: '/'})
     destroyCookie(null, 'calref', {path: '/'})
+    localStorage.removeItem(FAVORITE_VARIANTS)
+    localStorage.removeItem(USER_DATA)
     setAppState(perv => ({...perv, isAuthenticate: false}))
 
     router.push('/user/sign-in')

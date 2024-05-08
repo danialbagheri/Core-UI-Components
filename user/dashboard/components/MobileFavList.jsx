@@ -22,8 +22,7 @@ import {useAuthFetch} from 'components/customHooks'
 import {addToCartHandler, removeFromFavoriteHandler} from './localUtils'
 /* -------------------------------------------------------------------------- */
 
-export function MobileFavList(props) {
-  const {loading} = props
+export function MobileFavList() {
   const [loadingVariant, setLoadingVariant] = React.useState(null)
   const [removeLoading, setRemoveLoading] = React.useState(false)
   const [appState, setAppState] = React.useContext(AppContext)
@@ -42,146 +41,139 @@ export function MobileFavList(props) {
           bgcolor: '#E4E4E4',
         }}
       />
-      {loading ? (
-        <Box className="centralize" mt="35px">
-          <CircularProgress sx={{display: {xs: 'block', md: 'none'}}} />
-        </Box>
-      ) : (
-        <>
-          {appState?.favoriteVariants?.length ? (
-            appState?.favoriteVariants.map(variant => (
-              <React.Fragment key={variant.id}>
+
+      {appState?.favoriteVariants?.length ? (
+        appState?.favoriteVariants.map(variant => (
+          <React.Fragment key={variant.id}>
+            <Box
+              className="centralize"
+              key={variant.id}
+              sx={{py: '24px', width: 317, gap: 5}}
+            >
+              <Box
+                sx={{
+                  width: 79,
+                  minWidth: 79,
+                  height: 92,
+                  position: 'relative',
+                }}
+              >
+                <Image
+                  alt={variant.name}
+                  fill
+                  sizes="10vw"
+                  src={getProperVariantImageSrc(variant.image_list)}
+                  style={{objectFit: 'cover'}}
+                />
+              </Box>
+              <Box
+                sx={{
+                  flexGrow: '1',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  flexDirection: 'column',
+                  height: 92,
+                }}
+              >
                 <Box
-                  className="centralize"
-                  key={variant.id}
-                  sx={{py: '24px', width: 317, gap: 5}}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    width: '100%',
+                    gap: 4,
+
+                    '& a': {
+                      textDecoration: 'none',
+                    },
+                  }}
                 >
-                  <Box
-                    sx={{
-                      width: 79,
-                      minWidth: 79,
-                      height: 92,
-                      position: 'relative',
-                    }}
+                  <Link
+                    href={`/products/${variant.product_slug}?sku=${variant.sku}`}
                   >
-                    <Image
-                      alt={variant.name}
-                      fill
-                      sizes="10vw"
-                      src={getProperVariantImageSrc(variant.image_list)}
-                      style={{objectFit: 'cover'}}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      flexGrow: '1',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between',
-                      flexDirection: 'column',
-                      height: 92,
-                    }}
-                  >
-                    <Box
+                    <Typography
                       sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'flex-start',
-                        width: '100%',
-                        gap: 4,
-
-                        '& a': {
-                          textDecoration: 'none',
-                        },
+                        fontSize: 14,
+                        fontWeight: 500,
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        WebkitLineClamp: 2,
+                        textOverflow: 'ellipsis',
+                        lineHeight: '1.7rem',
                       }}
                     >
-                      <Link
-                        href={`/products/${variant.product_slug}?sku=${variant.sku}`}
-                      >
-                        <Typography
-                          sx={{
-                            fontSize: 14,
-                            fontWeight: 500,
-                            display: '-webkit-box',
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                            WebkitLineClamp: 2,
-                            textOverflow: 'ellipsis',
-                            lineHeight: '1.7rem',
-                          }}
-                        >
-                          {`${variant.product_name} - ${variant.name}`}
-                        </Typography>
-                      </Link>
+                      {`${variant.product_name} - ${variant.name}`}
+                    </Typography>
+                  </Link>
 
-                      <Price
-                        sx={{flexDirection: 'column', gap: '2px'}}
-                        variant={variant}
-                      />
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        width: '100%',
-                      }}
-                    >
-                      <CustomButton
-                        loading={loadingVariant === variant.id}
-                        loadingSize={20}
-                        onClick={() =>
-                          addToCartHandler({
-                            variant,
-                            setLoadingVariant,
-                            checkoutId,
-                            addVariant,
-                            openCart,
-                          })
-                        }
-                        sx={{height: 32, width: 152, fontSize: 14}}
-                        variant="contained"
-                      >
-                        Add to cart
-                      </CustomButton>
-                      {removeLoading === variant.id ? (
-                        <CircularProgress
-                          sx={{
-                            width: '32px !important',
-                            height: '32px !important',
-                          }}
-                        />
-                      ) : (
-                        <RemoveIcon
-                          onClick={() =>
-                            removeFromFavoriteHandler({
-                              variant,
-                              setRemoveLoading,
-                              appState,
-                              setAppState,
-                              router,
-                              authFetchHandler,
-                            })
-                          }
-                        />
-                      )}
-                    </Box>
-                  </Box>
+                  <Price
+                    sx={{flexDirection: 'column', gap: '2px'}}
+                    variant={variant}
+                  />
                 </Box>
                 <Box
                   sx={{
-                    width: '288px',
-                    height: '1px',
-                    margin: '0 auto',
-                    bgcolor: '#E4E4E4',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '100%',
                   }}
-                />
-              </React.Fragment>
-            ))
-          ) : (
-            <EmptyState sx={{mt: '35px'}} />
-          )}
-        </>
+                >
+                  <CustomButton
+                    loading={loadingVariant === variant.id}
+                    loadingSize={20}
+                    onClick={() =>
+                      addToCartHandler({
+                        variant,
+                        setLoadingVariant,
+                        checkoutId,
+                        addVariant,
+                        openCart,
+                      })
+                    }
+                    sx={{height: 32, width: 152, fontSize: 14}}
+                    variant="contained"
+                  >
+                    Add to cart
+                  </CustomButton>
+                  {removeLoading === variant.id ? (
+                    <CircularProgress
+                      sx={{
+                        width: '32px !important',
+                        height: '32px !important',
+                      }}
+                    />
+                  ) : (
+                    <RemoveIcon
+                      onClick={() =>
+                        removeFromFavoriteHandler({
+                          variant,
+                          setRemoveLoading,
+                          appState,
+                          setAppState,
+                          router,
+                          authFetchHandler,
+                        })
+                      }
+                    />
+                  )}
+                </Box>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                width: '288px',
+                height: '1px',
+                margin: '0 auto',
+                bgcolor: '#E4E4E4',
+              }}
+            />
+          </React.Fragment>
+        ))
+      ) : (
+        <EmptyState sx={{mt: '35px'}} />
       )}
     </Box>
   )

@@ -14,7 +14,11 @@ import {
   LogOut,
 } from 'components/icons'
 import {routes} from 'constants/user'
-import {IS_CALYPSO_WEBSITE} from 'constants/general'
+import {
+  FAVORITE_VARIANTS,
+  IS_CALYPSO_WEBSITE,
+  USER_DATA,
+} from 'constants/general'
 
 const SIDE_BAR_ITEMS = [
   {id: 'my-dashboard', name: 'My dashboard', url: `/user/${routes.DASHBOARD}`},
@@ -33,6 +37,8 @@ const SIDE_BAR_BUTTONS = [
     onClick: router => {
       destroyCookie(null, 'calacc', {path: '/'})
       destroyCookie(null, 'calref', {path: '/'})
+      localStorage.removeItem(FAVORITE_VARIANTS)
+      localStorage.removeItem(USER_DATA)
       router.push('/user/sign-in')
     },
     icon: <LogOut color="primary" fontSize="small" />,

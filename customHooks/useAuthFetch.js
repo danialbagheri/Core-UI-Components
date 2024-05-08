@@ -3,6 +3,7 @@ import * as React from 'react'
 import {destroyCookie, parseCookies, setCookie} from 'nookies'
 import {AppContext} from '../appProvider'
 import {postRefreshToken} from '../../services'
+import {FAVORITE_VARIANTS, USER_DATA} from 'constants/general'
 
 export function useAuthFetch() {
   const {calacc, calref} = parseCookies()
@@ -40,7 +41,14 @@ export function useAuthFetch() {
           if (err.status === 401) {
             destroyCookie(null, 'calacc', {path: '/'})
             destroyCookie(null, 'calref', {path: '/'})
-            setAppState(perv => ({...perv, isAuthenticate: false}))
+            localStorage.removeItem(FAVORITE_VARIANTS)
+            localStorage.removeItem(USER_DATA)
+            setAppState(perv => ({
+              ...perv,
+              isAuthenticate: false,
+              favoriteVariants: null,
+              userData: null,
+            }))
             await onNotAuthenticatedAction()
             console.error(err)
           } else {

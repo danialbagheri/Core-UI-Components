@@ -27,8 +27,7 @@ import {addToCartHandler, removeFromFavoriteHandler} from './localUtils'
 import {getProperVariantImageSrc} from 'utils'
 /* -------------------------------------------------------------------------- */
 
-export default function DesktopFavList(props) {
-  const {loading} = props
+export default function DesktopFavList() {
   const [loadingVariant, setLoadingVariant] = React.useState(null)
   const [removeLoading, setRemoveLoading] = React.useState(false)
   const [appState, setAppState] = React.useContext(AppContext)
@@ -36,10 +35,6 @@ export default function DesktopFavList(props) {
   const authFetchHandler = useAuthFetch()
   const router = useRouter()
   const checkoutId = checkoutState.id
-
-  if (loading) {
-    return <CircularProgress sx={{display: {xs: 'none', md: 'block'}}} />
-  }
 
   return (
     <>

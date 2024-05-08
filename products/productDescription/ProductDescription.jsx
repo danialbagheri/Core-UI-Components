@@ -14,7 +14,6 @@ import {ShowPrice} from 'sharedComponents'
 import {CustomButton} from 'components/shared'
 import {CustomTooltip} from '../CustomTooltip'
 import {favoriteVariantHandler} from 'services'
-import {getFavoriteVariantsHandler} from 'utils'
 import {ProductDropDown} from './productDropDown'
 import {AppContext} from 'components/appProvider'
 import StarRating from '../StarRating/StarRating'
@@ -22,7 +21,7 @@ import {VariantSelector} from '../VariantSelector'
 import {useAuthFetch} from 'components/customHooks'
 import {Heart, HeartOutlined} from 'components/icons'
 import ShareButton from 'components/common/shareButton/ShareButton'
-import {WEBSITE_NAME} from 'constants/general'
+import {FAVORITE_VARIANTS, WEBSITE_NAME} from 'constants/general'
 
 const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
 
@@ -32,7 +31,7 @@ const ProductDescription = props => {
   const [appState, setAppState] = React.useContext(AppContext)
   const [loading, setLoading] = React.useState(false)
   const authFetchHandler = useAuthFetch()
-  const isLoggedIn = appState.isAuthenticate !== false
+  const isLoggedIn = appState.isAuthenticate
   const isFavorite = Boolean(
     appState?.favoriteVariants?.find(
       variant => variant.sku === selectedVariant.sku,
@@ -53,6 +52,10 @@ const ProductDescription = props => {
           const newFavoriteVariants = appState.favoriteVariants.filter(
             variant => variant.sku !== sku,
           )
+          localStorage.setItem(
+            FAVORITE_VARIANTS,
+            JSON.stringify(newFavoriteVariants),
+          )
           setAppState(prevState => ({
             ...prevState,
             favoriteVariants: newFavoriteVariants,
@@ -62,6 +65,10 @@ const ProductDescription = props => {
             ...appState.favoriteVariants,
             selectedVariant,
           ]
+          localStorage.setItem(
+            FAVORITE_VARIANTS,
+            JSON.stringify(newFavoriteVariants),
+          )
           setAppState(prevState => ({
             ...prevState,
             favoriteVariants: newFavoriteVariants,
@@ -84,16 +91,6 @@ const ProductDescription = props => {
       })
     }
   }
-
-  const getFavoriteProductsHandler = async () => {
-    await getFavoriteVariantsHandler({authFetchHandler, setAppState})
-  }
-
-  React.useEffect(() => {
-    if (appState.isAuthenticate === undefined) {
-      getFavoriteProductsHandler()
-    }
-  }, [])
 
   return (
     <Stack gap={4}>
@@ -187,7 +184,7 @@ const ProductDescription = props => {
                 }}
               >
                 {isFavorite
-                  ? 'Remove from favorites'
+                  ? 'Remove from favourites'
                   : 'Add to your favourites'}
                 {isFavorite ? (
                   <Heart sx={{fill: '#FF0000'}} />
