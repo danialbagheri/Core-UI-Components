@@ -12,6 +12,7 @@ import {AppContext} from 'components/appProvider'
 import {useAuthFetch} from 'components/customHooks'
 import {getUserInfo, postUserSubscriptionInfo} from 'services'
 import {SubscribeElement} from './SubscribeElement'
+import {USER_DATA} from 'constants/general'
 
 export function SubscribeForm({sx = {}}) {
   const [email, setEmail] = React.useState('')
@@ -56,10 +57,17 @@ export function SubscribeForm({sx = {}}) {
       //Check if user is registered and we had not fetched the user data
       if (appState.userData === null && appState.userHasCreateAccount) {
         const onAuthenticatedAction = async token => {
-          const data = await getUserInfo(token)
+          let userData = null
+          const localStorageUserData = localStorage.getItem(USER_DATA)
+          if (localStorageUserData) {
+            userData = await JSON.parse(localStorageUserData)
+          } else {
+            userData = await getUserInfo(token)
+          }
+
           setAppState(prevState => ({
             ...prevState,
-            userData: {...data},
+            userData: {...userData},
             [SUBSCRIPTION_STATE]: SUBSCRIBED,
           }))
         }
@@ -79,8 +87,14 @@ export function SubscribeForm({sx = {}}) {
       }
     } else if (appState[SUBSCRIPTION_STATE] === null) {
       const onAuthenticatedAction = async token => {
-        const data = await getUserInfo(token)
-        const email = data.email
+        let userData = null
+        const localStorageUserData = localStorage.getItem(USER_DATA)
+        if (localStorageUserData) {
+          userData = await JSON.parse(localStorageUserData)
+        } else {
+          userData = await getUserInfo(token)
+        }
+        const email = userData.email
         const subscriptionData = await postUserSubscriptionInfo({
           token,
           data: {email},
@@ -91,7 +105,7 @@ export function SubscribeForm({sx = {}}) {
         localStorage.setItem(SUBSCRIPTION_STATE, subscriptionState)
         setAppState(prevState => ({
           ...prevState,
-          userData: {...data},
+          userData: {...userData},
           [SUBSCRIPTION_STATE]: false,
         }))
       }
