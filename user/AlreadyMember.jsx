@@ -84,7 +84,7 @@ export function AlreadyMember({sx = {}}) {
         })
       }
 
-      router.push('/user/dashboard')
+      router.push({pathname: '/user/dashboard', query: router.query})
 
       setLoading(false)
     } catch (err) {

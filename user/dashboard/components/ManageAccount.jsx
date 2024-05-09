@@ -46,7 +46,12 @@ export function ManageAccount() {
     destroyCookie(null, 'calref', {path: '/'})
     localStorage.removeItem(FAVORITE_VARIANTS)
     localStorage.removeItem(USER_DATA)
-    setAppState(perv => ({...perv, isAuthenticate: false}))
+    setAppState(perv => ({
+      ...perv,
+      isAuthenticate: false,
+      favoriteVariants: null,
+      userData: null,
+    }))
 
     router.push('/user/sign-in')
   }

@@ -20,6 +20,7 @@ import {FavIcon} from './FavIcon'
 /* --------------------------------- Styles --------------------------------- */
 import styles from './styles.module.css'
 import {getProperVariantImageSrc} from 'utils'
+import Link from 'next/link'
 /* -------------------------------------------------------------------------- */
 
 const LIFE_STYLE = 'LS'
@@ -78,6 +79,7 @@ export function ProductItem(props) {
   const isOnSale =
     activeVariant[COMPARE_AT_PRICE] || activeVariant[EURO_COMPARE_AT_PRICE]
   const isOutOfStock = activeVariant.inventory_quantity < 1
+  const productPath = `/products/${product?.slug}?sku=${activeVariant.sku}`
 
   /**
    *
@@ -165,7 +167,7 @@ export function ProductItem(props) {
         className={styles.fadeOut}
         onClick={e => {
           e.preventDefault()
-          router.push(`/products/${product?.slug}?sku=${activeVariant.sku}`)
+          router.push(productPath)
         }}
         onMouseEnter={() => mouseMoveHandler(true)}
         onMouseLeave={() => mouseMoveHandler(false)}
@@ -198,17 +200,19 @@ export function ProductItem(props) {
         {displayImage &&
         product?.secondary_image_resized &&
         hasLifeStyleImage ? (
-          <Image
-            alt={product?.name}
-            className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
-            fill
-            loading="eager"
-            sizes="(max-width: 900px) 50vw, 20vw"
-            src={product?.secondary_image_resized || ''}
-            style={{
-              objectFit: 'cover',
-            }}
-          />
+          <Link href={productPath}>
+            <Image
+              alt={product?.name}
+              className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
+              fill
+              loading="eager"
+              sizes="(max-width: 900px) 50vw, 20vw"
+              src={product?.secondary_image_resized || ''}
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+          </Link>
         ) : (
           <Box
             sx={{
@@ -223,17 +227,19 @@ export function ProductItem(props) {
               border: 'none',
             }}
           >
-            <Image
-              alt={product?.name}
-              fill
-              priority
-              sizes="(max-width: 900px) 50vw, 20vw"
-              src={imageSrcHandler(
-                activeVariant.image_list,
-                product?.main_image,
-              )}
-              style={{objectFit: 'contain'}}
-            />
+            <Link href={productPath}>
+              <Image
+                alt={product?.name}
+                fill
+                priority
+                sizes="(max-width: 900px) 50vw, 20vw"
+                src={imageSrcHandler(
+                  activeVariant.image_list,
+                  product?.main_image,
+                )}
+                style={{objectFit: 'contain'}}
+              />
+            </Link>
           </Box>
         )}
 

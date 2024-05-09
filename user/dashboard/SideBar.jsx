@@ -166,7 +166,12 @@ export function SideBar(props) {
           onClick={() => {
             button.onClick(router)
             if (button.id === 'log-out') {
-              setAppState(prev => ({...prev, isAuthenticate: false}))
+              setAppState(prev => ({
+                ...prev,
+                isAuthenticate: false,
+                favoriteVariants: null,
+                userData: null,
+              }))
             }
           }}
           sx={{

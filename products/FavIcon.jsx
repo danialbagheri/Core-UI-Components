@@ -11,13 +11,14 @@ import {Heart, HeartOutlined} from 'components/icons'
 import {useAuthFetch} from 'components/customHooks'
 import {CustomTooltip} from './CustomTooltip'
 import {FAVORITE_VARIANTS} from 'constants/general'
+import {useRouter} from 'next/router'
 
 export const FavIcon = props => {
   const {isHovered, variant} = props
-
   const [appState, setAppState] = React.useContext(AppContext)
-
   const fetchHandlers = useAuthFetch()
+  const router = useRouter()
+  const path = router.asPath.split('/').join('_')
 
   const sku = variant?.sku
   const isFavorite = appState.favoriteVariants?.find(
@@ -88,7 +89,8 @@ export const FavIcon = props => {
             ''
           ) : (
             <div>
-              <Link href="/user/sign-in">Log in</Link> to use Wishlists!
+              <Link href={`/user/sign-in?favourite=${path}`}>Log in</Link> to
+              use Wishlists!
             </div>
           )
         }

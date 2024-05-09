@@ -71,8 +71,6 @@ export default function MailjetSignUp() {
       setAppState,
     })
 
-    console.log('🚀 🙂  subscribeState:::', subscribeState)
-
     if (!subscribeState.state) {
       const message =
         subscribeState.message ||
