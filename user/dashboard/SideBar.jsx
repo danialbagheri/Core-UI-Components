@@ -7,18 +7,9 @@ import {Box, Typography} from '@mui/material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import {destroyCookie} from 'nookies'
 import {AppContext} from '../../appProvider'
-import {
-  CalypsoGirlDashboard,
-  CalypsoGirlPassword,
-  Heart,
-  LogOut,
-} from 'components/icons'
+import {Heart, LogOut} from 'components/icons'
 import {routes} from 'constants/user'
-import {
-  FAVORITE_VARIANTS,
-  IS_CALYPSO_WEBSITE,
-  USER_DATA,
-} from 'constants/general'
+import {FAVORITE_VARIANTS, USER_DATA} from 'constants/general'
 
 const SIDE_BAR_ITEMS = [
   {id: 'my-dashboard', name: 'My dashboard', url: `/user/${routes.DASHBOARD}`},
@@ -31,18 +22,6 @@ const SIDE_BAR_ITEMS = [
 ]
 
 const SIDE_BAR_BUTTONS = [
-  {
-    id: 'log-out',
-    name: 'Log out',
-    onClick: router => {
-      destroyCookie(null, 'calacc', {path: '/'})
-      destroyCookie(null, 'calref', {path: '/'})
-      localStorage.removeItem(FAVORITE_VARIANTS)
-      localStorage.removeItem(USER_DATA)
-      router.push('/user/sign-in')
-    },
-    icon: <LogOut color="primary" fontSize="small" />,
-  },
   {
     id: 'my_wish_list',
     name: 'My wish list',
@@ -70,6 +49,20 @@ export function SideBar(props) {
     return 'flex'
   }
 
+  const logoutHandler = () => {
+    setAppState(prev => ({
+      ...prev,
+      isAuthenticate: false,
+      favoriteVariants: null,
+      userData: null,
+    }))
+    destroyCookie(null, 'calacc', {path: '/'})
+    destroyCookie(null, 'calref', {path: '/'})
+    localStorage.removeItem(FAVORITE_VARIANTS)
+    localStorage.removeItem(USER_DATA)
+    router.push('/user/sign-in')
+  }
+
   const routerClickHandler = (id, url) => {
     if (id === route) {
       return
@@ -77,26 +70,45 @@ export function SideBar(props) {
     router.push(url)
   }
 
-  const renderProperIcon = () => {
-    if (IS_CALYPSO_WEBSITE) {
-      if (route === routes.PASSWORD) {
-        return <CalypsoGirlPassword sx={{width: 145, height: 145}} />
-      }
-      return <CalypsoGirlDashboard sx={{width: 145, height: 145}} />
-    }
-    return null
-  }
-
   return (
     <Box
       sx={{
         width: 280,
         minWidth: 280,
-        display: {xs: 'none', md: 'flex'},
+        display: 'flex',
         flexDirection: 'column',
         gap: 2,
       }}
     >
+      {SIDE_BAR_BUTTONS.map(button => (
+        <Box
+          bgcolor="sand.main"
+          key={button.id}
+          onClick={() => {
+            button.onClick(router)
+            if (button.id === 'log-out') {
+              setAppState(prev => ({
+                ...prev,
+                isAuthenticate: false,
+                favoriteVariants: null,
+                userData: null,
+              }))
+            }
+          }}
+          sx={{
+            p: '12px 55px',
+            borderRadius: '10px',
+            display: handleDisplayButton(button.route),
+            gap: 4,
+            cursor: 'pointer',
+          }}
+        >
+          {button.icon}
+          <Typography color="primary" fontSize="16px" fontWeight={600}>
+            {button.name}
+          </Typography>
+        </Box>
+      ))}
       <Box
         bgcolor="sand.main"
         className="centralize"
@@ -108,8 +120,6 @@ export function SideBar(props) {
           gap: 4,
         }}
       >
-        {renderProperIcon()}
-
         <Box
           sx={{
             px: 10,
@@ -159,35 +169,23 @@ export function SideBar(props) {
           ))}
         </Box>
       </Box>
-      {SIDE_BAR_BUTTONS.map(button => (
-        <Box
-          bgcolor="sand.main"
-          key={button.id}
-          onClick={() => {
-            button.onClick(router)
-            if (button.id === 'log-out') {
-              setAppState(prev => ({
-                ...prev,
-                isAuthenticate: false,
-                favoriteVariants: null,
-                userData: null,
-              }))
-            }
-          }}
-          sx={{
-            p: '12px 55px',
-            borderRadius: '10px',
-            display: handleDisplayButton(button.route),
-            gap: 4,
-            cursor: 'pointer',
-          }}
-        >
-          {button.icon}
-          <Typography color="primary" fontSize="16px" fontWeight={600}>
-            {button.name}
-          </Typography>
-        </Box>
-      ))}
+
+      <Box
+        bgcolor="sand.main"
+        onClick={logoutHandler}
+        sx={{
+          p: '12px 55px',
+          borderRadius: '10px',
+          display: 'flex',
+          gap: 4,
+          cursor: 'pointer',
+        }}
+      >
+        <LogOut color="primary" fontSize="small" />
+        <Typography color="primary" fontSize="16px" fontWeight={600}>
+          Log out
+        </Typography>
+      </Box>
     </Box>
   )
 }

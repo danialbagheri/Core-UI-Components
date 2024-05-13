@@ -1,5 +1,5 @@
 export * from './Header'
-export * from './Body'
+export * from './DashboardBody'
 export * from './SideBar'
 export * from './Container'
 export * from './FavoriteVariantsList'
