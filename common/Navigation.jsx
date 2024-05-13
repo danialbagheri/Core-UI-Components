@@ -2,7 +2,6 @@ import * as React from 'react'
 
 /* ---------------------------- NextJs Components --------------------------- */
 import Image from 'next/image'
-import {useRouter} from 'next/router'
 /* -------------------------------------------------------------------------- */
 
 /* ----------------------------- MUI Components ----------------------------- */
@@ -15,7 +14,6 @@ import {Link, useScrollTrigger, useTheme} from '@mui/material'
 /* ---------------------------- Local Components ---------------------------- */
 import {DesktopMenu, MenuDrawer} from './localComponents'
 import SearchModal from '../searchModal/SearchModal'
-import {hideHeaderLogoOrInfoState} from 'utils'
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------- Local Icons ------------------------------ */
@@ -164,8 +162,6 @@ export const initialNavItems = [
 
 function Navigation() {
   const navItems = initialNavItems
-  const router = useRouter()
-  const {hideLogo} = hideHeaderLogoOrInfoState(router)
   const theme = useTheme()
   /* --------------------------------- States --------------------------------- */
   const [mobileOpen, setMobileOpen] = React.useState(false)
@@ -296,10 +292,7 @@ function Navigation() {
                   md: trigger ? 'unset' : 'translate(-50%,-100%)',
                 },
 
-                display: {
-                  xs: hideLogo && !trigger ? 'none' : 'block',
-                  md: 'block',
-                },
+                display: 'block',
 
                 '&:hover': {boxShadow: 'none', bgcolor: 'unset'},
                 '&>span': {display: 'none'},
