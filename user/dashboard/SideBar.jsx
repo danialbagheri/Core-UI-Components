@@ -7,12 +7,12 @@ import {Box, Typography} from '@mui/material'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import {destroyCookie} from 'nookies'
 import {AppContext} from '../../appProvider'
-import {Heart, LogOut} from 'components/icons'
+import {CartEmpty, Heart, LogOut} from 'components/icons'
 import {routes} from 'constants/user'
 import {FAVORITE_VARIANTS, USER_DATA} from 'constants/general'
 
 const SIDE_BAR_ITEMS = [
-  {id: 'my-dashboard', name: 'My dashboard', url: `/user/${routes.DASHBOARD}`},
+  {id: 'dashboard', name: 'My dashboard', url: `/user/${routes.DASHBOARD}`},
   {
     id: 'account-details',
     name: 'Account details',
@@ -24,12 +24,21 @@ const SIDE_BAR_ITEMS = [
 const SIDE_BAR_BUTTONS = [
   {
     id: 'my_wish_list',
-    name: 'My wish list',
+    name: 'My wishlist',
     onClick: router => {
       router.push(`/user/${routes.DASHBOARD}/${routes.FAVORITE_VARIANTS}`)
     },
     icon: <Heart color="primary" fontSize="small" />,
     route: `${routes.FAVORITE_VARIANTS}`,
+  },
+  {
+    id: 'my_orders',
+    name: 'My orders',
+    onClick: router => {
+      router.push(`/user/${routes.DASHBOARD}/${routes.ORDERS}`)
+    },
+    icon: <CartEmpty color="primary" fontSize="small" />,
+    route: `${routes.ORDERS}`,
   },
 ]
 
@@ -114,7 +123,7 @@ export function SideBar(props) {
         className="centralize"
         id="side_bar_top_part"
         sx={{
-          p: '35px 15px',
+          p: '19px 15px',
           borderRadius: '10px',
           flexDirection: 'column',
           gap: 4,

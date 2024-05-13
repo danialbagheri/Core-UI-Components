@@ -1,8 +1,10 @@
 import {Box} from '@mui/material'
+
 import {SideBar} from './SideBar'
+import {DashboardBreadCrumbs} from './DashboardBreadCrumbs'
 
 export function Container(props) {
-  const {route, sx = {}} = props
+  const {route, sx = {}, children, mobileFooter, breadcrumbs} = props
 
   return (
     <Box
@@ -10,8 +12,9 @@ export function Container(props) {
         width: '100%',
         maxWidth: {xs: 280, md: 711},
         m: '0 auto',
-        py: {xs: 6, md: 21},
-        gap: {xs: 5, md: '77px'},
+        pt: {xs: 6, md: 21},
+        pb: 21,
+        gap: {xs: '38px', md: '77px'},
 
         display: 'flex',
         justifyContent: 'flex-start',
@@ -26,8 +29,21 @@ export function Container(props) {
         ...sx,
       }}
     >
+      {mobileFooter}
       <SideBar route={route} />
-      {props.children}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          flexDirection: 'column',
+          gap: '36px',
+          width: '100%',
+        }}
+      >
+        <DashboardBreadCrumbs breadcrumbs={breadcrumbs} />
+        {children}
+      </Box>
     </Box>
   )
 }

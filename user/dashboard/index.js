@@ -1,5 +1,7 @@
 export * from './Header'
 export * from './DashboardBody'
+export * from './DashboardHeader'
+export * from './DashboardBreadCrumbs'
 export * from './SideBar'
 export * from './Container'
 export * from './FavoriteVariantsList'
