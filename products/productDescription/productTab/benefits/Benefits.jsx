@@ -31,10 +31,10 @@ export default function Benefits(props) {
           {tag.svg_icon || tag.icon ? (
             <Image
               alt={tag.name}
-              height="60"
+              height={60}
               loading="lazy"
               src={tag.svg_icon || tag.icon || ''}
-              width="60"
+              width={60}
             />
           ) : null}
           <Typography sx={{width: '100%', wordWrap: 'break-word'}}>

@@ -44,6 +44,7 @@ function SearchResultElements({product}) {
           <Image
             alt={'image'}
             fill
+            sizes="100vw"
             src={product.main_image || '/calypso-logoorange-icon.svg'}
             style={{objectFit: 'contain'}}
           />

@@ -31,6 +31,7 @@ export function Header(props: PropsType) {
       <Image
         alt={data.alt}
         fill
+        sizes="(max-width: 600px) 90vw,50vw"
         src={data.imageSrc}
         style={{objectFit: 'cover'}}
       />

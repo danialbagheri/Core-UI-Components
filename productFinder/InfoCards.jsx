@@ -284,6 +284,7 @@ export function InfoCards(props) {
         <Image
           alt="type"
           fill
+          sizes="(max-width: 600px) 90vw, 33vw"
           src={card.imgSrc}
           style={{objectFit: 'contain'}}
         />

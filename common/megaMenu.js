@@ -17,6 +17,7 @@ function MegaMenuItem(props) {
           <Image
             alt={item.item.name}
             fill
+            sizes="33vw"
             src={item.item.main_image_resized}
             style={{objectFit: 'contain'}}
           />

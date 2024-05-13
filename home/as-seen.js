@@ -38,6 +38,7 @@ function AsSeen() {
             <Image
               alt={_data.alt}
               fill
+              sizes="(max-width: 600px) 90vw, 33vw"
               src={_data.src}
               style={{objectFit: 'contain'}}
             />

@@ -98,6 +98,7 @@ export default function MegaMenu(props: PropsType) {
                   <Image
                     alt={item.name}
                     fill
+                    sizes="33vw"
                     src={item.imageSrc || '/images/placeholder.png'}
                     style={{objectFit: 'cover'}}
                   />

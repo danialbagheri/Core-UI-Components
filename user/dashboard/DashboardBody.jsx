@@ -36,6 +36,7 @@ export function DashboardBody(props) {
           <Image
             alt="product-finder"
             fill
+            sizes="(max-width: 600px) 90vw, 33vw"
             src="/productFinder/link.png"
             style={{objectFit: 'contain'}}
           />

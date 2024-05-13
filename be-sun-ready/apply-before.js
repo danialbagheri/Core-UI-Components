@@ -16,7 +16,8 @@ export default function ApplyBefore({blogs}) {
             <Box sx={{position: 'relative', width: '100%', height: '300px'}}>
               <Image
                 alt={blog.item.image_alt_text}
-                fill={true}
+                fill
+                sizes="100vw"
                 src={blog.item.resized || '/advice/placeholder.png'}
                 style={{objectFit: 'cover'}}
               />

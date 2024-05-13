@@ -156,6 +156,7 @@ export function MenuDrawer(props) {
               <Image
                 alt={item.name}
                 fill
+                sizes="(max-width: 600px) 90vw, 33vw"
                 src={item?.mobileImageSrc || ''}
                 style={{objectFit: 'cover'}}
               />

@@ -172,6 +172,7 @@ export default function MailjetSignUp() {
             <Image
               alt={'subscription'}
               fill
+              sizes="(max-width: 600px) 90vw, 50vw"
               src={'/home-page/newsletter-subscription.jpg'}
               style={{objectFit: 'cover'}}
             />

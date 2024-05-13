@@ -79,7 +79,7 @@ function Navigation() {
       >
         <div className="navbar-content">
           <Box className="navbar-brand" href="/">
-            <Image alt={website} height="47" src={logo} width="150" />
+            <Image alt={website} height={47} src={logo} width={150} />
           </Box>
 
           <ul

@@ -28,6 +28,7 @@ function ProductImageSlider(props) {
         <Image
           alt={selectedVariant.image_list[i]?.alternate_text}
           fill={true}
+          sizes="100vw"
           src={selectedVariant.image_list[i]?.image}
           style={{objectFit: 'cover'}}
         />
@@ -106,10 +107,11 @@ function ProductImageSlider(props) {
               >
                 <Image
                   alt={img.alternate_text}
-                  fill={true}
+                  fill
                   onMouseLeave={isGif ? null : offZoom}
                   onMouseMove={isGif ? null : onZoom}
                   onMouseOver={isGif ? null : onZoom}
+                  sizes="100vw"
                   src={img.image}
                   style={{
                     objectFit: isGif ? 'cover' : 'contain',

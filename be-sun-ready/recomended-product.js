@@ -55,6 +55,7 @@ export default function RecommendedProducts({products}) {
               <Image
                 alt={product.name}
                 fill
+                sizes="100vw"
                 src={firstImage.image}
                 style={{objectFit: 'contain'}}
               />

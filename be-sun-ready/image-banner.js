@@ -9,6 +9,7 @@ export default class ImageBanner extends React.Component {
             <Image
               alt="Frequently Asked Questions"
               fill
+              sizes="100vw"
               src="/be-sun-ready/banner-sun-safe.png"
               style={{objectFit: 'cover'}}
             />

@@ -119,6 +119,7 @@ export const renderProperComponent = (props: PropsType) => {
                   <Image
                     alt={content.id}
                     fill
+                    sizes="(max-width: 600px) 90vw, 33vw"
                     src={content.data}
                     style={{objectFit: 'cover'}}
                   />

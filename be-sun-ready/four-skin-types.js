@@ -7,7 +7,12 @@ export default function FourSkinTypes() {
       <div className="row">
         <div className="col-md-3 col-sm-6 col-6 col-xs-6">
           <div className={Styles.SkinColorHolder}>
-            <Image height="307" src="/be-sun-ready/pale.png" width="307" />
+            <Image
+              alt="be-sun-ready"
+              height="307"
+              src="/be-sun-ready/pale.png"
+              width="307"
+            />
             <h4 className={Styles.SkinColorTitle}>
               Very pale, white skin, freckles, red hair
             </h4>
@@ -27,7 +32,12 @@ export default function FourSkinTypes() {
 
         <div className="col-md-3 col-sm-6 col-6 col-xs-6">
           <div className={Styles.SkinColorHolder}>
-            <Image height="307" src="/be-sun-ready/white.png" width="307" />
+            <Image
+              alt="be-sun-ready-white"
+              height="307"
+              src="/be-sun-ready/white.png"
+              width="307"
+            />
             <h4 className={Styles.SkinColorTitle}>
               Fair, white skin, blonde or auburn hair
             </h4>
@@ -46,7 +56,12 @@ export default function FourSkinTypes() {
         </div>
         <div className="col-md-3 col-sm-6 col-6 col-xs-6">
           <div className={Styles.SkinColorHolder}>
-            <Image height="307" src="/be-sun-ready/brunette.png" width="307" />
+            <Image
+              alt="be-sun-ready-brunette"
+              height="307"
+              src="/be-sun-ready/brunette.png"
+              width="307"
+            />
             <h4 className={Styles.SkinColorTitle}>
               Medium skin tone, brunette hair
             </h4>
@@ -65,7 +80,12 @@ export default function FourSkinTypes() {
         </div>
         <div className="col-md-3 col-sm-6 col-6 col-xs-6">
           <div className={Styles.SkinColorHolder}>
-            <Image height="307" src="/be-sun-ready/dark.png" width="307" />
+            <Image
+              alt="be-sun-ready-dark"
+              height="307"
+              src="/be-sun-ready/dark.png"
+              width="307"
+            />
             <h4 className={Styles.SkinColorTitle}>Dark Skin, Dark hair</h4>
             <br />
             <br />

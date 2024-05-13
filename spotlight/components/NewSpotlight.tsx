@@ -25,6 +25,7 @@ export default function NewSpotlight(props: {item: string}) {
         <Image
           alt={data.alt}
           fill
+          sizes="(max-width: 600px) 50vw, 20vw"
           src={data.photo}
           style={{objectFit: 'cover'}}
         />

@@ -55,6 +55,7 @@ export function ProductFinderBanner(props: PropsType) {
           <Image
             alt="Product finder"
             fill
+            sizes="(max-width: 600px) 90vw, 33vw"
             src={imgSrc}
             style={{objectFit: 'contain'}}
           />

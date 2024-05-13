@@ -73,6 +73,7 @@ export default function Instagram() {
             <Image
               alt={feed.caption}
               fill
+              sizes="100vw"
               src={feed.thumbnail}
               style={{objectFit: 'cover'}}
             />

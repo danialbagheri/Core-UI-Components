@@ -95,7 +95,12 @@ export default function ImageReviewModal({open, setOpen, data}) {
               }}
             >
               <Box>
-                <Image height="100" src={mainImgSrc.src} width="100" />
+                <Image
+                  alt="main-image"
+                  height="100"
+                  src={mainImgSrc.src}
+                  width="100"
+                />
               </Box>
               <Typography sx={{marginBottom: -2}} variant={'h6'}>
                 Images in this review

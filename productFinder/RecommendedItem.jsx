@@ -43,6 +43,7 @@ export function RecommendedItem(props) {
         <Image
           alt={data.image_list[0].alternate_text}
           fill
+          sizes="(max-width: 600px) 90vw, 33vw"
           src={data.image_list[0].image}
           style={{objectFit: 'contain'}}
         />

@@ -185,6 +185,7 @@ export default function ProductRange(props) {
             <Image
               alt="Product finder"
               fill
+              sizes="100vw"
               src={bannerSpecs?.bannerSrc || ''}
             />
           </Link>

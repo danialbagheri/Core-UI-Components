@@ -88,7 +88,12 @@ export function SpotlightBody(props: SpotlightBodyType) {
             overflow: 'hidden',
           }}
         >
-          <Image alt={personData.alt} fill src={personData.photo} />
+          <Image
+            alt={personData.alt}
+            fill
+            sizes="(max-width: 600px) 50vw, 20vw"
+            src={personData.photo}
+          />
         </Box>
         <Box>
           <Typography
