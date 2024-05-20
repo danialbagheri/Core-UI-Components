@@ -17,32 +17,31 @@ export default function ProductQuantity(props) {
 
   return (
     <ButtonGroup
-      aria-label="Disabled elevation buttons"
       disableElevation
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        color: '#5F5F5F',
-        height: '52px',
-        width: '240px',
-        gap: 4,
+        color: '#000',
+        height: '40px',
+        width: '98px',
         borderRadius: '10px',
-        border: '1px solid #707070',
-
-        '& button': {
-          height: '100%',
-          width: '50%',
-        },
+        border: '1px solid #E9E9E9',
       }}
       variant="outline"
     >
-      <Button onClick={() => decrementQuantity(props.selectedQuantity)}>
+      <Button
+        onClick={() => decrementQuantity(props.selectedQuantity)}
+        sx={{'& svg': {width: 10, height: 11}}}
+      >
         <FontAwesomeIcon icon={faMinus} />
       </Button>
       <Typography fontSize={18}>{props.selectedQuantity}</Typography>
-      <Button onClick={() => incrementQuantity(props.selectedQuantity)}>
-        <FontAwesomeIcon icon={faPlus} />
+      <Button
+        onClick={() => incrementQuantity(props.selectedQuantity)}
+        sx={{'& svg': {width: 10, height: 11}}}
+      >
+        <FontAwesomeIcon icon={faPlus} sx={{width: 10, height: 11}} />
       </Button>
     </ButtonGroup>
   )

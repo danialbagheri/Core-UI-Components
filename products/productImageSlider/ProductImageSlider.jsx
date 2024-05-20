@@ -45,8 +45,8 @@ function ProductImageSlider(props) {
   return (
     <Box
       sx={{
-        position: {xs: 'relative', sm: 'sticky'},
-        top: {xs: 0, sm: '70px'},
+        position: {xs: 'relative', md: 'sticky'},
+        top: {xs: 0, md: '70px'},
         overflow: 'scroll',
         paddingRight:
           '17px' /* Increase/decrease this value for cross-browser compatibility */,

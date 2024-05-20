@@ -1,6 +1,6 @@
 import {Box, Typography} from '@mui/material'
 
-function VariantSize(props) {
+export function VariantSize(props) {
   const {selectedVariant} = props
   return (
     <Box sx={{display: 'flex', gap: 2}}>
@@ -16,5 +16,3 @@ function VariantSize(props) {
     </Box>
   )
 }
-
-export default VariantSize

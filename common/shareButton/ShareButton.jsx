@@ -14,11 +14,19 @@ export default function ShareButton({text, media}) {
 
   const icons =
     displayIcon === false ? (
-      <Box sx={{display: 'flex', alignItems: 'center'}}>
-        <IconButton color="primary" onClick={showSharingIcons}>
+      <Box
+        onClick={showSharingIcons}
+        sx={{display: 'flex', alignItems: 'center'}}
+      >
+        <IconButton
+          color="primary"
+          sx={{'& svg': {width: {xs: 17, md: 25}, height: {xs: 18, md: 28}}}}
+        >
           <ShareIcon />
         </IconButton>
-        <Typography color="primary">Share</Typography>
+        <Typography color="primary" sx={{display: {xs: 'block', md: 'none'}}}>
+          Share
+        </Typography>
       </Box>
     ) : (
       <SharingSocialIcons

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
 import {Typography} from '@mui/material'
 
-function DeliveryInfo() {
+export function DeliveryInfo() {
   return (
     <Box mt={4}>
       <Stack alignItems="center" direction={'row'} gap={2}>
@@ -19,5 +19,3 @@ function DeliveryInfo() {
     </Box>
   )
 }
-
-export default DeliveryInfo

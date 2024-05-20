@@ -1,96 +1,20 @@
 import * as React from 'react'
 
-import Link from 'next/link'
-
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import {Stack} from '@mui/material'
 
-import {AddButton} from './addButton'
-import {OutOfStock} from './outOfStock'
 import {ProductTab} from './productTab'
-import {VariantSize} from './variantSize'
 import {ShowPrice} from 'sharedComponents'
-import {CustomButton} from 'components/shared'
-import {CustomTooltip} from '../CustomTooltip'
-import {favoriteVariantHandler} from 'services'
 import {ProductDropDown} from './productDropDown'
-import {AppContext} from 'components/appProvider'
+
 import StarRating from '../StarRating/StarRating'
 import {VariantSelector} from '../VariantSelector'
-import {useAuthFetch} from 'components/customHooks'
-import {Heart, HeartOutlined} from 'components/icons'
-import ShareButton from 'components/common/shareButton/ShareButton'
-import {FAVORITE_VARIANTS, WEBSITE_NAME} from 'constants/general'
 
-const WEBSITE = process.env.NEXT_PUBLIC_WEBSITE
+import {AddButton, OutOfStock, Policies, VariantSize} from './components'
 
 const ProductDescription = props => {
   const {product, selectedVariant, setSelectedVariant} = props
-
-  const [appState, setAppState] = React.useContext(AppContext)
-  const [loading, setLoading] = React.useState(false)
-  const authFetchHandler = useAuthFetch()
-  const isLoggedIn = appState.isAuthenticate
-  const isFavorite = Boolean(
-    appState?.favoriteVariants?.find(
-      variant => variant.sku === selectedVariant.sku,
-    ),
-  )
-  const isCalypso = WEBSITE === WEBSITE_NAME.toLowerCase()
-
-  const favoriteClickHandler = async e => {
-    e.stopPropagation()
-    const sku = selectedVariant.sku
-
-    if (appState.isAuthenticate && sku) {
-      const onAuthenticatedAction = async token => {
-        const action = isFavorite ? 'remove' : 'add'
-        await favoriteVariantHandler(sku, token, action)
-
-        if (isFavorite) {
-          const newFavoriteVariants = appState.favoriteVariants.filter(
-            variant => variant.sku !== sku,
-          )
-          localStorage.setItem(
-            FAVORITE_VARIANTS,
-            JSON.stringify(newFavoriteVariants),
-          )
-          setAppState(prevState => ({
-            ...prevState,
-            favoriteVariants: newFavoriteVariants,
-          }))
-        } else {
-          const newFavoriteVariants = [
-            ...appState.favoriteVariants,
-            selectedVariant,
-          ]
-          localStorage.setItem(
-            FAVORITE_VARIANTS,
-            JSON.stringify(newFavoriteVariants),
-          )
-          setAppState(prevState => ({
-            ...prevState,
-            favoriteVariants: newFavoriteVariants,
-          }))
-        }
-      }
-
-      const onNotAuthenticatedAction = () => {
-        setAppState(prevState => ({
-          ...prevState,
-          favoriteVariants: undefined,
-          isAuthenticate: false,
-        }))
-      }
-
-      authFetchHandler({
-        onAuthenticatedAction,
-        onNotAuthenticatedAction,
-        setLoading,
-      })
-    }
-  }
 
   return (
     <Stack gap={4}>
@@ -110,27 +34,10 @@ const ProductDescription = props => {
           )}
         </a>
       </Box>
-      <Box
-        dangerouslySetInnerHTML={{
-          __html: product.description,
-        }}
-        sx={{textAlign: 'justify'}}
-      />
-      <ProductTab product={product} selectedVariant={selectedVariant} />
-
-      {selectedVariant.inventory_quantity > 0 ? (
-        <Box mt={10}>
-          <Typography>
-            FREE 1 - 2 day shipping on all orders above £25
-          </Typography>
-        </Box>
-      ) : null}
 
       <VariantSize selectedVariant={selectedVariant} />
 
-      <Typography color="primary.main" variant="h2">
-        <ShowPrice selectedVariant={selectedVariant} />
-      </Typography>
+      <ShowPrice selectedVariant={selectedVariant} />
 
       <VariantSelector
         selectedVariant={selectedVariant}
@@ -145,58 +52,23 @@ const ProductDescription = props => {
         <OutOfStock selectedVariant={selectedVariant} />
       )}
 
-      <Box
-        sx={{
-          width: 220,
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          flexWrap: {xs: 'wrap', ssm: 'nowrap'},
+      <Policies />
+
+      {/* <Box
+        dangerouslySetInnerHTML={{
+          __html: product.description,
         }}
-      >
-        <CustomTooltip
-          arrow
-          enterTouchDelay={0}
-          title={
-            isLoggedIn ? (
-              ''
-            ) : (
-              <div>
-                <Link href="/user/sign-in">Log in</Link> to use Wishlists!
-              </div>
-            )
-          }
-        >
-          {isCalypso ? (
-            <Box>
-              <CustomButton
-                borderColor="#DEDEDE"
-                className="centralize"
-                loading={loading}
-                onClick={favoriteClickHandler}
-                sx={{
-                  p: 2,
-                  borderRadius: '10px',
-                  gap: '10px',
-                  color: isFavorite ? '#FF0000' : '#000',
-                  width: 233,
-                  height: 42,
-                }}
-              >
-                {isFavorite
-                  ? 'Remove from favourites'
-                  : 'Add to your favourites'}
-                {isFavorite ? (
-                  <Heart sx={{fill: '#FF0000'}} />
-                ) : (
-                  <HeartOutlined sx={{fill: '#000'}} />
-                )}
-              </CustomButton>
-            </Box>
-          ) : null}
-        </CustomTooltip>
-        <ShareButton media={product.main_image} text={product.name} />
-      </Box>
+        sx={{textAlign: 'justify'}}
+      /> */}
+      <ProductTab product={product} selectedVariant={selectedVariant} />
+
+      {/* {selectedVariant.inventory_quantity > 0 ? (
+        <Box mt={10}>
+          <Typography>
+            FREE 1 - 2 day shipping on all orders above £25
+          </Typography>
+        </Box>
+      ) : null} */}
 
       <ProductDropDown product={product} selectedVariant={selectedVariant} />
     </Stack>

@@ -11,7 +11,7 @@ import {Stack} from '@mui/system'
 import {validateEmail} from 'utils'
 import {postOutOfStockEmail} from 'services'
 
-function OutOfStock(props) {
+export function OutOfStock(props) {
   const {selectedVariant} = props
   const theme = useTheme()
 
@@ -125,5 +125,3 @@ function OutOfStock(props) {
     </Stack>
   )
 }
-
-export default OutOfStock
