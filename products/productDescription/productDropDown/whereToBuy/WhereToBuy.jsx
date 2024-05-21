@@ -14,7 +14,7 @@ export default class WhereToBuy extends React.Component {
         }
         return (
           <Box height={50} key={index} sx={{position: 'relative'}} width={100}>
-            <Link href={store.url} target="_blank">
+            <Link href={store?.url || ''} target="_blank">
               <Image
                 alt={store.stockist.name}
                 fill
