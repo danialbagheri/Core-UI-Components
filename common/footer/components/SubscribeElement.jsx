@@ -202,7 +202,7 @@ export function SubscribeElement(props) {
                 sx={{fill: theme.palette.primary.main, width: 15, height: 15}}
               />
               <Typography color="primary" fontSize={14} fontWeight={600}>
-                Setting
+                Settings
               </Typography>
             </Link>
           </Box>

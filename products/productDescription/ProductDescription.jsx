@@ -17,14 +17,16 @@ const ProductDescription = props => {
   const {product, selectedVariant, setSelectedVariant} = props
 
   return (
-    <Stack gap={4}>
-      <Typography color="primary.main" variant={'h2'}>
+    <Stack>
+      <Typography fontSize={32} fontWeight={700} lineHeight="39px">
         {product.name}
       </Typography>
 
-      <Typography variant={'h3'}>{product.sub_title}</Typography>
+      <Typography fontSize={22} fontWeight={600} lineHeight="26.8px" mt="7px">
+        {product.sub_title}
+      </Typography>
 
-      <Box sx={{display: 'flex', alignItems: 'flex-start', gap: 2, mt: 2}}>
+      <Box sx={{display: 'flex', alignItems: 'flex-start', gap: 2, mt: '7px'}}>
         <StarRating name={product.name} score={product.review_average_score} />
         <a href="#readReviews">
           {product.total_review_count >= 1 ? (
@@ -35,42 +37,42 @@ const ProductDescription = props => {
         </a>
       </Box>
 
-      <VariantSize selectedVariant={selectedVariant} />
+      <VariantSize selectedVariant={selectedVariant} sx={{mt: '12px'}} />
 
-      <ShowPrice selectedVariant={selectedVariant} />
+      <ShowPrice selectedVariant={selectedVariant} sx={{mt: '18px'}} />
 
       <VariantSelector
         selectedVariant={selectedVariant}
         setSelectedVariant={setSelectedVariant}
         slug={product.slug}
+        sx={{mt: '24px'}}
         variants={product.variants}
       />
 
       {selectedVariant.inventory_quantity > 0 ? (
-        <AddButton product={product} selectedVariant={selectedVariant} />
+        <AddButton
+          product={product}
+          selectedVariant={selectedVariant}
+          sx={{mt: '22px'}}
+        />
       ) : (
-        <OutOfStock selectedVariant={selectedVariant} />
+        <OutOfStock selectedVariant={selectedVariant} sx={{mt: '22px'}} />
       )}
 
-      <Policies />
+      <Policies sx={{mt: '42px'}} />
 
-      {/* <Box
-        dangerouslySetInnerHTML={{
-          __html: product.description,
-        }}
-        sx={{textAlign: 'justify'}}
-      /> */}
-      <ProductTab product={product} selectedVariant={selectedVariant} />
+      <ProductTab
+        product={product}
+        selectedVariant={selectedVariant}
+        sx={{mt: '44px'}}
+      />
 
-      {/* {selectedVariant.inventory_quantity > 0 ? (
-        <Box mt={10}>
-          <Typography>
-            FREE 1 - 2 day shipping on all orders above £25
-          </Typography>
-        </Box>
-      ) : null} */}
-
-      <ProductDropDown product={product} selectedVariant={selectedVariant} />
+      <ProductDropDown
+        product={product}
+        productDescription={product.description}
+        selectedVariant={selectedVariant}
+        sx={{mt: '44px'}}
+      />
     </Stack>
   )
 }

@@ -1,9 +1,9 @@
 import {Box, Typography} from '@mui/material'
 
 export function VariantSize(props) {
-  const {selectedVariant} = props
+  const {selectedVariant, sx = {}} = props
   return (
-    <Box sx={{display: 'flex', gap: 2}}>
+    <Box sx={{display: 'flex', gap: 2, ...sx}}>
       {selectedVariant.size ? (
         <Typography variant="h6">Size: {selectedVariant.size} | </Typography>
       ) : null}

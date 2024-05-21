@@ -63,12 +63,12 @@ const settings = {
 }
 
 export default function Trending(props) {
-  const {items} = props
+  const {items, name} = props
 
   return (
     <Box sx={{px: 4, maxWidth: 1600, margin: '0 auto', mt: 5}}>
       <Typography color="earth.main" sx={{mb: 4}} variant="h3">
-        Trending
+        {name || 'Trending'}
       </Typography>
 
       <Slider {...settings}>

@@ -11,6 +11,7 @@ export function VariantSelector({
   selectedVariant,
   setSelectedVariant,
   slug,
+  sx = {},
   ...props
 }) {
   const searchParams = useSearchParams()
@@ -120,6 +121,7 @@ export function VariantSelector({
         alignItems: 'center',
         gap: '12px',
         flexWrap: 'wrap',
+        ...sx,
       }}
       {...props}
     >

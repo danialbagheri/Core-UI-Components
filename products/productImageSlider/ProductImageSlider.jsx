@@ -8,8 +8,8 @@ function ProductImageSlider(props) {
   const onZoom = e => {
     const parentNode = e.target.parentNode.parentNode.parentNode.parentNode
 
-    const x = 0.7 * e.clientX - e.target.offsetLeft
-    const y = 0.7 * e.clientY - e.target.offsetTop
+    const x = 0.5 * e.clientX - e.target.offsetLeft
+    const y = 0.8 * e.clientY - e.target.offsetTop
 
     parentNode.style.transformOrigin = `${x}px ${y}px`
     parentNode.style.transform = 'scale(2)'
@@ -45,7 +45,7 @@ function ProductImageSlider(props) {
   return (
     <Box
       sx={{
-        position: {xs: 'relative', md: 'sticky'},
+        position: 'relative',
         top: {xs: 0, md: '70px'},
         overflow: 'scroll',
         paddingRight:
@@ -71,12 +71,11 @@ function ProductImageSlider(props) {
         '&>.slick-initialized>ul': {
           position: 'relative',
           bottom: 0,
-          marginTop: 5,
           display: 'flex !important',
           alignItems: 'center',
           justifyContent: 'center',
           flexWrap: 'wrap',
-          gap: 4,
+          mb: 2,
 
           '&>.slick-active': {
             boxShadow: ' 0 0 0 2px #ff6b00',
@@ -84,11 +83,12 @@ function ProductImageSlider(props) {
           },
           li: {
             position: 'relative',
-            width: 60,
-            height: 60,
-            border: '2px solid rgba(0,0,0,0.1)',
-            borderRadius: '50%',
+            width: 74,
+            height: 86,
+            border: '2px solid transparent',
+            borderRadius: '10%',
             overflow: 'hidden',
+            mt: 5,
           },
         },
       }}
@@ -101,7 +101,7 @@ function ProductImageSlider(props) {
               <Box
                 sx={{
                   width: '100%',
-                  height: '500px',
+                  height: '722px',
                   position: 'relative',
                 }}
               >

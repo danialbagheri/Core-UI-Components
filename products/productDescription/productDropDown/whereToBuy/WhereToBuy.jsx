@@ -1,5 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box'
+import Image from 'next/image'
+import Link from 'next/link'
 export default class WhereToBuy extends React.Component {
   render() {
     const {stores, childProducts} = this.props
@@ -11,14 +13,16 @@ export default class WhereToBuy extends React.Component {
           return null
         }
         return (
-          <Box key={index}>
-            <a href={store.url} rel="noopener noreferrer" target="_blank">
-              <img
+          <Box height={50} key={index} sx={{position: 'relative'}} width={100}>
+            <Link href={store.url} target="_blank">
+              <Image
                 alt={store.stockist.name}
+                fill
+                sizes="100vw"
                 src={store.stockist.logo}
-                width={'100px'}
+                style={{objectFit: 'contain'}}
               />
-            </a>
+            </Link>
           </Box>
         )
       })

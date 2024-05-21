@@ -16,7 +16,7 @@ import {useAuthFetch} from 'components/customHooks'
 import ShareButton from 'components/common/shareButton/ShareButton'
 
 export function AddButton(props) {
-  const {selectedVariant, product} = props
+  const {selectedVariant, product, sx = {}} = props
 
   const {addVariant, checkoutState, openCart} = useShopify()
   const [selectedQuantity, setSelectedQuantity] = React.useState(1)
@@ -123,6 +123,7 @@ export function AddButton(props) {
         alignItems: {xs: 'flex-start', md: 'center'},
         flexDirection: {xs: 'column', md: 'row'},
         gap: {xs: '29px', md: '23px'},
+        ...sx,
       }}
     >
       <Box

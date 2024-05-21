@@ -3,7 +3,8 @@ import {Contact, Return, Shipping} from 'components/icons'
 import Link from 'next/link'
 import React from 'react'
 
-export function Policies() {
+export function Policies(props) {
+  const {sx = {}} = props
   return (
     <Box
       sx={{
@@ -21,6 +22,8 @@ export function Policies() {
         rowGap: '21px',
 
         justifyContent: 'flex-start',
+
+        ...sx,
       }}
     >
       <Shipping

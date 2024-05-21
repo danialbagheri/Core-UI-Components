@@ -12,7 +12,7 @@ import {validateEmail} from 'utils'
 import {postOutOfStockEmail} from 'services'
 
 export function OutOfStock(props) {
-  const {selectedVariant} = props
+  const {selectedVariant, sx = {}} = props
   const theme = useTheme()
 
   const [email, setEmail] = React.useState('')
@@ -53,7 +53,11 @@ export function OutOfStock(props) {
   }
 
   return (
-    <Stack mb={3} spacing={5} sx={{backgroundColor: '#FCF5EC', padding: 4}}>
+    <Stack
+      mb={3}
+      spacing={5}
+      sx={{backgroundColor: '#FCF5EC', padding: 4, ...sx}}
+    >
       {emailSubmit ? (
         <>
           <Typography textAlign={'center'} variant="h3">

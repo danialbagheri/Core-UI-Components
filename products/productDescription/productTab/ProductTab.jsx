@@ -39,7 +39,7 @@ function a11yProps(index) {
 }
 
 const ProductTab = props => {
-  const {product, selectedVariant} = props
+  const {product, selectedVariant, sx = {}} = props
 
   const [value, setValue] = React.useState(0)
 
@@ -48,7 +48,7 @@ const ProductTab = props => {
   }
 
   return (
-    <Box sx={{width: '100%'}}>
+    <Box sx={{width: '100%', ...sx}}>
       <Box sx={{borderBottom: 1, borderColor: 'primary.main'}}>
         <Tabs
           aria-label="basic tabs example"

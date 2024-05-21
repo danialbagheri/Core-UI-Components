@@ -78,6 +78,7 @@ const ProductItemSkeleton = () => {
 
 export default function BestSellerSlider() {
   const [topSeller, setTopSeller] = React.useState<CollectionType | null>(null)
+
   const [loading, setLoading] = React.useState(true)
 
   const getTopSellerHandler = async () => {
@@ -98,7 +99,7 @@ export default function BestSellerSlider() {
   return (
     <Box sx={{px: 4, maxWidth: 1600, margin: '0 auto', mt: 5, mb: 15}}>
       <Typography color="earth.main" sx={{mb: 4}} variant="h3">
-        Best seller
+        {topSeller?.name}
       </Typography>
 
       {loading ? (
