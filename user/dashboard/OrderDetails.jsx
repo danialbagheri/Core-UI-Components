@@ -61,19 +61,19 @@ export function OrderDetails(props) {
 
   const renderProperAddress = address => {
     const addressArray = []
-    if (address?.address1) {
-      addressArray.push(address?.address1)
-    }
-    if (address?.address2) {
-      addressArray.push(address?.address2)
+    if (address?.country) {
+      addressArray.push(address?.country)
     }
     if (address?.city || address?.zip) {
       const zip = address?.zip ? `, ${address.zip}` : ''
       const properAddress = `${address?.city ?? ''}${zip}`
       addressArray.push(properAddress)
     }
-    if (address?.country) {
-      addressArray.push(address?.country)
+    if (address?.address1) {
+      addressArray.push(address?.address1)
+    }
+    if (address?.address2) {
+      addressArray.push(address?.address2)
     }
 
     return addressArray

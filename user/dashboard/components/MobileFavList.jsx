@@ -61,7 +61,7 @@ export function MobileFavList() {
                 <Image
                   alt={variant.name}
                   fill
-                  sizes="10vw"
+                  sizes="100vw"
                   src={getProperVariantImageSrc(variant.image_list)}
                   style={{objectFit: 'cover'}}
                 />
