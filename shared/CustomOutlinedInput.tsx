@@ -86,7 +86,7 @@ export function CustomOutlinedInput(props: PropsTypes) {
     <Box sx={{...sx}}>
       {label ? (
         <Typography
-        data-cy={cypress}
+          data-cy={cypress}
           sx={{
             color: error ? '#d32f2f' : '#000',
             fontSize: '16px',
@@ -98,7 +98,7 @@ export function CustomOutlinedInput(props: PropsTypes) {
         </Typography>
       ) : null}
       <OutlinedInput
-      data-cy={cypress}
+        data-cy={cypress}
         disabled={disabled}
         fullWidth
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}

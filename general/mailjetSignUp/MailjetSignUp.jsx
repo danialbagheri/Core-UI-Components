@@ -122,8 +122,8 @@ export default function MailjetSignUp() {
   return (
     <>
       <Box
-        onClick={() => setShowPopUp(false)}
         data-cy="newsletter-hidepopup"
+        onClick={() => setShowPopUp(false)}
         sx={{
           display: showPopUp ? 'block' : 'none',
           position: 'fixed',
@@ -146,11 +146,11 @@ export default function MailjetSignUp() {
         }`}
       >
         <Box
+          data-cy="newsletter-showpopup"
           onClick={e => {
             e.stopPropagation()
             setShowPopUpSetting()
           }}
-          data-cy="newsletter-showpopup"
           sx={{
             top: 0,
             left: 0,
@@ -199,7 +199,12 @@ export default function MailjetSignUp() {
               className="centralize"
               sx={{flexDirection: 'column-reverse', gap: 2}}
             >
-              <Box className="centralize" gap="9px" width={175} data-cy="newsletter-popup-success">
+              <Box
+                className="centralize"
+                data-cy="newsletter-popup-success"
+                gap="9px"
+                width={175}
+              >
                 <GreenCheck sx={{width: 39, height: 39}} />
                 <Typography color="#226F61" fontSize={20} fontWeight={700}>
                   Thank you for subscribing!
@@ -230,9 +235,9 @@ export default function MailjetSignUp() {
                   gap: '10px',
                   flexGrow: 1,
                 }}
-              
               >
                 <TextField
+                  data-cy="newsletter-popup-email"
                   error={error}
                   helperText={error}
                   id="outlined-required"
@@ -242,14 +247,13 @@ export default function MailjetSignUp() {
                   sx={{...fieldStyle}}
                   type="email"
                   value={email}
-                  data-cy="newsletter-popup-email"
                 />
                 <CustomButton
+                  cypress="newsletter-popup-container"
                   loading={loading}
                   onClick={submitHandler}
                   sx={{borderRadius: 1, height: 32, fontSize: 16}}
                   variant="contained"
-                  cypress="newsletter-popup-container"
                 >
                   SUBSCRIBE
                 </CustomButton>

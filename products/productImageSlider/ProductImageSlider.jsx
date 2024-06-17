@@ -46,8 +46,9 @@ function ProductImageSlider(props) {
     <Box
       sx={{
         position: 'relative',
-        top: {xs: 0, md: '70px'},
+        top: {xs: 0, md: 0},
         overflow: 'scroll',
+
         paddingRight:
           '17px' /* Increase/decrease this value for cross-browser compatibility */,
         boxSizing: 'content-box',
@@ -83,8 +84,8 @@ function ProductImageSlider(props) {
           },
           li: {
             position: 'relative',
-            width: 74,
-            height: 86,
+            width: 66,
+            height: 84,
             border: '2px solid transparent',
             borderRadius: '10%',
             overflow: 'hidden',
@@ -101,8 +102,8 @@ function ProductImageSlider(props) {
               <Box
                 sx={{
                   width: '100%',
-                  height: '722px',
                   position: 'relative',
+                  height: {xs: 450, md: 722},
                 }}
               >
                 <Image

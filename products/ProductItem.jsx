@@ -20,7 +20,6 @@ import {FavIcon} from './FavIcon'
 /* --------------------------------- Styles --------------------------------- */
 import styles from './styles.module.css'
 import {getProperVariantImageSrc} from 'utils'
-import Link from 'next/link'
 /* -------------------------------------------------------------------------- */
 
 const LIFE_STYLE = 'LS'
@@ -163,44 +162,44 @@ export function ProductItem(props) {
       }}
     >
       {/* --------------------- Image and add button container --------------------- */}
-      <Box
-        className={styles.fadeOut}
-        onClick={e => {
-          e.preventDefault()
-          router.push(productPath)
-        }}
-        onMouseEnter={() => mouseMoveHandler(true)}
-        onMouseLeave={() => mouseMoveHandler(false)}
-        onTouchStart={() => mouseMoveHandler(!displayImage)}
-        sx={{
-          height: {xs: 300, msm: 365},
-          width: '100%',
+      <a href={productPath}>
+        <Box
+          className={styles.fadeOut}
+          onClick={e => {
+            e.preventDefault()
+            router.push(productPath)
+          }}
+          onMouseEnter={() => mouseMoveHandler(true)}
+          onMouseLeave={() => mouseMoveHandler(false)}
+          onTouchStart={() => mouseMoveHandler(!displayImage)}
+          sx={{
+            height: {xs: 300, msm: 365},
+            width: '100%',
 
-          borderRadius: '10px',
-          overflow: 'hidden',
+            borderRadius: '10px',
+            overflow: 'hidden',
 
-          background: renderBoxBgColor(),
+            background: renderBoxBgColor(),
 
-          position: 'relative',
+            position: 'relative',
 
-          pt: '52px',
-          pb: '10px',
+            pt: '52px',
+            pb: '10px',
 
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          gap: '7px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '7px',
 
-          cursor: 'pointer',
-        }}
-      >
-        <ProductTag isOnSale={isOnSale} product={product} />
+            cursor: 'pointer',
+          }}
+        >
+          <ProductTag isOnSale={isOnSale} product={product} />
 
-        {/*Secondary image on hover */}
-        {displayImage &&
-        product?.secondary_image_resized &&
-        hasLifeStyleImage ? (
-          <Link href={productPath}>
+          {/*Secondary image on hover */}
+          {displayImage &&
+          product?.secondary_image_resized &&
+          hasLifeStyleImage ? (
             <Image
               alt={product?.name}
               className={imageIsHovered ? styles.fadeIn : styles.fadeOut}
@@ -212,22 +211,20 @@ export function ProductItem(props) {
                 objectFit: 'cover',
               }}
             />
-          </Link>
-        ) : (
-          <Box
-            sx={{
-              width: {xs: '100%', msm: 212},
+          ) : (
+            <Box
+              sx={{
+                width: {xs: '100%', msm: 212},
 
-              height: 270,
+                height: 270,
 
-              margin: '0 auto',
-              position: 'relative',
-              transition: 'all 200ms',
+                margin: '0 auto',
+                position: 'relative',
+                transition: 'all 200ms',
 
-              border: 'none',
-            }}
-          >
-            <Link href={productPath}>
+                border: 'none',
+              }}
+            >
               <Image
                 alt={product?.name}
                 fill
@@ -239,53 +236,57 @@ export function ProductItem(props) {
                 )}
                 style={{objectFit: 'contain'}}
               />
-            </Link>
-          </Box>
-        )}
+            </Box>
+          )}
 
-        <FavIcon isHovered={isHovered} variant={activeVariant} />
+          <FavIcon isHovered={isHovered} variant={activeVariant} />
 
-        {/* Add to cart button which is hidden by default but shown on hover */}
-        {isHovered ? (
-          <Box
-            className="centralize"
-            onClick={e => {
-              e.stopPropagation()
-              if (!isOutOfStock) {
-                addToCartHandler(activeVariant.graphql_id, 1)
-              }
-            }}
-            sx={{
-              height: 40,
-              width: '100%',
+          {/* Add to cart button which is hidden by default but shown on hover */}
+          {isHovered ? (
+            <Box
+              className="centralize"
+              onClick={e => {
+                e.stopPropagation()
+                if (!isOutOfStock) {
+                  addToCartHandler(activeVariant.graphql_id, 1)
+                }
+              }}
+              sx={{
+                height: 40,
+                width: '100%',
 
-              bgcolor: renderButtonBgColor(),
+                bgcolor: renderButtonBgColor(),
 
-              position: 'absolute',
-              bottom: 0,
+                position: 'absolute',
+                bottom: 0,
 
-              borderRadius: '0px 0px 10px 10px',
-              zIndex: 2,
-            }}
-          >
-            <Typography color="#FFF" fontSize={18} fontWeight={500}>
-              {isOutOfStock ? 'Out of stock!' : 'Add to cart'}
-            </Typography>
-          </Box>
-        ) : (
-          <Box
-            className="centralize"
-            gap="10px"
-            sx={{display: displayImage ? 'none !important' : 'flex !important'}}
-          >
-            <StarRating
-              name={product?.name}
-              score={product?.review_average_score}
-            />
-            <Typography color="#333">{product?.total_review_count}</Typography>
-          </Box>
-        )}
-      </Box>
+                borderRadius: '0px 0px 10px 10px',
+                zIndex: 2,
+              }}
+            >
+              <Typography color="#FFF" fontSize={18} fontWeight={500}>
+                {isOutOfStock ? 'Out of stock!' : 'Add to cart'}
+              </Typography>
+            </Box>
+          ) : (
+            <Box
+              className="centralize"
+              gap="10px"
+              sx={{
+                display: displayImage ? 'none !important' : 'flex !important',
+              }}
+            >
+              <StarRating
+                name={product?.name}
+                score={product?.review_average_score}
+              />
+              <Typography color="#333">
+                {product?.total_review_count}
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </a>
       {/* -------------------------------------------------------------------------- */}
 
       <Box

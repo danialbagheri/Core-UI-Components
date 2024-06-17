@@ -30,15 +30,15 @@ export default class WhereToBuy extends React.Component {
       thisProductStore = <li>All good pharmacies.</li>
     }
 
-    const products = <p>{childProducts} is available from:</p>
+    const products = `${childProducts} is available from:`
 
     return (
-      <div>
-        <div>{products}</div>
+      <>
+        <Box>{products}</Box>
         <Box sx={{display: 'flex', my: 5, gap: 2, flexWrap: 'wrap'}}>
           {thisProductStore}
         </Box>
-      </div>
+      </>
     )
   }
 }

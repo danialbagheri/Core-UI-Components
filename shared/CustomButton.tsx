@@ -26,7 +26,7 @@ export function CustomButton(props: PropsTypes) {
     disabled,
     loadingSize = 30,
     borderColor,
-    cypress
+    cypress,
   } = props
 
   const theme = useTheme()
@@ -47,6 +47,7 @@ export function CustomButton(props: PropsTypes) {
 
   return (
     <Button
+      data-cy={cypress}
       disabled={disabled || loading}
       onClick={e => {
         onClick && !disabled ? onClick(e) : e.preventDefault()
@@ -85,7 +86,6 @@ export function CustomButton(props: PropsTypes) {
         ...sx,
       }}
       variant={variant}
-      data-cy={cypress}
     >
       {loading ? (
         <CircularProgress

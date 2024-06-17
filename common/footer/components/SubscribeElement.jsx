@@ -111,7 +111,12 @@ export function SubscribeElement(props) {
     case notRegisteredSubscribed:
       return (
         <Box className="centralize">
-          <Box className="centralize" gap="9px" width={182} data-cy="newsletter-footer-success">
+          <Box
+            className="centralize"
+            data-cy="newsletter-footer-success"
+            gap="9px"
+            width={182}
+          >
             <GreenCheck sx={{width: 39, height: 39}} />
             <Typography color="#226F61" fontSize={20} fontWeight={700}>
               Thank you for subscribing!
